@@ -506,7 +506,7 @@ void A_TextureDialog::List_Selection_Changed()
 	}
 	
 	char buf[255];
-	sprintf(buf, "%i X %i", BasePicWidth, BasePicHeight);
+	sprintf(buf, "Index = %i        %i X %i", Index, BasePicWidth, BasePicHeight);
 	SetDlgItemText(TextureDlg_Hwnd, IDC_STWIDTHHEIGHT, (LPCTSTR)buf);
 	
 	//IDC_STWIDTHHEIGHT

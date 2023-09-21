@@ -93,8 +93,13 @@ private:
 	bool CreateDirectoryMesh(void);
 	bool DecompileTextures(void);
 	void CreateMaterialFile(char* MatFileName);
+
 	bool Write_XML_File();
+	bool Write_WE_XML_File();
+
 	bool RenderToXML(int GroupIndex);
+	bool Render_WE_ToXML(int GroupIndex);
+
 	bool WriteNewXML(int GroupIndex);
 	bool WriteSubMesh(int GroupIndex);
 	bool Convert_To_Mesh();

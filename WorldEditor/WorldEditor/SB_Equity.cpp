@@ -220,14 +220,16 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 		if (LOWORD(wParam) == ID_DEBUG_GENERAL)
 		{
-			if (App->CLSB_Ogre->RenderListener->ShowBoundingGroup == 1)
+			App->CLSB_Ogre->RenderListener->JustTexture_ID++;
+
+			/*if (App->CLSB_Ogre->RenderListener->ShowBoundingGroup == 1)
 			{
 				App->CLSB_Ogre->RenderListener->ShowBoundingGroup = 0;
 			}
 			else
 			{
 				App->CLSB_Ogre->RenderListener->ShowBoundingGroup = 1;
-			}
+			}*/
 
 			return TRUE;
 		}

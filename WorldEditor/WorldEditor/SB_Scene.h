@@ -57,6 +57,7 @@ public:
 	int Object_Count;
 
 	int AdjusedIndex_Store[500];
+	int AdjustedIndex_Count;
 
 	bool FullScreenMode_Flag;
 	bool SameBrush;

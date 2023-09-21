@@ -1015,3 +1015,166 @@ bool SB_Export_Ogre3D::WriteSubMesh(int GroupIndex)
 
 	return 1;
 }
+
+// *************************************************************************
+// *			Write_XML_WE_File:- Terry and Hazel Flanigan 2023	  	   *
+// *************************************************************************
+bool SB_Export_Ogre3D::Write_WE_XML_File()
+{
+	S_XMLStore[0] = new XMLStore_Type;
+	S_XMLStore[0]->SortedPolyCount = 0;
+
+	char XmlFileName[256];
+	char XFIle[256];
+
+	strcpy(XmlFileName, App->CLSB_Model->JustName);
+
+	strcpy(XmlMeshFileName, XmlFileName);
+	strcpy(XmlScriptFileName, XmlFileName);
+	strcpy(XmlSkellFileName, XmlFileName);
+	strcpy(XmlSkellTagName, XmlFileName);
+
+	strcpy(XFIle, XmlFileName);
+
+	strcat(XmlScriptFileName, "_");
+	strcat(XmlSkellTagName, "_");
+
+	strcpy(XFIle, XmlMeshFileName);
+
+	strcat(XmlMeshFileName, ".mesh.xml");
+	strcat(XmlScriptFileName, ".material");
+	strcat(XmlSkellFileName, ".skeleton.xml");
+	strcat(XmlSkellTagName, ".skeleton");
+
+	WritePolyFile = nullptr;
+
+	WritePolyFile = fopen(XmlMeshFileName, "wt");
+	if (!WritePolyFile)
+	{
+		return 0;
+	}
+
+	fprintf(WritePolyFile, "%s\n", "<mesh>");
+	fprintf(WritePolyFile, "%s\n", "    <submeshes>");
+
+	int Count = 0;
+	int BrushCount = App->CLSB_Model->XBrushCount;
+
+	while (Count < BrushCount)
+	{
+		int FaceCount = 0;
+		int BrushLoop = 0;
+		int SubBrushCount = App->CLSB_Model->B_XBrush[Count]->Brush_Count;
+
+		while (BrushLoop < SubBrushCount)
+		{
+			FaceCount = 0;
+
+			while (FaceCount < App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Face_Count)
+			{
+				FaceCount++;
+			}
+		}
+
+		Render_WE_ToXML(Count);
+		WriteNewXML(Count);
+		Count++;
+	}
+
+
+	fprintf(WritePolyFile, "%s\n", "    </submeshes>");
+
+	/*if (DoSkell == 1)
+	{
+		fprintf(WritePolyFile, "%s%s%s\n", "    <skeletonlink name=\"", XmlSkellTagName, "\" />");
+	}*/
+
+	fprintf(WritePolyFile, "%s\n", "</mesh>");
+
+	fclose(WritePolyFile);
+
+	if (S_XMLStore[0])
+	{
+		delete S_XMLStore[0];
+		S_XMLStore[0] = NULL;
+
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *			Render_WE_ToXML:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Export_Ogre3D::Render_WE_ToXML(int GroupIndex)
+{
+	int FaceCount = 0;
+	int XMLCount = 0;
+	int Face = 0;
+
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	while (FaceCount < App->CLSB_Model->Group[GroupIndex]->GroupFaceCount)
+	{
+		A = App->CLSB_Model->Group[GroupIndex]->Face_Data[FaceCount].a;
+		B = App->CLSB_Model->Group[GroupIndex]->Face_Data[FaceCount].b;
+		C = App->CLSB_Model->Group[GroupIndex]->Face_Data[FaceCount].c;
+
+		// first vector in face and vertic + normal and uv 
+		S_XMLStore[0]->XMLvertex[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->vertex_Data[A].x;
+		S_XMLStore[0]->XMLvertex[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->vertex_Data[A].y;
+		S_XMLStore[0]->XMLvertex[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->vertex_Data[A].z;
+
+		S_XMLStore[0]->mapcoord[XMLCount].u = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[A].u;
+		S_XMLStore[0]->mapcoord[XMLCount].v = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[A].v;
+
+		S_XMLStore[0]->XMLnormal[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->Normal_Data[A].x;
+		S_XMLStore[0]->XMLnormal[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->Normal_Data[A].y;
+		S_XMLStore[0]->XMLnormal[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->Normal_Data[A].z;
+
+		S_XMLStore[0]->BoneIndex[XMLCount] = 0;// SN[cube.polygon[Count].a].BoneIndex;
+		S_XMLStore[0]->XMLpolygon[Face].a = XMLCount;
+		XMLCount++;
+
+		// second vector in face and vertic + normal and uv 
+		S_XMLStore[0]->XMLvertex[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->vertex_Data[B].x;
+		S_XMLStore[0]->XMLvertex[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->vertex_Data[B].y;
+		S_XMLStore[0]->XMLvertex[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->vertex_Data[B].z;
+
+		S_XMLStore[0]->mapcoord[XMLCount].u = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[B].u;
+		S_XMLStore[0]->mapcoord[XMLCount].v = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[B].v;
+
+		S_XMLStore[0]->XMLnormal[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->Normal_Data[B].x;
+		S_XMLStore[0]->XMLnormal[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->Normal_Data[B].y;
+		S_XMLStore[0]->XMLnormal[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->Normal_Data[B].z;
+
+		S_XMLStore[0]->BoneIndex[XMLCount] = 0;// SN[cube.polygon[Count].a].BoneIndex;
+		S_XMLStore[0]->XMLpolygon[Face].b = XMLCount;
+		XMLCount++;
+
+		// third vector in face and vertic + normal and uv 
+		S_XMLStore[0]->XMLvertex[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->vertex_Data[C].x;
+		S_XMLStore[0]->XMLvertex[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->vertex_Data[C].y;
+		S_XMLStore[0]->XMLvertex[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->vertex_Data[C].z;
+
+		S_XMLStore[0]->mapcoord[XMLCount].u = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[C].u;
+		S_XMLStore[0]->mapcoord[XMLCount].v = App->CLSB_Model->Group[GroupIndex]->MapCord_Data[C].v;
+
+		S_XMLStore[0]->XMLnormal[XMLCount].x = App->CLSB_Model->Group[GroupIndex]->Normal_Data[C].x;
+		S_XMLStore[0]->XMLnormal[XMLCount].y = App->CLSB_Model->Group[GroupIndex]->Normal_Data[C].y;
+		S_XMLStore[0]->XMLnormal[XMLCount].z = App->CLSB_Model->Group[GroupIndex]->Normal_Data[C].z;
+
+		S_XMLStore[0]->BoneIndex[XMLCount] = 0;// SN[cube.polygon[Count].a].BoneIndex;
+		S_XMLStore[0]->XMLpolygon[Face].c = XMLCount;
+		XMLCount++;
+		Face++;
+
+		FaceCount++;
+	}
+
+	S_XMLStore[0]->SXMLCount = XMLCount;
+
+	return 1;
+}

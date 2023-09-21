@@ -307,6 +307,7 @@ void SB_Scene::Build_World(int ExpSelected)
 bool SB_Scene::Level_Build_G3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
 {
 	App->CLSB_Model->XBrushCount = 0;
+	AdjustedIndex_Count = 0;
 
 	int i;
 	geBoolean* WrittenTex;
@@ -333,6 +334,9 @@ bool SB_Scene::Level_Build_G3ds(Level3* pLevel, const char* Filename, BrushList*
 
 		}
 	}
+	
+
+	AdjustedIndex_Count = AdjustedIndex;
 
 	BrushList_Export(BList, GE_FALSE);
 

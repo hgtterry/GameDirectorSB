@@ -302,6 +302,15 @@ void SB_ImGui::Model_Data_GUI(void)
 		ImGui::Text("Motions:- %i", App->CLSB_Model->MotionCount);
 		ImGui::Text(" --------------------------- Brushes  ");
 		ImGui::Text("XBrushes:- %i", App->CLSB_Model->XBrushCount);
+		ImGui::Text("Texture Count:- %i", App->CLSB_Scene->AdjustedIndex_Count);
+
+		int Count = 0;
+		while (Count < App->CLSB_Scene->AdjustedIndex_Count)
+		{
+			ImGui::Text("Texture ID:- %i", App->CLSB_Scene->AdjusedIndex_Store[Count]);
+			Count++;
+		}
+
 		ImGui::Text("  ");
 
 		ImVec2 Size = ImGui::GetWindowSize();
