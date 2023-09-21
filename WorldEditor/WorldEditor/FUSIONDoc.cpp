@@ -1912,125 +1912,6 @@ void CFusionDoc::OnUpdateToolsToggleadjustmode(CCmdUI* pCmdUI)
 
 }
 
-void CFusionDoc::DoBrushSelection(Brush	*	pBrush,BrushSel	nSelType) //	brushSelToggle | brushSelAlways)
-{
-    int ModelId = 0;
-    geBoolean ModelLocked;
-    ModelInfo_Type *ModelInfo;
-    GroupListType *Groups;
-    int GroupId = 0;
-    geBoolean GroupLocked;
-    BrushList *BList;
-    Brush	*pBParent=NULL;
-
-    ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
-    Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
-    BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
-
-    if(Brush_GetParent(BList, pBrush, &pBParent))
-    {
-        pBrush	=pBParent;
-    }
-
-    ModelLocked = GE_FALSE;
-    GroupLocked = FALSE;
-//	if(mAdjustMode != ADJUST_MODE_FACE)
-    {
-        // don't do this stuff if we're in face mode...
-        ModelId = Brush_GetModelId (pBrush);
-        if (ModelId != 0)
-        {
-            Model *pModel;
-
-            pModel = ModelList_FindById (ModelInfo->Models, ModelId);
-            if (pModel != NULL)
-            {
-                ModelLocked = Model_IsLocked (pModel);
-            }
-        }
-
-        if (!ModelLocked)
-        {
-            GroupId = Brush_GetGroupId (pBrush);
-            if (GroupId != 0)
-            {
-                GroupLocked = Group_IsLocked (Groups, GroupId);
-            }
-        }
-    }
-
-    if( nSelType == brushSelToggle && BrushIsSelected (pBrush) )
-    {
-        if (ModelLocked)
-        {
-            // model is locked, so deselect everything in the model
-            SelectModelBrushes (FALSE, ModelId);
-        }
-        else if (GroupLocked)
-        {
-            // group is locked, so deselect entire group
-            SelectGroupBrushes (FALSE, GroupId);
-        }
-        else
-        {
-            SelBrushList_Remove (App->CLSB_Doc->pSelBrushes, pBrush);
-// changed QD Actors
-            if(strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
-            {
-                CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
-
-                for(int i=0;i < Entities->GetSize();i++)
-                {
-                    Brush *b=(*Entities)[i].GetActorBrush();
-                    if(b!=NULL)
-                        if(SelBrushList_Find (App->CLSB_Doc->pSelBrushes, b))
-                            if ((*Entities)[i].IsSelected())
-                            {
-                                (*Entities)[i].DeSelect();
-                                --App->CLSB_Doc->NumSelEntities;
-                            }
-                }
-            }
-// end change
-        }
-    }
-    else
-    {
-        if (ModelLocked)
-        {
-            // model is locked, so select everything in the model
-            SelectModelBrushes (TRUE, ModelId);
-        }
-        else if (GroupLocked)
-        {
-            // group is locked.  Select everything in the group
-            SelectGroupBrushes (TRUE, GroupId);
-        }
-        else
-        {
-            SelBrushList_Add (App->CLSB_Doc->pSelBrushes, pBrush);
-// changed QD Actors
-            if(strstr(App->CL_Brush->Brush_GetName(pBrush),".act")!=NULL)
-            {
-                CEntityArray *Entities = Level_GetEntities (App->CLSB_Doc->pLevel);
-
-                for(int i=0;i < Entities->GetSize();i++)
-                {
-                    Brush *b=(*Entities)[i].GetActorBrush();
-                    if(b!=NULL)
-                        if(SelBrushList_Find (App->CLSB_Doc->pSelBrushes, b))
-                            if (!(*Entities)[i].IsSelected())
-                            {
-                                (*Entities)[i].Select();
-                                ++App->CLSB_Doc->NumSelEntities;
-                            }
-                }
-            }
-// end change
-        }
-    }
-}/* CFusionDoc::DoBrushSelection */
-
 void CFusionDoc::SelectEntity
     (
       CEntity *pEntity
@@ -2076,51 +1957,6 @@ void CFusionDoc::DeselectEntity
     }
 }
 
-void CFusionDoc::DoEntitySelection
-    (
-      CEntity *pEntity
-    )
-{
-    // an entity is closest.  Select/deselect it.
-    int GroupId;
-    geBoolean GroupLocked;
-    GroupListType *Groups = Level_GetGroups (App->CLSB_Doc->pLevel);
-
-    assert (pEntity != NULL);
-
-    GroupLocked = FALSE;
-    GroupId = pEntity->GetGroupId ();
-    if (GroupId != 0)
-    {
-        GroupLocked = Group_IsLocked (Groups, GroupId);
-    }
-
-
-    if (pEntity->IsSelected ())
-    {
-        if (GroupLocked)
-        {
-            // deselect entire group
-            SelectGroupBrushes (FALSE, GroupId);
-        }
-        else
-        {
-            DeselectEntity (pEntity);
-        }
-    }
-    else
-    {
-        if (GroupLocked)
-        {
-            // select entire group
-            SelectGroupBrushes (TRUE, GroupId);
-        }
-        else
-        {
-            SelectEntity (pEntity);
-        }
-    }
-}
 
 static geBoolean fdocSelectEntity (CEntity &Ent, void *lParam)
 {
@@ -2347,7 +2183,7 @@ void CFusionDoc::SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v)
             Max = Render_OrthoWorldToView ( v, &bbox->Max );
             if( viewRect.PtInRect( Min ) && viewRect.PtInRect( Max ) )		// If Brush ENTIRELY in rect...
             {			
-                DoBrushSelection( pBrush, brushSelAlways ) ;
+                App->CLSB_Doc->DoBrushSelection( pBrush, brushSelAlways ) ;
                 bSelectedSomething = GE_TRUE ;
             }
         }
@@ -2367,7 +2203,7 @@ void CFusionDoc::SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v)
             {
                 if( viewRect.PtInRect( EntPosView ) )
                 {
-                    DoEntitySelection( pEnt );
+                    App->CLSB_Doc->DoEntitySelection( pEnt );
                     bSelectedSomething = GE_TRUE ;
                 }
             }
@@ -2739,7 +2575,7 @@ void CFusionDoc::SelectRay(CPoint point, ViewVars *v) // hgtterry Select Ray
                     {
                         App->CLSB_Doc->ResetAllSelections();
                     }
-                    DoEntitySelection(&(*Entities)[CurEnt]);
+                    App->CLSB_Doc->DoEntitySelection(&(*Entities)[CurEnt]);
                     EntitySelected	=GE_TRUE;
                 }
             }
@@ -2812,11 +2648,11 @@ void CFusionDoc::SelectRay(CPoint point, ViewVars *v) // hgtterry Select Ray
                 // We found the hit face.
                 if (App->CLSB_Doc->mAdjustMode == ADJUST_MODE_BRUSH)
                 {
-                    DoBrushSelection (fsData.pFoundBrush, brushSelToggle);
+                    App->CLSB_Doc->DoBrushSelection (fsData.pFoundBrush, brushSelToggle);
                 }
                 else
                 {
-                    DoBrushSelection (fsData.pFoundBrush, brushSelAlways);
+                    App->CLSB_Doc->DoBrushSelection (fsData.pFoundBrush, brushSelAlways);
                     // if the face is already in the list, then remove it
                     if (SelFaceList_Remove (App->CLSB_Doc->pSelFaces, fsData.pFoundFace))
                     {
@@ -4519,50 +4355,32 @@ static geBoolean fdocScaleEntityCallback (CEntity &Ent, void *lParam)
     return GE_TRUE;
 }
 
-typedef struct
-{
-    int ModelId;
-    BOOL Select;
-    CFusionDoc *pDoc;
-} fdocBrushSelectData;
+//typedef struct
+//{
+//    int ModelId;
+//    BOOL Select;
+//    CFusionDoc *pDoc;
+//} fdocBrushSelectData;
+//
+//static geBoolean fdocSelectBrushCallback (Brush *pBrush, void *lParam)
+//{
+//    fdocBrushSelectData *pData;
+//
+//    pData = (fdocBrushSelectData *)lParam;
+//    if (Brush_GetModelId (pBrush) == pData->ModelId)
+//    {
+//        if (pData->Select)
+//        {
+//            SelBrushList_Add (App->CLSB_Doc->pSelBrushes, pBrush);
+//        }
+//        else
+//        {
+//            SelBrushList_Remove (App->CLSB_Doc->pSelBrushes, pBrush);
+//        }
+//    }
+//    return GE_TRUE;
+//}
 
-static geBoolean fdocSelectBrushCallback (Brush *pBrush, void *lParam)
-{
-    fdocBrushSelectData *pData;
-
-    pData = (fdocBrushSelectData *)lParam;
-    if (Brush_GetModelId (pBrush) == pData->ModelId)
-    {
-        if (pData->Select)
-        {
-            SelBrushList_Add (App->CLSB_Doc->pSelBrushes, pBrush);
-        }
-        else
-        {
-            SelBrushList_Remove (App->CLSB_Doc->pSelBrushes, pBrush);
-        }
-    }
-    return GE_TRUE;
-}
-
-void CFusionDoc::SelectModelBrushes
-    (
-      BOOL Select,
-      int ModelId
-    )
-{
-    fdocBrushSelectData bsData;
-
-    bsData.Select = Select;
-    bsData.ModelId = ModelId;
-    bsData.pDoc = this;
-
-    // Go through the brush list and add all brushes that have
-    // this model's id to the selection list.
-    Level_EnumBrushes (App->CLSB_Doc->pLevel, &bsData, ::fdocSelectBrushCallback);
-
-    App->CLSB_Doc->UpdateSelected ();
-}
 
 /******************************************************
      BRUSH GROUP SUPPORT

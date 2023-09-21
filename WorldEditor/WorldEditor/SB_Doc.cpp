@@ -273,7 +273,7 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 		{
 		case fctBRUSH:
 		{
-			App->m_pDoc->DoBrushSelection(pMinBrush, brushSelToggle);
+			DoBrushSelection(pMinBrush, brushSelToggle);
             if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
             {
                 App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
@@ -281,7 +281,7 @@ void SB_Doc::SelectOrtho(CPoint point, ViewVars* v)
 			break;
 		}
 		case fctENTITY:
-			App->m_pDoc->DoEntitySelection(pMinEntity);
+			DoEntitySelection(pMinEntity);
 			break;
 		default:
 			// bad value returned from FindClosestThing
@@ -1422,7 +1422,7 @@ static geBoolean fdocSelectBrushesFromFaces(Brush* pBrush, void* lParam)
         pFace = Brush_GetFace(pBrush, iFace);
         if (Face_IsSelected(pFace))
         {
-            pDoc->DoBrushSelection(pBrush, brushSelAlways);
+            App->CLSB_Doc->DoBrushSelection(pBrush, brushSelAlways);
             break;
         }
     }
@@ -1587,5 +1587,221 @@ void SB_Doc::DoGeneralSelect(void)
     mModeTool = ID_GENERALSELECT;
     ConfigureCurrentTool();
     //mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->Update(this);
+}
+
+// *************************************************************************
+// *           DoEntitySelection:- Terry and Hazel Flanigan 2023           *
+// *************************************************************************
+void SB_Doc::DoEntitySelection(CEntity* pEntity)
+{
+    App->Get_Current_Document();
+
+    // an entity is closest.  Select/deselect it.
+    int GroupId;
+    geBoolean GroupLocked;
+    GroupListType* Groups = Level_GetGroups(pLevel);
+
+    assert(pEntity != NULL);
+
+    GroupLocked = FALSE;
+    GroupId = pEntity->GetGroupId();
+    if (GroupId != 0)
+    {
+        GroupLocked = Group_IsLocked(Groups, GroupId);
+    }
+
+
+    if (pEntity->IsSelected())
+    {
+        if (GroupLocked)
+        {
+            // deselect entire group
+            App->m_pDoc->SelectGroupBrushes(FALSE, GroupId);
+        }
+        else
+        {
+            App->m_pDoc->DeselectEntity(pEntity);
+        }
+    }
+    else
+    {
+        if (GroupLocked)
+        {
+            // select entire group
+            App->m_pDoc->SelectGroupBrushes(TRUE, GroupId);
+        }
+        else
+        {
+            App->m_pDoc->SelectEntity(pEntity);
+        }
+    }
+}
+
+// *************************************************************************
+// *           DoBrushSelection:- Terry and Hazel Flanigan 2023            *
+// *************************************************************************
+void SB_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelToggle | brushSelAlways)
+{
+    App->Get_Current_Document();
+
+    int ModelId = 0;
+    geBoolean ModelLocked;
+    ModelInfo_Type* ModelInfo;
+    GroupListType* Groups;
+    int GroupId = 0;
+    geBoolean GroupLocked;
+    BrushList* BList;
+    Brush* pBParent = NULL;
+
+    ModelInfo = Level_GetModelInfo(pLevel);
+    Groups = Level_GetGroups(pLevel);
+    BList = Level_GetBrushes(pLevel);
+
+    if (Brush_GetParent(BList, pBrush, &pBParent))
+    {
+        pBrush = pBParent;
+    }
+
+    ModelLocked = GE_FALSE;
+    GroupLocked = FALSE;
+    //	if(mAdjustMode != ADJUST_MODE_FACE)
+    {
+        // don't do this stuff if we're in face mode...
+        ModelId = Brush_GetModelId(pBrush);
+        if (ModelId != 0)
+        {
+            Model* pModel;
+
+            pModel = ModelList_FindById(ModelInfo->Models, ModelId);
+            if (pModel != NULL)
+            {
+                ModelLocked = Model_IsLocked(pModel);
+            }
+        }
+
+        if (!ModelLocked)
+        {
+            GroupId = Brush_GetGroupId(pBrush);
+            if (GroupId != 0)
+            {
+                GroupLocked = Group_IsLocked(Groups, GroupId);
+            }
+        }
+    }
+
+    if (nSelType == brushSelToggle && App->m_pDoc->BrushIsSelected(pBrush))
+    {
+        if (ModelLocked)
+        {
+            // model is locked, so deselect everything in the model
+            SelectModelBrushes(FALSE, ModelId);
+        }
+        else if (GroupLocked)
+        {
+            // group is locked, so deselect entire group
+            App->m_pDoc->SelectGroupBrushes(FALSE, GroupId);
+        }
+        else
+        {
+            SelBrushList_Remove(pSelBrushes, pBrush);
+           
+            if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
+            {
+                CEntityArray* Entities = Level_GetEntities(pLevel);
+
+                for (int i = 0; i < Entities->GetSize(); i++)
+                {
+                    Brush* b = (*Entities)[i].GetActorBrush();
+                    if (b != NULL)
+                        if (SelBrushList_Find(pSelBrushes, b))
+                            if ((*Entities)[i].IsSelected())
+                            {
+                                (*Entities)[i].DeSelect();
+                                --NumSelEntities;
+                            }
+                }
+            }
+        }
+    }
+    else
+    {
+        if (ModelLocked)
+        {
+            // model is locked, so select everything in the model
+            SelectModelBrushes(TRUE, ModelId);
+        }
+        else if (GroupLocked)
+        {
+            // group is locked.  Select everything in the group
+            App->m_pDoc->SelectGroupBrushes(TRUE, GroupId);
+        }
+        else
+        {
+            SelBrushList_Add(pSelBrushes, pBrush);
+      
+            if (strstr(App->CL_Brush->Brush_GetName(pBrush), ".act") != NULL)
+            {
+                CEntityArray* Entities = Level_GetEntities(pLevel);
+
+                for (int i = 0; i < Entities->GetSize(); i++)
+                {
+                    Brush* b = (*Entities)[i].GetActorBrush();
+                    if (b != NULL)
+                        if (SelBrushList_Find(pSelBrushes, b))
+                            if (!(*Entities)[i].IsSelected())
+                            {
+                                (*Entities)[i].Select();
+                                ++NumSelEntities;
+                            }
+                }
+            }  
+        }
+    }
+}
+
+typedef struct
+{
+    int ModelId;
+    BOOL Select;
+    CFusionDoc* pDoc;
+} fdocBrushSelectData;
+
+static geBoolean fdocSelectBrushCallback(Brush* pBrush, void* lParam)
+{
+    fdocBrushSelectData* pData;
+
+    pData = (fdocBrushSelectData*)lParam;
+    if (Brush_GetModelId(pBrush) == pData->ModelId)
+    {
+        if (pData->Select)
+        {
+            SelBrushList_Add(App->CLSB_Doc->pSelBrushes, pBrush);
+        }
+        else
+        {
+            SelBrushList_Remove(App->CLSB_Doc->pSelBrushes, pBrush);
+        }
+    }
+    return GE_TRUE;
+}
+
+// *************************************************************************
+// *           SelectModelBrushes:- Terry and Hazel Flanigan 2023          *
+// *************************************************************************
+void SB_Doc::SelectModelBrushes(BOOL Select,int ModelId)
+{
+    App->Get_Current_Document();
+
+    fdocBrushSelectData bsData;
+
+    bsData.Select = Select;
+    bsData.ModelId = ModelId;
+    bsData.pDoc = App->m_pDoc;
+
+    // Go through the brush list and add all brushes that have
+    // this model's id to the selection list.
+    Level_EnumBrushes(App->CLSB_Doc->pLevel, &bsData, fdocSelectBrushCallback);
+
+    App->CLSB_Doc->UpdateSelected();
 }
 

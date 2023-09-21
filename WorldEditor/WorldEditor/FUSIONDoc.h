@@ -65,13 +65,6 @@ enum
 	fctBRUSH
 };
 
-enum BrushSel
-{
-	brushSelToggle,
-	brushSelAlways,
-	brushDeselAlways
-} ;
-
 enum GridFlags
 {
 	USE_GRID			=1,
@@ -132,7 +125,7 @@ public:
 	void SelectAllFacesInBrushes();
 
 	void SelectGroupBrushes (BOOL Select, int WhichGroup);
-	void SelectModelBrushes (BOOL Select, int ModelId);
+
 
 	void OnBrushAddtoworld();
 	
@@ -229,8 +222,7 @@ public:
 
 	geBoolean BrushIsSelected (Brush const *pBrush);
 
-	void DoBrushSelection (Brush *pBrush, BrushSel nSelType ) ;
-	void DoEntitySelection (CEntity *pEntity);
+	
 	
 	geBoolean	fdocShowBrush( Brush const *b, Box3d const *ViewBox ) ;
 

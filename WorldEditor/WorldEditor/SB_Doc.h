@@ -2,6 +2,13 @@
 
 #include "SelFaceList.h"
 
+enum BrushSel
+{
+	brushSelToggle,
+	brushSelAlways,
+	brushDeselAlways
+};
+
 enum fdocAdjustEnum
 {
 	ADJUST_MODE_TOGGLE,
@@ -33,6 +40,8 @@ public:
 	void DoneRotate(void);
 
 	void DoGeneralSelect(void);
+	void DoEntitySelection(CEntity* pEntity);
+	void DoBrushSelection(Brush* pBrush, BrushSel	nSelType); //	brushSelToggle | brushSelAlways)
 
 	void Lock_AllTextures(void);
 
@@ -67,6 +76,8 @@ public:
 	BOOL IsSelectionLocked(void) { return SelectLock; }
 	void SetAdjustmentMode(fdocAdjustEnum nCmdIDMode);
 	void ConfigureCurrentTool(void);
+
+	void SelectModelBrushes(BOOL Select, int ModelId);
 
 	// ----------------------------------------------------------- Varibles
 	fdocAdjustEnum mAdjustMode;
