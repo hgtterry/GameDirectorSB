@@ -62,13 +62,13 @@ public:
 	int Scale_Y;
 	int Scale_Z;
 
-	ManualObject*		GridManual;
-	SceneNode*			GridNode;
+	Ogre::ManualObject*		GridManual;
+	Ogre::SceneNode*		GridNode;
 
-	ManualObject*		HairManual;
-	SceneNode*			HairNode;
+	Ogre::ManualObject*		HairManual;
+	Ogre::SceneNode*		HairNode;
 
-	SceneNode*			DummyNode;
+	Ogre::SceneNode*		DummyNode;
 
 	Ogre::Entity*		Crosshair_Ent; 
 	Ogre::SceneNode*	Crosshair_Node;

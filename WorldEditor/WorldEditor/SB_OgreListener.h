@@ -33,16 +33,16 @@ distribution.
 
 //using namespace Ogre;
 
-class SB_OgreListener : public FrameListener
+class SB_OgreListener : public Ogre::FrameListener
 {
 public:
 	SB_OgreListener(void);
 	~SB_OgreListener(void);
 
 	void Reset_Class(void);
-	bool frameStarted(const FrameEvent& evt);
-	bool frameEnded(const FrameEvent& evt);
-	bool frameRenderingQueued(const FrameEvent& evt);
+	bool frameStarted(const Ogre::FrameEvent& evt);
+	bool frameEnded(const Ogre::FrameEvent& evt);
+	bool frameRenderingQueued(const Ogre::FrameEvent& evt);
 
 	bool Update_Game_Logic(float DeltaTime);
 
@@ -73,11 +73,11 @@ public:
 
 	Ogre::Camera* mCam;
 	Ogre::Camera* Pl_mDummyCamera;
-	Vector3		Pl_mDummyTranslateVector;
+	Ogre::Vector3		Pl_mDummyTranslateVector;
 
-	Radian		mRotX;
-	Radian		mRotY;
-	Vector3		mTranslateVector;
+	Ogre::Radian		mRotX;
+	Ogre::Radian		mRotY;
+	Ogre::Vector3		mTranslateVector;
 	int			Wheel;
 	double		toggleTimer;
 

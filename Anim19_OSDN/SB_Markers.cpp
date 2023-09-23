@@ -219,6 +219,17 @@ void SB_Markers::Load_PickSight(void)
 {
 	mPickSight = OverlayManager::getSingleton().getByName("MyOverlays/PicksightOverlay");
 	mPickSight->hide();
+
+	Sight_Entity = App->CL_Ogre->mSceneMgr->createEntity("Arrow23", "Gizmo.mesh", App->CL_Ogre->App_Resource_Group);
+	Sight_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Sight_Node->attachObject(Sight_Entity);
+
+
+	//mPickSight->add3D(Sight_Node);
+
+	Sight_Node->setPosition(0, 0, 0);
+	Sight_Node->setVisible(true);
+	Sight_Node->setScale(7, 7, 7);
 }
 
 // **************************************************************************

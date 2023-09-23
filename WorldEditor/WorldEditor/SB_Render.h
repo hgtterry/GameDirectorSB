@@ -25,7 +25,7 @@ distribution.
 
 #include "Ogre.h"
 
-class SB_Render : public RenderQueueListener
+class SB_Render : public Ogre::RenderQueueListener
 {
 public:
 	SB_Render();
@@ -73,10 +73,10 @@ public:
 
 protected:
 
-	virtual void renderQueueStarted(Ogre::uint8 queueGroupId, const String& invocation,
+	virtual void renderQueueStarted(Ogre::uint8 queueGroupId, const Ogre::String& invocation,
 		bool& skipThisInvocation);
 
-	virtual void renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocation,
+	virtual void renderQueueEnded(Ogre::uint8 queueGroupId, const Ogre::String& invocation,
 		bool& repeatThisInvocation);
 
 	void PreRender();

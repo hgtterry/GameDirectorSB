@@ -65,6 +65,7 @@ public:
 
 	bool SelectEntity_World(void);
 
+	Ogre::Camera* TestCamera;
 	Ogre::Camera* mCam;
 	Ogre::Camera* Pl_mDummyCamera;
 	Vector3		Pl_mDummyTranslateVector;

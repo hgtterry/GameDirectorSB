@@ -77,5 +77,8 @@ public:
 
 	Ogre::Entity*		BlueRotAxis_Ent;
 	Ogre::SceneNode*	BlueRotAxis_Node;
+
+	Ogre::Entity* Sight_Entity;
+	Ogre::SceneNode* Sight_Node;
 };
 

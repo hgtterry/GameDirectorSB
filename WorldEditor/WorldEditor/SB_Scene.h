@@ -59,6 +59,8 @@ public:
 	int AdjusedIndex_Store[500];
 	int AdjustedIndex_Count;
 
+	bool Picking(void);
+
 	bool FullScreenMode_Flag;
 	bool SameBrush;
 

@@ -819,3 +819,12 @@ bool SB_Scene::Add_Resource_Location_Project(char* Resource_Location)
 
 	return 1;
 }
+
+// *************************************************************************
+// *					Picking::Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Scene::Picking(void)
+{
+	
+	return 1;
+}

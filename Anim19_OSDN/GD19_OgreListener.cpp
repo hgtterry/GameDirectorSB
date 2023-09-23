@@ -32,7 +32,7 @@ GD19_OgreListener::GD19_OgreListener(void)
 	mCam = App->CL_Ogre->mCamera;
 	Pl_mDummyCamera = App->CL_Ogre->mSceneMgr->createCamera("PickCamera");
 	App->SBC_3DT->Pl_mDummyCamera = App->CL_Ogre->mSceneMgr->createCamera("ShootCamera");
-
+	TestCamera = App->CL_Ogre->mSceneMgr->createCamera("PickCamera2");
 
 	Wheel = 0;
 	StopOgre = 0;
@@ -1114,13 +1114,19 @@ bool GD19_OgreListener::Capture_RightMouse_World(void)
 // *************************************************************************
 bool GD19_OgreListener::SelectEntity_World(void)
 {
+	
+	Ogre::Quaternion Q;
+
 	DistanceToCollision = 0;
 
 	Ogre::SceneNode *mNode;
 	Vector3 oldPos = App->CL_Ogre->mCamera->getPosition();
+	
+	Q = App->CL_Ogre->mCamera->getOrientation();
+
 	Pl_mDummyCamera->setPosition(oldPos);
 
-	Ogre::Quaternion Q;
+	
 	Q = App->CL_Ogre->mCamera->getOrientation();
 
 	Pl_mDummyCamera->setOrientation(Q);

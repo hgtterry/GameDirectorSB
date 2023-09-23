@@ -30,7 +30,7 @@ typedef struct Mvertex_type
 	float x,y,z;
 }Mvertex_type;
 
-class GD_Bt_Render : public btIDebugDraw,public RenderQueueListener
+class GD_Bt_Render : public btIDebugDraw,public Ogre::RenderQueueListener
 {
 	int m_debugMode;
 
@@ -98,10 +98,10 @@ public:
 
 protected:
 
-	virtual void renderQueueStarted(Ogre::uint8 queueGroupId, const String& invocation, 
+	virtual void renderQueueStarted(Ogre::uint8 queueGroupId, const Ogre::String& invocation,
 		bool& skipThisInvocation);
 
-	virtual void renderQueueEnded(Ogre::uint8 queueGroupId, const String& invocation, 
+	virtual void renderQueueEnded(Ogre::uint8 queueGroupId, const Ogre::String& invocation,
 		bool& repeatThisInvocation);
 
 	void PreRender();
