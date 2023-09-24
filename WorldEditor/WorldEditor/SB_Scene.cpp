@@ -823,8 +823,20 @@ bool SB_Scene::Add_Resource_Location_Project(char* Resource_Location)
 // *************************************************************************
 // *					Picking::Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Scene::Picking(void)
+bool SB_Scene::Picking(Ogre::RenderWindow* rw, Ogre::Camera* camera, const Ogre::Vector2& mousecoords, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask)
 {
-	
+	Ogre::Real tx = mousecoords.x / (Ogre::Real)rw->getWidth();
+	Ogre::Real ty = mousecoords.y / (Ogre::Real)rw->getHeight();
+	Ogre::Ray ray = camera->getCameraToViewportRay(tx, ty);
+
+	if (App->CLSB_Ogre->OgreListener->mCollisionTools->raycast(ray, result, target, closest_distance, queryMask))
+	{
+		App->Beep_Win();
+		//App->CLSB_Grid->Sight_Node->setPosition(result);
+	}
+
+	//Ogre::SceneNode* mNode;
+
+
 	return 1;
 }

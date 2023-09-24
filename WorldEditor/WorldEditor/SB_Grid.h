@@ -39,6 +39,7 @@ public:
 	void Hair_SetVisible(bool Option);
 
 	void Reset_View(void);
+	void Load_Gizmo(void);
 
 	Ogre::ColourValue ColourMain; 
 	Ogre::ColourValue ColourHairZ;
@@ -75,6 +76,9 @@ public:
 
 	Ogre::Entity*		Selection_Ent; 
 	Ogre::SceneNode*	Selection_Node;
+
+	Ogre::Entity*		Sight_Entity;
+	Ogre::SceneNode*	Sight_Node;
 
 	bool ShowGridFlag;
 	bool ShowDivisions;

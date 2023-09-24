@@ -97,6 +97,7 @@ SB_App::SB_App()
 	CLSB_Physics =				nullptr;
 	CLSB_Environment =			nullptr;
 	CLSB_SoundMgr =				nullptr;
+	CLSB_Picking =				nullptr;
 
 	AppBackground = NULL;
 	BlackBrush =	NULL;
@@ -299,7 +300,8 @@ bool SB_App::InitApp(void)
 	CLSB_Physics =					new SB_Physics();
 	CLSB_Environment =				new SB_Environment();
 	CLSB_SoundMgr =					new SB_SoundMgr();
-
+	CLSB_Picking =					new SB_Picking();
+	
 	InitCommonControls();
 
 	hInst =NULL;
@@ -419,6 +421,14 @@ void SB_App::Say(const char* Message, char* Message2)
 	}
 
 	App->CL_Dialogs->Message(text, text2);
+}
+
+// *************************************************************************
+// *			Beep_Win:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_App::Beep_Win()
+{
+	Beep(440, 100);
 }
 
 // *************************************************************************

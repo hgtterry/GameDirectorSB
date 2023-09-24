@@ -965,6 +965,12 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
 				App->CLSB_Ogre->OgreListener->Pl_Cent500Y = p.y;
 
+				float poo;
+				Ogre::MovableObject* mPoo;
+
+				ImGuiIO& io = ImGui::GetIO();
+				App->CLSB_Scene->Picking(App->CLSB_Ogre->mWindow, App->CLSB_Ogre->mCamera, Ogre::Vector2(io.MousePos.x, io.MousePos.y), Ogre::Vector3(0, 0, 0), mPoo, poo,-1);
+				
 				SetCapture(App->ViewGLhWnd);// Bernie
 				SetCursorPos(App->CursorPosX, App->CursorPosY);
 

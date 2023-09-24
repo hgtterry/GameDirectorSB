@@ -222,6 +222,7 @@ bool CollisionTools::raycastFromPoint(const Ogre::Vector3 &point,
 
 bool CollisionTools::raycast(const Ogre::Ray &ray, Ogre::Vector3 &result,Ogre::Entity* &target,float &closest_distance, const Ogre::uint32 queryMask) 
 {
+    MessageBox(NULL, "poo", "poo", MB_OK);
 	return raycast(ray, result, (Ogre::MovableObject*&)target, closest_distance, queryMask);
 }
 
@@ -245,10 +246,12 @@ bool CollisionTools::raycast(const Ogre::Ray &ray, Ogre::Vector3 &result,Ogre::M
     }
     else
     {
+       // MessageBox(NULL, "poo", "poo", MB_OK);
         //LOG_ERROR << "Cannot raycast without RaySceneQuery instance" << ENDLOG;
         return (false);
     }
 
+   // MessageBox(NULL, "poo", "poo", MB_OK);
     // at this point we have raycast to a series of different objects bounding boxes.
     // we need to test these different objects to see which is the first polygon hit.
     // there are some minor optimizations (distance based) that mean we wont have to

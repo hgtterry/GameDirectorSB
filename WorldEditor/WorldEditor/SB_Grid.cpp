@@ -250,6 +250,21 @@ void SB_Grid::Reset_View(void)
 	App->CLSB_Ogre->mCamera->lookAt(Ogre::Vector3(0, 30, 0));
 }
 
+// *************************************************************************
+// *			Load_Gizmo:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void SB_Grid::Load_Gizmo(void)
+{
+	
+	Sight_Entity = App->CLSB_Ogre->mSceneMgr->createEntity("Arrow23", "axes.mesh", App->CLSB_Ogre->App_Resource_Group);
+	Sight_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	Sight_Node->attachObject(Sight_Entity);
+
+	Sight_Node->setPosition(0, 0, 0);
+	Sight_Node->setVisible(true);
+	Sight_Node->setScale(1, 1, 1);
+}
+
 
 
 

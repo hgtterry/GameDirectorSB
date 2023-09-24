@@ -59,7 +59,7 @@ public:
 	int AdjusedIndex_Store[500];
 	int AdjustedIndex_Count;
 
-	bool Picking(void);
+	bool Picking(Ogre::RenderWindow* rw, Ogre::Camera* camera, const Ogre::Vector2& mousecoords, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
 
 	bool FullScreenMode_Flag;
 	bool SameBrush;

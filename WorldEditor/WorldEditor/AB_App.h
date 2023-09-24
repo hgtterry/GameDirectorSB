@@ -99,6 +99,7 @@ distribution.
 #include "SB_Physics.h"
 #include "SB_Environment.h"
 #include "SB_SoundMgr.h"
+#include "SB_Picking.h"
 
 class SB_App
 {
@@ -176,7 +177,7 @@ public:
 	SB_Physics*					CLSB_Physics;
 	SB_Environment*				CLSB_Environment;
 	SB_SoundMgr*				CLSB_SoundMgr;
-
+	SB_Picking*					CLSB_Picking;
 
 	bool InitApp(void);
 	void InitMFC(void);
@@ -186,6 +187,7 @@ public:
 
 	void Start_Dialogs();
 
+	void Beep_Win();
 	void Say(const char* Message, char* Message2 = NULL);
 	void Say_Int(int Value);
 	void Say_Float(float Value);
