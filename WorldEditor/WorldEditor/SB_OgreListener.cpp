@@ -84,7 +84,9 @@ SB_OgreListener::SB_OgreListener(void)
 
 	Animate_Ogre = 0;
 	AnimationScale = 1;
-	
+
+	App->CLSB_Picking = new SB_Picking(App->CLSB_Ogre->mSceneMgr);
+
 	mCollisionTools = new MOC::CollisionTools(App->CLSB_Ogre->mSceneMgr);
 	mCollisionTools->setHeightAdjust(3.5f);
 	DistanceToCollision = 0;

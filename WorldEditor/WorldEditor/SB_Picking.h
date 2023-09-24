@@ -26,7 +26,15 @@ distribution.
 class SB_Picking
 {
 public:
-	SB_Picking();
+	SB_Picking(Ogre::SceneManager* sceneMgr);
 	~SB_Picking();
+
+	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
+	void GetMeshInformation(const Ogre::MeshPtr mesh, size_t& vertex_count, Ogre::Vector3*& vertices, size_t& index_count, Ogre::uint32*& indices, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
+	
+	Ogre::SceneManager* mSceneMgr;
+	Ogre::RaySceneQuery* mRaySceneQuery;
+
+	Ogre::MovableObject* pentity;
 };
 

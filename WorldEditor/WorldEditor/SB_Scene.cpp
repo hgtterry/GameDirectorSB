@@ -829,7 +829,7 @@ bool SB_Scene::Picking(Ogre::RenderWindow* rw, Ogre::Camera* camera, const Ogre:
 	Ogre::Real ty = mousecoords.y / (Ogre::Real)rw->getHeight();
 	Ogre::Ray ray = camera->getCameraToViewportRay(tx, ty);
 
-	if (App->CLSB_Ogre->OgreListener->mCollisionTools->raycast(ray, result, target, closest_distance, queryMask))
+	if (App->CLSB_Picking->raycast(ray, result, target, closest_distance, queryMask))
 	{
 		App->Beep_Win();
 		//App->CLSB_Grid->Sight_Node->setPosition(result);

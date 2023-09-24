@@ -300,7 +300,7 @@ bool SB_App::InitApp(void)
 	CLSB_Physics =					new SB_Physics();
 	CLSB_Environment =				new SB_Environment();
 	CLSB_SoundMgr =					new SB_SoundMgr();
-	CLSB_Picking =					new SB_Picking();
+	
 	
 	InitCommonControls();
 
