@@ -49,6 +49,36 @@ SB_Picking::~SB_Picking()
 }
 
 // *************************************************************************
+// *		Mouse_Pick_Entity::Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Picking::Mouse_Pick_Entity()
+{
+    HitVertices = Ogre::Vector3(0, 0, 0);
+
+    Ogre::RenderWindow* rw = App->CLSB_Ogre->mWindow;
+    Ogre::Camera* camera = App->CLSB_Ogre->mCamera;
+
+    ImGuiIO& io = ImGui::GetIO();
+
+    Ogre::Real tx = io.MousePos.x / (Ogre::Real)rw->getWidth();
+    Ogre::Real ty = io.MousePos.y / (Ogre::Real)rw->getHeight();
+
+    Ogre::Ray ray = camera->getCameraToViewportRay(tx, ty);
+
+    Ogre::uint32 queryMask = -1;
+    Ogre::Vector3 result = Ogre::Vector3(0,0,0);
+    Ogre::MovableObject* target = NULL;
+    float closest_distance = 0;
+
+    if (App->CLSB_Picking->raycast(ray, result, target, closest_distance, queryMask))
+    {
+        App->Beep_Win();
+        App->CLSB_Grid->Sight_Node->setPosition(result);
+    }
+
+}
+
+// *************************************************************************
 // *					             raycast		                	   *
 // *************************************************************************
 bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask)
@@ -129,6 +159,9 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                         // this is the closest so far, save it off
                         closest_distance = hit.second;
                         new_closest_found = true;
+
+                        float X = vertices[indices[i]].x;
+                        //HitVertices.x = (Ogre::Real(vertices[indices[i]]));
                     }
                 }
             }
