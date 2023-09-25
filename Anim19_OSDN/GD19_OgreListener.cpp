@@ -92,7 +92,7 @@ GD19_OgreListener::GD19_OgreListener(void)
 	CameraMode = 1;  // Model Mode
 
 	ImGui_Render_Tab = Enums::ImGui_Camera;
-
+	App->CL_Picking = new SB_Picking(App->CL_Ogre->mSceneMgr);
 }
 
 GD19_OgreListener::~GD19_OgreListener(void)

@@ -95,7 +95,7 @@ distribution.
 #include "SB_Logger.h"
 
 #include "DynamicCharacterController.h"
-
+#include "SB_Picking.h"
 // :- Terry and Hazel Flanigan 2023
 
 class GD19_App
@@ -178,6 +178,7 @@ public:
 
 	DynamicCharacterController*		SBC_DCC;
 
+	SB_Picking*				CL_Picking;
 
 	Com_Diaolgs*			Com_CDialogs;		// Common Dialogs for App [291221]
 	// ----------------------------------- 
@@ -209,7 +210,8 @@ public:
 	void Say(const char* Message);
 	void Say_Int(int Value);
 	void Say_Win(const char* Message);
-	
+
+	void Beep_Win();
 	void Flash_Window();
 
 	void Disable_Panels(bool Disable);

@@ -97,7 +97,7 @@ GD19_App::GD19_App(void)
 	CL_Logger =				nullptr;
 
 	SBC_DCC =				nullptr;
-
+	CL_Picking =			nullptr;
 	// ---------------------------------------------------- 29/12/21
 	Com_CDialogs =		nullptr;
 
@@ -586,6 +586,14 @@ void GD19_App::Say_Int(int Value)
 	char buf[255];
 	_itoa(Value, buf, 10);
 	MessageBox(MainHwnd, buf, "Equity Notice", MB_OK);
+}
+
+// *************************************************************************
+// *			Beep_Win:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void GD19_App::Beep_Win()
+{
+	Beep(440, 100);
 }
 
 // *************************************************************************
