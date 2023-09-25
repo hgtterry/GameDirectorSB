@@ -713,13 +713,14 @@ LRESULT CALLBACK SB_TopTabs::Camera_TB_Proc(HWND hDlg, UINT message, WPARAM wPar
 					App->CL_Vm_ImGui->Show_Object_Selection = 0;
 
 					App->SBC_TopTabs->Toggle_Select_Flag = 0;
-					App->SBC_Markers->mPickSight->hide();
+					//App->SBC_Markers->mPickSight->hide();
 					App->CL_Ogre->OgreListener->GD_Selection_Mode = 0;
 				}
 				else
 				{
+					App->CL_Vm_ImGui->Show_Object_Selection = 1;
 					App->SBC_TopTabs->Toggle_Select_Flag = 1;
-					App->SBC_Markers->mPickSight->show();
+					//App->SBC_Markers->mPickSight->show();
 					App->CL_Ogre->OgreListener->GD_Selection_Mode = 1;
 				}
 

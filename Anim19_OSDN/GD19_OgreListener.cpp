@@ -1114,7 +1114,7 @@ bool GD19_OgreListener::Capture_RightMouse_World(void)
 // *************************************************************************
 bool GD19_OgreListener::SelectEntity_World(void)
 {
-	
+	return 1;
 	Ogre::Quaternion Q;
 
 	DistanceToCollision = 0;

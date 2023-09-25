@@ -298,43 +298,44 @@ void VM_ImGui::Object_Selection(void)
 		ImGui::Text("Selected Object");
 		ImGui::Separator();
 
-		ImGui::Text("Internal Name: = %s",App->CL_Ogre->OgreListener->Pl_Entity_Name.c_str());
+		ImGui::Text("Internal Name: = %s",App->CL_Picking->Pl_Entity_Name.c_str());
 		ImGui::Text("Object Name: = %s",App->CL_Ogre->OgreListener->Selected_Object_Name);
 		
 		ImGui::Text("");
 
-		ImGui::Text("Edit Selected Object");
+		ImGui::Text("Distance: = %f", App->CL_Picking->closest_distance);
+		/*ImGui::Text("Edit Selected Object");
 		ImGui::Separator();
 
 		ImGui::Indent();
 		ImGui::Indent();
-		ImGui::Indent();
+		ImGui::Indent();*/
 
-		if (ImGui::Button("Yes"))
-		{
-			App->SBC_TopTabs->Toggle_Select_Flag = 0;
-			App->SBC_Markers->mPickSight->hide();
-			App->CL_Ogre->OgreListener->GD_Selection_Mode = 0;
+		//if (ImGui::Button("Yes"))
+		//{
+		//	App->SBC_TopTabs->Toggle_Select_Flag = 0;
+		//	App->SBC_Markers->mPickSight->hide();
+		//	App->CL_Ogre->OgreListener->GD_Selection_Mode = 0;
 
-			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		//	RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			//App->SBC_FileView->Select_Item(App->CL_Ogre->OgreListener->Selected_Entity_Index);
-			App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
-			Show_Object_Selection = 0;
-		}
+		//	//App->SBC_FileView->Select_Item(App->CL_Ogre->OgreListener->Selected_Entity_Index);
+		//	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+		//	Show_Object_Selection = 0;
+		//}
 
-		ImGui::SameLine();
+		//ImGui::SameLine();
 
-		if (ImGui::Button("No"))
-		{
-			App->SBC_TopTabs->Toggle_Select_Flag = 0;
-			App->SBC_Markers->mPickSight->hide();
-			App->CL_Ogre->OgreListener->GD_Selection_Mode = 0;
+		//if (ImGui::Button("No"))
+		//{
+		//	App->SBC_TopTabs->Toggle_Select_Flag = 0;
+		//	App->SBC_Markers->mPickSight->hide();
+		//	App->CL_Ogre->OgreListener->GD_Selection_Mode = 0;
 
-			RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+		//	RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-			Show_Object_Selection = 0;
-		}
+		//	Show_Object_Selection = 0;
+		//}
 
 		ImGui::End();
 	}

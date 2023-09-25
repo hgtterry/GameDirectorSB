@@ -68,12 +68,69 @@ void SB_Picking::Mouse_Pick_Entity()
     Ogre::uint32 queryMask = -1;
     Ogre::Vector3 result = Ogre::Vector3(0,0,0);
     Ogre::MovableObject* target = NULL;
-    float closest_distance = 0;
+    closest_distance = 0;
+
+    Pl_Entity_Name = " ";
+    App->CL_Ogre->OgreListener->Selected_Object_Name[0] = 0;
+
+    Ogre::SceneNode* mNode;
 
     if (raycast(ray, result, target, closest_distance, queryMask))
     {
-        App->Beep_Win();
-        //App->CLSB_Grid->Sight_Node->setPosition(result);
+        //App->Beep_Win();
+
+        mNode = pentity->getParentSceneNode();
+        Pl_Entity_Name = pentity->getName();
+        
+        char buff[255];
+        strcpy(buff, Pl_Entity_Name.c_str());
+
+        App->CL_Vm_ImGui->Show_Object_Selection = 1;
+
+        bool test = Ogre::StringUtil::match("Plane0", Pl_Entity_Name, true);
+        if (test == 1)
+        {
+            Pl_Entity_Name = "---------";
+        }
+        else
+        {
+            bool test = Ogre::StringUtil::match("Player_1", Pl_Entity_Name, true);
+            if (test == 1)
+            {
+                Pl_Entity_Name = "Player_1";
+
+                return;
+            }
+            else
+            {
+                char* pdest;
+                int IntNum = 0;
+                char buffer[255];
+
+                strcpy(buffer, Pl_Entity_Name.c_str());
+                pdest = strstr(buffer, "GDEnt_");
+                if (pdest != NULL)
+                {
+                    sscanf((buffer + 6), "%i", &IntNum);
+
+                    App->SBC_Markers->MarkerBB_Addjust(IntNum);
+
+                    App->CL_Ogre->OgreListener->Selected_Entity_Index = IntNum;
+                    strcpy(App->CL_Ogre->OgreListener->Selected_Object_Name, App->SBC_Scene->V_Object[IntNum]->Mesh_Name);
+
+                    App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+
+                    return;
+
+                }
+            }
+
+        }
+
+    }
+    else
+    {
+        Pl_Entity_Name = "---------";
     }
 
 }

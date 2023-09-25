@@ -1220,7 +1220,10 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 							App->CL_Ogre->OgreListener->Pl_Cent500X = p.x;
 							App->CL_Ogre->OgreListener->Pl_Cent500Y = p.y;
 
-							App->CL_Picking->Mouse_Pick_Entity();
+							if (App->CL_Ogre->OgreListener->GD_Selection_Mode == 1)
+							{
+								App->CL_Picking->Mouse_Pick_Entity();
+							}
 
 							SetCapture(App->ViewGLhWnd);// Bernie
 							SetCursorPos(App->CursorPosX, App->CursorPosY);
