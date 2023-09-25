@@ -959,7 +959,6 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 				POINT p;
 				GetCursorPos(&p);
-				//ScreenToClient(App->MainHwnd, &p);
 				App->CursorPosX = p.x;
 				App->CursorPosY = p.y;
 				App->CLSB_Ogre->OgreListener->Pl_Cent500X = p.x;
@@ -992,10 +991,8 @@ LRESULT CALLBACK SB_Equity::Ogre3D_New_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 		if (App->CLSB_Ogre->OgreIsRunning == 1)
 		{
-			//SetCursorPos(App->CursorPosX, App->CursorPosY+44);
 			ReleaseCapture();
 			App->CLSB_Ogre->OgreListener->Pl_LeftMouseDown = 0;
-			//SetCursorPos(App->CursorPosX, App->CursorPosY);
 			SetCursor(App->CUR);
 			return 1;
 		}

@@ -1213,6 +1213,15 @@ LRESULT CALLBACK Ogre3D_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
 					{
 						if (!ImGui::GetIO().WantCaptureMouse)
 						{
+							POINT p;
+							GetCursorPos(&p);
+							App->CursorPosX = p.x;
+							App->CursorPosY = p.y;
+							App->CL_Ogre->OgreListener->Pl_Cent500X = p.x;
+							App->CL_Ogre->OgreListener->Pl_Cent500Y = p.y;
+
+							App->CL_Picking->Mouse_Pick_Entity();
+
 							SetCapture(App->ViewGLhWnd);// Bernie
 							SetCursorPos(App->CursorPosX, App->CursorPosY);
 							App->CL_Ogre->OgreListener->Pl_LeftMouseDown = 1;

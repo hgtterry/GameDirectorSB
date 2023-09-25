@@ -70,7 +70,7 @@ void SB_Picking::Mouse_Pick_Entity()
     Ogre::MovableObject* target = NULL;
     float closest_distance = 0;
 
-    if (App->CLSB_Picking->raycast(ray, result, target, closest_distance, queryMask))
+    if (raycast(ray, result, target, closest_distance, queryMask))
     {
         App->Beep_Win();
         //App->CLSB_Grid->Sight_Node->setPosition(result);
