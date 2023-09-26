@@ -38,6 +38,9 @@ SB_Grid::SB_Grid(void)
 	HairManual = NULL;
 	HairNode = NULL;
 
+	FaceManual = NULL;
+	FaceNode = NULL;
+
 	DummyNode = NULL;
 
 	Crosshair_Ent = NULL;
@@ -175,6 +178,7 @@ void SB_Grid::Grid_Update(bool Create)
 	GridNode->setVisible(true);
 	GridNode->setScale(Scale_X, Scale_Y, Scale_Z);
 }
+
 // *************************************************************************
 // *	  		Hair_Update:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************
@@ -182,7 +186,7 @@ void SB_Grid::Hair_Update(bool Create)
 {
 	if (Create == 1)
 	{
-		HairManual = App->CL_Ogre->mSceneMgr->createManualObject("HairManual");
+		HairManual = App->CL_Ogre->mSceneMgr->createManualObject("FaceManual");
 		HairManual->setRenderQueueGroup(5);
 	}
 
@@ -217,6 +221,7 @@ void SB_Grid::Hair_Update(bool Create)
 	HairNode->setVisible(true);
 	HairNode->setScale(Scale_X, Scale_Y, Scale_Z);
 }
+
 // *************************************************************************
 // *	  	Grid_SetVisiable:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
@@ -224,6 +229,7 @@ void SB_Grid::Grid_SetVisible(bool Option)
 {
 	GridNode->setVisible(Option);
 }
+
 // *************************************************************************
 // *	  	Hair_SetVisiable:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
@@ -233,6 +239,47 @@ void SB_Grid::Hair_SetVisible(bool Option)
 
 }
 
+// *************************************************************************
+// *	  		Face_Update:- Terry and Hazel Flanigan 2022				   *
+// *************************************************************************
+void SB_Grid::Face_Update(bool Create)
+{
+	if (Create == 1)
+	{
+		FaceManual = App->CL_Ogre->mSceneMgr->createManualObject("HairManual");
+		FaceManual->setRenderQueueGroup(5);
+	}
 
+	FaceManual->clear();
+	FaceManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_LIST);
+
+	// X Axis
+	FaceManual->position(Ogre::Vector3(YAxis_min - HairExtend, 0, 0));
+	FaceManual->colour(ColourHairX);
+	FaceManual->position(Ogre::Vector3(YAxis_max + HairExtend, 0, 0));
+	FaceManual->colour(ColourHairX);
+	// Y Axis
+	FaceManual->position(Ogre::Vector3(0, YAxis_min - HairExtend, 0));
+	FaceManual->colour(ColourHairY);
+	FaceManual->position(Ogre::Vector3(0, YAxis_max + HairExtend, 0));
+	FaceManual->colour(ColourHairY);
+	// Z Axis
+	FaceManual->position(Ogre::Vector3(0, 0, ZAxis_min - HairExtend));
+	FaceManual->colour(ColourHairZ);
+	FaceManual->position(Ogre::Vector3(0, 0, ZAxis_max + HairExtend));
+	FaceManual->colour(ColourHairZ);
+
+	FaceManual->end();
+
+	if (Create == 1)
+	{
+		FaceNode = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		FaceNode->attachObject(FaceManual);
+	}
+
+	FaceNode->setPosition(0, 0, 0);
+	FaceNode->setVisible(true);
+	FaceNode->setScale(Scale_X, Scale_Y, Scale_Z);
+}
 
 

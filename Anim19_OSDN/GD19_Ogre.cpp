@@ -78,6 +78,7 @@ bool SB_Ogre::InitOgre(void)
 	// Set Up Grid Functions
 	App->SBC_Grid->Grid_Update(1);
 	App->SBC_Grid->Hair_Update(1);
+	App->SBC_Grid->Face_Update(1);
 
 	App->SBC_Grid->DummyNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 

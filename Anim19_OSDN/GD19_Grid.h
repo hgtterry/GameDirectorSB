@@ -38,6 +38,8 @@ public:
 	void Grid_SetVisible(bool Option);
 	void Hair_SetVisible(bool Option);
 
+	void Face_Update(bool Create);
+
 	Ogre::ColourValue ColourMain; 
 	Ogre::ColourValue ColourHairZ;
 	Ogre::ColourValue ColourHairX;
@@ -65,6 +67,9 @@ public:
 
 	ManualObject*		HairManual;
 	SceneNode*			HairNode;
+
+	ManualObject*		FaceManual;
+	SceneNode*			FaceNode;
 
 	SceneNode*			DummyNode;
 
