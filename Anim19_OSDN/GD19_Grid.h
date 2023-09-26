@@ -79,6 +79,8 @@ public:
 	Ogre::Entity*		Selection_Ent; 
 	Ogre::SceneNode*	Selection_Node;
 
+	Ogre::Vector3 HitVertices[2];
+
 	bool ShowGridFlag;
 	bool ShowDivisions;
 	bool ShowHair;

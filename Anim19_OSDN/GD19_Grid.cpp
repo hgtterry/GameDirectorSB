@@ -55,6 +55,10 @@ SB_Grid::SB_Grid(void)
 	ColourMain = ColourValue(0.7, 0.7, 0, 0.6);
 	ColourDivision = ColourValue(1, 1, 1, 0.4);
 
+	HitVertices[0] = Ogre::Vector3(0, 0, 0);
+	HitVertices[1] = Ogre::Vector3(10, 0, 0);
+	HitVertices[2] = Ogre::Vector3(0, 10, 0);
+
 	YAxis_min = -8;
 	YAxis_max = 8;
 
@@ -251,23 +255,18 @@ void SB_Grid::Face_Update(bool Create)
 	}
 
 	FaceManual->clear();
-	FaceManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_LIST);
+	FaceManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_TRIANGLE_LIST);
 
 	// X Axis
-	FaceManual->position(Ogre::Vector3(YAxis_min - HairExtend, 0, 0));
+	FaceManual->position(HitVertices[0]);
 	FaceManual->colour(ColourHairX);
-	FaceManual->position(Ogre::Vector3(YAxis_max + HairExtend, 0, 0));
+
+	FaceManual->position(HitVertices[1]);
 	FaceManual->colour(ColourHairX);
-	// Y Axis
-	FaceManual->position(Ogre::Vector3(0, YAxis_min - HairExtend, 0));
+	
+	FaceManual->position(HitVertices[2]);
 	FaceManual->colour(ColourHairY);
-	FaceManual->position(Ogre::Vector3(0, YAxis_max + HairExtend, 0));
-	FaceManual->colour(ColourHairY);
-	// Z Axis
-	FaceManual->position(Ogre::Vector3(0, 0, ZAxis_min - HairExtend));
-	FaceManual->colour(ColourHairZ);
-	FaceManual->position(Ogre::Vector3(0, 0, ZAxis_max + HairExtend));
-	FaceManual->colour(ColourHairZ);
+	
 
 	FaceManual->end();
 
