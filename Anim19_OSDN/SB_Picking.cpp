@@ -190,11 +190,10 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
             // mesh data to retrieve
             size_t vertex_count;
             size_t index_count;
-            Ogre::Vector3* vertices;
-            Ogre::uint32* indices;
+            
 
             // get the mesh information
-            GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(), vertex_count, vertices, index_count, indices,
+            GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(), vertex_count, index_count,
                 pentity->getParentNode()->_getDerivedPosition(),
                 pentity->getParentNode()->_getDerivedOrientation(),
                 pentity->getParentNode()->_getDerivedScale());
@@ -217,8 +216,11 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                         closest_distance = hit.second;
                         new_closest_found = true;
 
-                        float X = vertices[indices[i]].x;
-                        //HitVertices.x = (Ogre::Real(vertices[indices[i]]));
+                        App->SBC_Grid->HitVertices[0] = vertices[indices[i]];
+                        App->SBC_Grid->HitVertices[1] = vertices[indices[i + 1]];
+                        App->SBC_Grid->HitVertices[2] = vertices[indices[i + 2]];
+                        App->SBC_Grid->Face_Update2();   
+                        App->SBC_Grid->FaceNode->setVisible(true);
                     }
                 }
             }
@@ -254,7 +256,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 // *************************************************************************
 // *					      GetMeshInformation		              	   *
 // *************************************************************************
-void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_count,Ogre::Vector3*& vertices,size_t& index_count,Ogre::uint32*& indices,const Ogre::Vector3& position,const Ogre::Quaternion& orient,const Ogre::Vector3& scale)
+void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_count,size_t& index_count,const Ogre::Vector3& position,const Ogre::Quaternion& orient,const Ogre::Vector3& scale)
 {
     bool added_shared = false;
     size_t current_offset = 0;
@@ -291,6 +293,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_coun
     // Allocate space for the vertices and indices
     vertices = new Ogre::Vector3[vertex_count];
     indices = new Ogre::uint32[index_count];
+    TextCords = new Ogre::Vector3[vertex_count];
 
     added_shared = false;
 
@@ -369,4 +372,39 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_coun
         ibuf->unlock();
         current_offset = next_offset;
     }
+
+
+    for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
+    {
+        Ogre::SubMesh* submesh = mesh->getSubMesh(i);
+
+        Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
+
+        if ((!submesh->useSharedVertices) || (submesh->useSharedVertices && !added_shared))
+        {
+            if (submesh->useSharedVertices)
+            {
+                added_shared = true;
+                shared_offset = current_offset;
+            }
+
+            const Ogre::VertexElement* texElem = vertex_data->vertexDeclaration->findElementBySemantic(Ogre::VES_TEXTURE_COORDINATES);
+
+            Ogre::HardwareVertexBufferSharedPtr vbufText =
+                vertex_data->vertexBufferBinding->getBuffer(texElem->getSource());
+
+            byte* vertexText = (byte*)vbufText->lock(Ogre::HardwareBuffer::HBL_NORMAL);
+            float* pRealText;
+
+            for (ulong j = 0; j < vertex_data->vertexCount; ++j, vertexText += vbufText->getVertexSize())
+            {
+                texElem->baseVertexPointerToElement(vertexText, &pRealText);
+                TextCords[0] = pRealText[0];
+                TextCords[1] = pRealText[1];
+            }
+
+            vbufText->unlock();
+        }
+    }
+       
 }

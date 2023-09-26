@@ -170,5 +170,22 @@ Particle_Script=GD_PurpleFountain
 Particle_SpeedFactor=0.500000
  
 *************************************************************************************
+[Object_7]
+Mesh_Name=Object_7
+Mesh_File=Cube.mesh
+Mesh_Resource_Path=
+Material_File=Cube.material
+Object_ID=8
+Object_Type=2
+Object_Shape=1
+Object_Usage=1
+Mesh_Pos=-636.862488,-106.664688,873.908752
+Mesh_Scale=1.000000,1.000000,1.000000
+Mesh_Rot=0.000000,0.000000,0.000000
+Mesh_Quat=1.000000,0.000000,0.000000,0.000000
+Physics_Quat=1.000000,0.000000,0.000000,0.000000
+Dimensions_Lock=0
+ 
+*************************************************************************************
 [Counters]
-Objects_Count=7
+Objects_Count=8

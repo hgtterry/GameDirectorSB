@@ -304,6 +304,13 @@ void VM_ImGui::Object_Selection(void)
 		ImGui::Text("");
 
 		ImGui::Text("Distance: = %f", App->CL_Picking->closest_distance);
+
+		if (App->CL_Picking->TextCords)
+		{
+			ImGui::Text("UV: = %f", App->CL_Picking->TextCords[0]);
+			ImGui::Text("UV: = %f", App->CL_Picking->TextCords[1]);
+		}
+
 		/*ImGui::Text("Edit Selected Object");
 		ImGui::Separator();
 

@@ -39,6 +39,9 @@ public:
 	void Hair_SetVisible(bool Option);
 
 	void Face_Update(bool Create);
+	void Face_Update2();
+
+	Ogre::ColourValue FaceColour;
 
 	Ogre::ColourValue ColourMain; 
 	Ogre::ColourValue ColourHairZ;
