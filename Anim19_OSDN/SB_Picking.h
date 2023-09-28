@@ -43,6 +43,8 @@ public:
 
 	int SubMesh_Face;
 
+	char FaceMaterial[MAX_PATH];
+
 	size_t Total_vertex_count;
 	size_t Total_index_count;
 

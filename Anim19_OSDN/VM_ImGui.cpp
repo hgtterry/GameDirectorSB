@@ -324,7 +324,8 @@ void VM_ImGui::Object_Selection(void)
 			ImGui::Text("UV1: = %f %f", App->SBC_Grid->HitFaceUVs[0].x, App->SBC_Grid->HitFaceUVs[0].y);
 			ImGui::Text("UV2: = %f %f", App->SBC_Grid->HitFaceUVs[1].x, App->SBC_Grid->HitFaceUVs[1].y);
 			ImGui::Text("UV3: = %f %f", App->SBC_Grid->HitFaceUVs[2].x, App->SBC_Grid->HitFaceUVs[2].y);
-
+			ImGui::Text("");
+			ImGui::Text("Face Material: = %s", App->CL_Picking->FaceMaterial);
 		}
 
 		if (ImGui::Button("Test"))

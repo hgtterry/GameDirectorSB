@@ -236,6 +236,8 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 
                         SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
 
+                        strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Face)->getMaterialName().c_str());
+
                         App->SBC_Grid->FaceNode->setVisible(true);
                     }
                 }
