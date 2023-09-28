@@ -42,6 +42,7 @@ public:
 	size_t Total_index_count;
 
 	int Face_Index;
+	int Sub_Mesh_Count;
 
 private:
 	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);

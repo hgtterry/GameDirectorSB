@@ -294,7 +294,6 @@ void VM_ImGui::Object_Selection(void)
 	}
 	else
 	{
-
 		ImGui::Text("Selected Object");
 		ImGui::Separator();
 
@@ -302,6 +301,7 @@ void VM_ImGui::Object_Selection(void)
 		ImGui::Text("Object Name: = %s",App->CL_Ogre->OgreListener->Selected_Object_Name);
 		
 		ImGui::Text("");
+		ImGui::Text("Sub Meshes: = %i", App->CL_Picking->Sub_Mesh_Count);
 		ImGui::Text("Total Vertices: = %i", App->CL_Picking->Total_vertex_count);
 		ImGui::Text("Total Indices: = %i", App->CL_Picking->Total_index_count);
 		ImGui::Text("Total Faces: = %i", App->CL_Picking->Total_index_count/3);
@@ -314,44 +314,17 @@ void VM_ImGui::Object_Selection(void)
 		{
 			int Face_Index = App->CL_Picking->Face_Index;
 
-			ImGui::Text("UV: = %f %f", App->CL_Picking->TextCords[Face_Index].x, App->CL_Picking->TextCords[Face_Index].y);
-			ImGui::Text("UV: = %f %f", App->CL_Picking->TextCords[Face_Index+1].x, App->CL_Picking->TextCords[Face_Index+1].y);
-			ImGui::Text("UV: = %f %f", App->CL_Picking->TextCords[Face_Index+2].x, App->CL_Picking->TextCords[Face_Index+2].y);
-			
+			ImGui::Text("Face Index: = %i", Face_Index / 3);
+
+			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->SBC_Grid->HitVertices[0].x, App->SBC_Grid->HitVertices[0].y, App->SBC_Grid->HitVertices[0].z);
+			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->SBC_Grid->HitVertices[1].x, App->SBC_Grid->HitVertices[1].y, App->SBC_Grid->HitVertices[1].z);
+			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->SBC_Grid->HitVertices[2].x, App->SBC_Grid->HitVertices[2].y, App->SBC_Grid->HitVertices[2].z);
+
+			ImGui::Text("UV1: = %f %f", App->CL_Picking->TextCords[Face_Index].x, App->CL_Picking->TextCords[Face_Index].y);
+			ImGui::Text("UV2: = %f %f", App->CL_Picking->TextCords[Face_Index+1].x, App->CL_Picking->TextCords[Face_Index+1].y);
+			ImGui::Text("UV3: = %f %f", App->CL_Picking->TextCords[Face_Index+2].x, App->CL_Picking->TextCords[Face_Index+2].y);
+
 		}
-
-		/*ImGui::Text("Edit Selected Object");
-		ImGui::Separator();
-
-		ImGui::Indent();
-		ImGui::Indent();
-		ImGui::Indent();*/
-
-		//if (ImGui::Button("Yes"))
-		//{
-		//	App->SBC_TopTabs->Toggle_Select_Flag = 0;
-		//	App->SBC_Markers->mPickSight->hide();
-		//	App->CL_Ogre->OgreListener->GD_Selection_Mode = 0;
-
-		//	RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-		//	//App->SBC_FileView->Select_Item(App->CL_Ogre->OgreListener->Selected_Entity_Index);
-		//	App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
-		//	Show_Object_Selection = 0;
-		//}
-
-		//ImGui::SameLine();
-
-		//if (ImGui::Button("No"))
-		//{
-		//	App->SBC_TopTabs->Toggle_Select_Flag = 0;
-		//	App->SBC_Markers->mPickSight->hide();
-		//	App->CL_Ogre->OgreListener->GD_Selection_Mode = 0;
-
-		//	RedrawWindow(App->SBC_TopTabs->Camera_TB_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
-
-		//	Show_Object_Selection = 0;
-		//}
 
 		ImGui::End();
 	}

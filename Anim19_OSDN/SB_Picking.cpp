@@ -42,6 +42,7 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     Total_vertex_count = 0;
     Total_index_count = 0;
     Face_Index = 0;
+    Sub_Mesh_Count = 0;
 }
 
 SB_Picking::~SB_Picking()
@@ -60,6 +61,7 @@ void SB_Picking::Mouse_Pick_Entity()
     Total_vertex_count = 0;
     Total_index_count = 0;
     Face_Index = 0;
+    Sub_Mesh_Count = 0;
 
     HitVertices = Ogre::Vector3(0, 0, 0);
 
@@ -239,6 +241,9 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
             if (new_closest_found)
             {
                 target = pentity;
+
+                Sub_Mesh_Count = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
+
                 closest_result = ray.getPoint(closest_distance);
             }
         }
@@ -294,7 +299,6 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
         Total_index_count += submesh->indexData->indexCount;
     }
 
-
     // Allocate space for the vertices and indices
     vertices = new Ogre::Vector3[Total_vertex_count];
     indices = new Ogre::uint32[Total_index_count];
@@ -344,7 +348,6 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
             vbuf->unlock();
             next_offset += vertex_data->vertexCount;
         }
-
 
         Ogre::IndexData* index_data = submesh->indexData;
         size_t numTris = index_data->indexCount / 3;
@@ -406,6 +409,8 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
             for (ulong j = 0; j < vertex_data->vertexCount; ++j, vertexText += vbufText->getVertexSize())
             {
                 texElem->baseVertexPointerToElement(vertexText, &pRealText);
+
+                //pRealText[0] = 1;
                 TextCords[textoffsset].x = pRealText[0];
                 TextCords[textoffsset].y = pRealText[1];
 
