@@ -236,8 +236,8 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 
                         SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
 
-                        strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Face)->getMaterialName().c_str());
-
+                        Get_Material_Data();
+                  
                         App->SBC_Grid->FaceNode->setVisible(true);
                     }
                 }
@@ -510,5 +510,14 @@ void SB_Picking::Set_Face_UV()
             vbufText->unlock();
         }
     }
+}
 
+// *************************************************************************
+// *					    Get_Material_Data		                   	   *
+// *************************************************************************
+void SB_Picking::Get_Material_Data()
+{
+	strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Face)->getMaterialName().c_str());
+	Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
+	strcpy(TextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
 }

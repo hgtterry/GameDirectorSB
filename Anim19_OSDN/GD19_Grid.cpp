@@ -260,7 +260,6 @@ void SB_Grid::Face_Update(bool Create)
 	FaceManual->clear();
 	FaceManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_LINE_STRIP);
 	
-
 	// X Axis
 	FaceManual->position(HitVertices[0]);
 	FaceManual->colour(FaceColour);
