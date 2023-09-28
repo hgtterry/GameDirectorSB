@@ -38,6 +38,10 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     mRaySceneQuery->setSortByDistance(true);
 
     pentity = NULL;
+
+    Total_vertex_count = 0;
+    Total_index_count = 0;
+    Face_Index = 0;
 }
 
 SB_Picking::~SB_Picking()
@@ -53,6 +57,10 @@ SB_Picking::~SB_Picking()
 // *************************************************************************
 void SB_Picking::Mouse_Pick_Entity()
 {
+    Total_vertex_count = 0;
+    Total_index_count = 0;
+    Face_Index = 0;
+
     HitVertices = Ogre::Vector3(0, 0, 0);
 
     Ogre::RenderWindow* rw = App->CL_Ogre->mWindow;
@@ -187,20 +195,16 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
             // get the entity to check
             pentity = static_cast<Ogre::MovableObject*>(query_result[qr_idx].movable);
 
-            // mesh data to retrieve
-            size_t vertex_count;
-            size_t index_count;
-            
-
+        
             // get the mesh information
-            GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(), vertex_count, index_count,
+            GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(),
                 pentity->getParentNode()->_getDerivedPosition(),
                 pentity->getParentNode()->_getDerivedOrientation(),
                 pentity->getParentNode()->_getDerivedScale());
 
             // test for hitting individual triangles on the mesh
             bool new_closest_found = false;
-            for (size_t i = 0; i < index_count; i += 3)
+            for (size_t i = 0; i < Total_index_count; i += 3)
             {
                 // check for a hit against this triangle
                 std::pair<bool, Ogre::Real> hit = Ogre::Math::intersects(ray, vertices[indices[i]],
@@ -216,6 +220,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                         closest_distance = hit.second;
                         new_closest_found = true;
 
+                        Face_Index = i;
                         App->SBC_Grid->HitVertices[0] = vertices[indices[i]];
                         App->SBC_Grid->HitVertices[1] = vertices[indices[i + 1]];
                         App->SBC_Grid->HitVertices[2] = vertices[indices[i + 2]];
@@ -256,7 +261,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 // *************************************************************************
 // *					      GetMeshInformation		              	   *
 // *************************************************************************
-void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_count,size_t& index_count,const Ogre::Vector3& position,const Ogre::Quaternion& orient,const Ogre::Vector3& scale)
+void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position,const Ogre::Quaternion& orient,const Ogre::Vector3& scale)
 {
     bool added_shared = false;
     size_t current_offset = 0;
@@ -264,7 +269,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_coun
     size_t next_offset = 0;
     size_t index_offset = 0;
 
-    vertex_count = index_count = 0;
+    Total_vertex_count = Total_index_count = 0;
 
     // Calculate how many vertices and indices we're going to need
     for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
@@ -276,24 +281,24 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_coun
         {
             if (!added_shared)
             {
-                vertex_count += mesh->sharedVertexData->vertexCount;
+                Total_vertex_count += mesh->sharedVertexData->vertexCount;
                 added_shared = true;
             }
         }
         else
         {
-            vertex_count += submesh->vertexData->vertexCount;
+            Total_vertex_count += submesh->vertexData->vertexCount;
         }
 
         // Add the indices
-        index_count += submesh->indexData->indexCount;
+        Total_index_count += submesh->indexData->indexCount;
     }
 
 
     // Allocate space for the vertices and indices
-    vertices = new Ogre::Vector3[vertex_count];
-    indices = new Ogre::uint32[index_count];
-    TextCords = new Ogre::Vector3[vertex_count];
+    vertices = new Ogre::Vector3[Total_vertex_count];
+    indices = new Ogre::uint32[Total_index_count];
+    TextCords = new Ogre::Vector2[Total_vertex_count];
 
     added_shared = false;
 
@@ -373,6 +378,8 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_coun
         current_offset = next_offset;
     }
 
+    // Texture Cords UVS
+    int textoffsset = 0;
 
     for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
     {
@@ -399,8 +406,10 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh,size_t& vertex_coun
             for (ulong j = 0; j < vertex_data->vertexCount; ++j, vertexText += vbufText->getVertexSize())
             {
                 texElem->baseVertexPointerToElement(vertexText, &pRealText);
-                TextCords[0] = pRealText[0];
-                TextCords[1] = pRealText[1];
+                TextCords[textoffsset].x = pRealText[0];
+                TextCords[textoffsset].y = pRealText[1];
+
+                textoffsset++;
             }
 
             vbufText->unlock();

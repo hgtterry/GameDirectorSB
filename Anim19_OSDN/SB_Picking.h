@@ -35,12 +35,17 @@ public:
 	float closest_distance;
 
 	Ogre::Vector3* vertices;
-	Ogre::Vector3* TextCords;
+	Ogre::Vector2* TextCords;
 	Ogre::uint32* indices;
+
+	size_t Total_vertex_count;
+	size_t Total_index_count;
+
+	int Face_Index;
 
 private:
 	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);
-	void GetMeshInformation(const Ogre::MeshPtr mesh, size_t& vertex_count, size_t& index_count, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
+	void GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position, const Ogre::Quaternion& orient, const Ogre::Vector3& scale);
 	
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::RaySceneQuery* mRaySceneQuery;

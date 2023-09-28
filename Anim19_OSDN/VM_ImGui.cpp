@@ -302,13 +302,22 @@ void VM_ImGui::Object_Selection(void)
 		ImGui::Text("Object Name: = %s",App->CL_Ogre->OgreListener->Selected_Object_Name);
 		
 		ImGui::Text("");
+		ImGui::Text("Total Vertices: = %i", App->CL_Picking->Total_vertex_count);
+		ImGui::Text("Total Indices: = %i", App->CL_Picking->Total_index_count);
+		ImGui::Text("Total Faces: = %i", App->CL_Picking->Total_index_count/3);
+
+		ImGui::Text("");
 
 		ImGui::Text("Distance: = %f", App->CL_Picking->closest_distance);
 
 		if (App->CL_Picking->TextCords)
 		{
-			ImGui::Text("UV: = %f", App->CL_Picking->TextCords[0]);
-			ImGui::Text("UV: = %f", App->CL_Picking->TextCords[1]);
+			int Face_Index = App->CL_Picking->Face_Index;
+
+			ImGui::Text("UV: = %f %f", App->CL_Picking->TextCords[Face_Index].x, App->CL_Picking->TextCords[Face_Index].y);
+			ImGui::Text("UV: = %f %f", App->CL_Picking->TextCords[Face_Index+1].x, App->CL_Picking->TextCords[Face_Index+1].y);
+			ImGui::Text("UV: = %f %f", App->CL_Picking->TextCords[Face_Index+2].x, App->CL_Picking->TextCords[Face_Index+2].y);
+			
 		}
 
 		/*ImGui::Text("Edit Selected Object");
