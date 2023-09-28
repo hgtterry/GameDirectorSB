@@ -55,7 +55,7 @@ SB_Picking::~SB_Picking()
 }
 
 // *************************************************************************
-// *		Mouse_Pick_Entity::Terry and Hazel Flanigan 2023			   *
+// *		Mouse_Pick_Entity:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Picking::Mouse_Pick_Entity()
 {
@@ -146,7 +146,7 @@ void SB_Picking::Mouse_Pick_Entity()
 }
 
 // *************************************************************************
-// *					             raycast		                	   *
+// *		        raycast:- Terry and Hazel Flanigan 2022		       	   *
 // *************************************************************************
 bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask)
 {
@@ -277,7 +277,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 }
 
 // *************************************************************************
-// *					      GetMeshInformation		              	   *
+// *		GetMeshInformation:- Terry and Hazel Flanigan 2023		  	   *
 // *************************************************************************
 void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector3& position,const Ogre::Quaternion& orient,const Ogre::Vector3& scale)
 {
@@ -439,7 +439,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
 }
 
 // *************************************************************************
-// *					          Set_Face_UV		                   	   *
+// *			Set_Face_UV:- Terry and Hazel Flanigan 2023		       	   *
 // *************************************************************************
 void SB_Picking::Set_Face_UV()
 {
@@ -513,7 +513,7 @@ void SB_Picking::Set_Face_UV()
 }
 
 // *************************************************************************
-// *					    Get_Material_Data		                   	   *
+// *		  Get_Material_Data:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
 void SB_Picking::Get_Material_Data()
 {

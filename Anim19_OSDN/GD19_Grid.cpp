@@ -287,7 +287,7 @@ void SB_Grid::Face_Update(bool Create)
 }
 
 // *************************************************************************
-// *	  		Face_Update2:- Terry and Hazel Flanigan 2022				   *
+// *	  		Face_Update2:- Terry and Hazel Flanigan 2022			   *
 // *************************************************************************
 void SB_Grid::Face_Update2()
 {
