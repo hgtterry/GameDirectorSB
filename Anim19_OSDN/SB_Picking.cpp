@@ -43,6 +43,7 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     Total_index_count = 0;
     Face_Index = 0;
     Sub_Mesh_Count = 0;
+    SubMesh_Face = 0;
 }
 
 SB_Picking::~SB_Picking()
@@ -62,8 +63,7 @@ void SB_Picking::Mouse_Pick_Entity()
     Total_index_count = 0;
     Face_Index = 0;
     Sub_Mesh_Count = 0;
-
-    HitVertices = Ogre::Vector3(0, 0, 0);
+    SubMesh_Face = 0;
 
     Ogre::RenderWindow* rw = App->CL_Ogre->mWindow;
     Ogre::Camera* camera = App->CL_Ogre->mCamera;
@@ -223,10 +223,19 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                         new_closest_found = true;
 
                         Face_Index = i;
+
                         App->SBC_Grid->HitVertices[0] = vertices[indices[i]];
                         App->SBC_Grid->HitVertices[1] = vertices[indices[i + 1]];
                         App->SBC_Grid->HitVertices[2] = vertices[indices[i + 2]];
+
                         App->SBC_Grid->Face_Update2();   
+
+                        App->SBC_Grid->HitFaceUVs[0] = TextCords[Face_Index];
+                        App->SBC_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
+                        App->SBC_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];
+
+                        SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
+
                         App->SBC_Grid->FaceNode->setVisible(true);
                     }
                 }
@@ -235,6 +244,8 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
             // free the verticies and indicies memory
             delete[] vertices;
             delete[] indices;
+            delete[] TextCords;
+            delete[] Sub_Mesh_Indexs;
 
             // if we found a new closest raycast for this object, update the
             // closest_result before moving on to the next object.
@@ -303,6 +314,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
     vertices = new Ogre::Vector3[Total_vertex_count];
     indices = new Ogre::uint32[Total_index_count];
     TextCords = new Ogre::Vector2[Total_vertex_count];
+    Sub_Mesh_Indexs = new Ogre::uint32[Total_index_count];
 
     added_shared = false;
 
@@ -410,9 +422,10 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
             {
                 texElem->baseVertexPointerToElement(vertexText, &pRealText);
 
-                //pRealText[0] = 1;
                 TextCords[textoffsset].x = pRealText[0];
                 TextCords[textoffsset].y = pRealText[1];
+
+                Sub_Mesh_Indexs[textoffsset] = i;
 
                 textoffsset++;
             }
@@ -421,4 +434,79 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
         }
     }
        
+}
+
+// *************************************************************************
+// *					          Set_Face_UV		                   	   *
+// *************************************************************************
+void SB_Picking::Set_Face_UV()
+{
+    bool added_shared = false;
+    size_t current_offset = 0;
+    size_t shared_offset = 0;
+    size_t next_offset = 0;
+    size_t index_offset = 0;
+
+    const Ogre::MeshPtr mesh = ((Ogre::Entity*)pentity)->getMesh();
+
+    // Texture Cords UVS
+    int textoffsset = 0;
+
+    for (unsigned short i = 0; i < mesh->getNumSubMeshes(); ++i)
+    {
+        Ogre::SubMesh* submesh = mesh->getSubMesh(i);
+
+        Ogre::VertexData* vertex_data = submesh->useSharedVertices ? mesh->sharedVertexData : submesh->vertexData;
+
+        if ((!submesh->useSharedVertices) || (submesh->useSharedVertices && !added_shared))
+        {
+            if (submesh->useSharedVertices)
+            {
+                added_shared = true;
+                shared_offset = current_offset;
+            }
+
+            const Ogre::VertexElement* texElem = vertex_data->vertexDeclaration->findElementBySemantic(Ogre::VES_TEXTURE_COORDINATES);
+
+            Ogre::HardwareVertexBufferSharedPtr vbufText =
+                vertex_data->vertexBufferBinding->getBuffer(texElem->getSource());
+
+            byte* vertexText = (byte*)vbufText->lock(Ogre::HardwareBuffer::HBL_NORMAL);
+            float* pRealText;
+
+            for (ulong j = 0; j < vertex_data->vertexCount; ++j, vertexText += vbufText->getVertexSize())
+            {
+                texElem->baseVertexPointerToElement(vertexText, &pRealText);
+
+                if (textoffsset == Face_Index)
+                {
+                    float v = pRealText[0];
+
+                   // pRealText[0] = 0;
+                    pRealText[0] = 1 - v;
+                }
+
+                if (textoffsset == Face_Index+1)
+                {
+                    float v = pRealText[0];
+
+                    //pRealText[0] = 0;
+                    pRealText[0] = 1 - v;
+                }
+
+                if (textoffsset == Face_Index+2)
+                {
+                    float v = pRealText[0];
+
+                   // pRealText[0] = 1;
+                    pRealText[0] = 1 - v;
+                }
+
+                textoffsset++;
+            }
+
+            vbufText->unlock();
+        }
+    }
+
 }

@@ -29,7 +29,8 @@ public:
 	SB_Picking(Ogre::SceneManager* sceneMgr);
 	~SB_Picking();
 
-	void SB_Picking::Mouse_Pick_Entity();
+	void Mouse_Pick_Entity();
+	void Set_Face_UV();
 
 	Ogre::String Pl_Entity_Name;
 	float closest_distance;
@@ -37,6 +38,10 @@ public:
 	Ogre::Vector3* vertices;
 	Ogre::Vector2* TextCords;
 	Ogre::uint32* indices;
+
+	Ogre::uint32* Sub_Mesh_Indexs;
+
+	int SubMesh_Face;
 
 	size_t Total_vertex_count;
 	size_t Total_index_count;
@@ -52,7 +57,5 @@ private:
 	Ogre::RaySceneQuery* mRaySceneQuery;
 
 	Ogre::MovableObject* pentity;
-
-	Ogre::Vector3 HitVertices;
 };
 

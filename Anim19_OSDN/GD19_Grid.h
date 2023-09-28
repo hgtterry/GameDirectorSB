@@ -83,6 +83,7 @@ public:
 	Ogre::SceneNode*	Selection_Node;
 
 	Ogre::Vector3 HitVertices[2];
+	Ogre::Vector2 HitFaceUVs[2];
 
 	bool ShowGridFlag;
 	bool ShowDivisions;
