@@ -166,7 +166,6 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
     }
     else
     {
-
         App->Say("No Ray Query");
         return (false);
     }
@@ -344,10 +343,7 @@ void SB_Picking::GetMeshInformation(const Ogre::MeshPtr mesh, const Ogre::Vector
             unsigned char* vertex =
                 static_cast<unsigned char*>(vbuf->lock(Ogre::HardwareBuffer::HBL_READ_ONLY));
 
-            // There is _no_ baseVertexPointerToElement() which takes an Ogre::Ogre::Real or a double
-            //  as second argument. So make it float, to avoid trouble when Ogre::Ogre::Real will
-            //  be comiled/typedefed as double:
-            //      Ogre::Ogre::Real* pOgre::Real;
+           
             float* pReal;
 
             for (size_t j = 0; j < vertex_data->vertexCount; ++j, vertex += vbuf->getVertexSize())

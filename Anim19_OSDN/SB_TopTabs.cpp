@@ -1287,8 +1287,7 @@ LRESULT CALLBACK SB_TopTabs::Files_TB_Proc(HWND hDlg, UINT message, WPARAM wPara
 
 		if (LOWORD(wParam) == IDC_TBBTLOAD)
 		{
-
-			App->SBC_Import->Load_Project("Level   *.SBLevel\0*.SBLevel\0", "Level");
+			App->SBC_Import->Load_Project("Project   *.SBProj\0*.SBProj\0", "Project");
 			return TRUE;
 		}
 
