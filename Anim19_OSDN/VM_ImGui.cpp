@@ -309,6 +309,8 @@ void VM_ImGui::Object_Selection(void)
 		ImGui::Text("");
 
 		ImGui::Text("Distance: = %f", App->CL_Picking->closest_distance);
+		ImGui::Text("Type: = %s", App->CL_Picking->TextureName);
+		ImGui::Text("Name: = %s", App->CL_Picking->ParticleName);
 
 		if (App->CL_Picking->TextCords)
 		{
@@ -325,9 +327,8 @@ void VM_ImGui::Object_Selection(void)
 			ImGui::Text("UV2: = %f %f", App->SBC_Grid->HitFaceUVs[1].x, App->SBC_Grid->HitFaceUVs[1].y);
 			ImGui::Text("UV3: = %f %f", App->SBC_Grid->HitFaceUVs[2].x, App->SBC_Grid->HitFaceUVs[2].y);
 			ImGui::Text("");
-			ImGui::Text("Face Material: = %s", App->CL_Picking->FaceMaterial);
-			ImGui::Text("Texture: = %s", App->CL_Picking->TextureName);*/
-
+			ImGui::Text("Face Material: = %s", App->CL_Picking->FaceMaterial);*/
+			//ImGui::Text("Texture: = %s", App->CL_Picking->TextureName);
 		}
 
 		if (ImGui::Button("Test"))

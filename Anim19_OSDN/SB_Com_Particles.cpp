@@ -113,7 +113,8 @@ void SB_Com_Particles::Create_Particle_Entity(int Index)
 	strcpy(Mesh_File, Object->Mesh_FileName);
 
 	Object->Object_Ent = App->CL_Ogre->mSceneMgr->createEntity(Ogre_Name, Mesh_File, App->CL_Ogre->App_Resource_Group);
-
+	//Ogre::SceneNode* mObject_Node = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	//mObject_Node->attachObject(Object->Object_Ent);
 
 	// ----------------------------------------------------------------------
 	char buf[100];
@@ -132,6 +133,7 @@ void SB_Com_Particles::Create_Particle_Entity(int Index)
 	Object->S_Particle[0]->Particle->setKeepParticlesInLocalSpace(true);
 
 	Ogre::SceneNode* PartNode = App->CL_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	
 
 	PartNode->attachObject(Object->S_Particle[0]->Particle);
 
@@ -143,8 +145,24 @@ void SB_Com_Particles::Create_Particle_Entity(int Index)
 
 	Object->Object_Node->setScale(Object->Mesh_Scale);
 	Object->Object_Node->setOrientation(Object->Mesh_Quat);
+	Object->Object_Node->setPosition(Object->Mesh_Pos);
 
 	Object->S_Particle[0]->Particle->setSpeedFactor(Object->S_Particle[0]->SpeedFactor);
+	
+	/*Ogre::Vector3 Size = App->CL_Object->GetMesh_BB_Size(Object->Object_Node);
+	App->SBC_Markers->MarkerBB_Update(Size.x / 2, Size.y / 2, Size.z / 2);
+
+	Ogre::Vector3 Centre = Object->Object_Node->getAttachedObject(0)->getBoundingBox().getCenter();
+	Ogre::Vector3 WS = Object->Object_Node->convertLocalToWorldPosition(Centre);
+
+	float x = App->SBC_Markers->BoxManual->getWorldBoundingBox().getSize().x / 4;
+	float y = App->SBC_Markers->BoxManual->getWorldBoundingBox().getSize().y / 4;
+	float z = App->SBC_Markers->BoxManual->getWorldBoundingBox().getSize().z / 4;
+
+	mObject_Node->setScale(Object->S_Particle[0]->Particle->getBoundingBox().getSize());
+	mObject_Node->setOrientation(Object->Mesh_Quat);
+	mObject_Node->setPosition(WS);*/
+	//PartNode->attachObject(Object->Object_Ent);
 }
 
 // *************************************************************************

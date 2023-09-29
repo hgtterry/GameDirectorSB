@@ -32,6 +32,7 @@ public:
 	void Mouse_Pick_Entity();
 	void Set_Face_UV();
 	void Clear_Picking_Data();
+	bool Ray_Test_Particles(const Ogre::Ray& ray);
 
 	Ogre::String Pl_Entity_Name;
 	float closest_distance;
@@ -46,7 +47,8 @@ public:
 
 	char FaceMaterial[MAX_PATH];
 	char TextureName[MAX_PATH];
-
+	char ParticleName[MAX_PATH];
+	bool ParticleFound;
 	size_t Total_vertex_count;
 	size_t Total_index_count;
 
@@ -62,6 +64,7 @@ private:
 
 	Ogre::SceneManager* mSceneMgr;
 	Ogre::RaySceneQuery* mRaySceneQuery;
+	Ogre::RaySceneQuery* mParticleSceneQuery;
 
 	Ogre::MovableObject* pentity;
 };

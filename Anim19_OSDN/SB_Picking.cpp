@@ -35,7 +35,13 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
         App->Say("No Ray Query");
         return;
     }
-    mRaySceneQuery->setSortByDistance(true);
+    
+    mParticleSceneQuery = mSceneMgr->createRayQuery(Ogre::Ray());
+    if (NULL == mParticleSceneQuery)
+    {
+        App->Say("No Ray Query");
+        return;
+    }
 
     pentity = NULL;
 
@@ -45,6 +51,7 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     Sub_Mesh_Count = 0;
     SubMesh_Face = 0;
     Selected_Ok = 0;
+    ParticleFound = 0;
 }
 
 SB_Picking::~SB_Picking()
@@ -66,6 +73,7 @@ void SB_Picking::Clear_Picking_Data()
     Sub_Mesh_Count = 0;
     SubMesh_Face = 0;
     Selected_Ok = 0;
+    ParticleFound = 0;
 
     App->SBC_Grid->HitVertices[0] = Ogre::Vector3(0, 0, 0);
     App->SBC_Grid->HitVertices[1] = Ogre::Vector3(0, 0, 0);
@@ -93,6 +101,13 @@ void SB_Picking::Mouse_Pick_Entity()
 
     Ogre::Ray ray = camera->getCameraToViewportRay(tx, ty);
 
+    if (Ray_Test_Particles(ray) == 1)
+    {
+        return;
+    }
+
+    Pl_Entity_Name = "-----";
+
     Ogre::uint32 queryMask = -1;
     Ogre::Vector3 result = Ogre::Vector3(0,0,0);
     Ogre::MovableObject* target = NULL;
@@ -103,13 +118,14 @@ void SB_Picking::Mouse_Pick_Entity()
 
     Ogre::SceneNode* mNode;
 
-    if (raycast(ray, result, target, closest_distance, queryMask))
+    Ogre::Ray ray2 = camera->getCameraToViewportRay(tx, ty);
+    if (raycast(ray2, result, target, closest_distance, queryMask))
     {
         //App->Beep_Win();
 
         mNode = pentity->getParentSceneNode();
         Pl_Entity_Name = pentity->getName();
-        
+
         char buff[255];
         strcpy(buff, Pl_Entity_Name.c_str());
 
@@ -133,13 +149,12 @@ void SB_Picking::Mouse_Pick_Entity()
             {
                 char* pdest;
                 int IntNum = 0;
-                char buffer[255];
-
-                strcpy(buffer, Pl_Entity_Name.c_str());
-                pdest = strstr(buffer, "GDEnt_");
+               
+                strcpy(buff, Pl_Entity_Name.c_str());
+                pdest = strstr(buff, "GDEnt_");
                 if (pdest != NULL)
                 {
-                    sscanf((buffer + 6), "%i", &IntNum);
+                    sscanf((buff + 6), "%i", &IntNum);
 
                     App->SBC_Markers->MarkerBB_Addjust(IntNum);
 
@@ -151,14 +166,30 @@ void SB_Picking::Mouse_Pick_Entity()
                     return;
 
                 }
+               
+				pdest = strstr(buff, "Area_");
+				if (pdest != NULL)
+				{
+					sscanf((buff + 5), "%i", &IntNum);
+
+					App->SBC_Markers->MarkerBB_Addjust(IntNum);
+
+					App->CL_Ogre->OgreListener->Selected_Entity_Index = IntNum;
+					strcpy(App->CL_Ogre->OgreListener->Selected_Object_Name, App->SBC_Scene->B_Area[IntNum]->Area_Name);
+
+					App->SBC_FileView->SelectItem(App->SBC_Scene->B_Area[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+
+					return;
+				}
+            
             }
-
         }
-
+    
     }
     else
     {
         Pl_Entity_Name = "---------";
+        strcpy(TextureName, "None 2");
         Selected_Ok = 0;
     }
 
@@ -170,17 +201,21 @@ void SB_Picking::Mouse_Pick_Entity()
 bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask)
 {
     target = NULL;
+    ParticleFound = 0;
+    Pl_Entity_Name = "---------";
 
     if (mRaySceneQuery != NULL)
     {
         mRaySceneQuery->setRay(ray);
         mRaySceneQuery->setSortByDistance(true);
-        mRaySceneQuery->setQueryMask(queryMask);
+       // mRaySceneQuery->setQueryMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
+        mRaySceneQuery->setQueryTypeMask(Ogre::SceneManager::ENTITY_TYPE_MASK);
         // execute the query, returns a vector of hits
         if (mRaySceneQuery->execute().size() <= 0)
         {
             // raycast did not hit an objects bounding box
             Selected_Ok = 0;
+            Pl_Entity_Name = "---------";
             return (false);
         }
     }
@@ -200,24 +235,31 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
     closest_distance = -1.0f;
     Ogre::Vector3 closest_result;
     Ogre::RaySceneQueryResult& query_result = mRaySceneQuery->getLastResults();
+
+    
+
     for (size_t qr_idx = 0; qr_idx < query_result.size(); qr_idx++)
     {
+        strcpy(TextureName, "None");
         // stop checking if we have found a raycast hit that is closer
         // than all remaining entities
         if ((closest_distance >= 0.0f) &&
             (closest_distance < query_result[qr_idx].distance))
         {
+            //strcpy(TextureName, query_result[0].movable->getMovableType().c_str());
             break;
         }
 
         // only check this result if its a hit against an entity
         if ((query_result[qr_idx].movable != NULL) &&
-            (query_result[qr_idx].movable->getMovableType().compare("Entity") == 0))
+            (query_result[qr_idx].movable->getMovableType().compare("Entity") == 0)&&
+            ParticleFound == 0)
         {
             // get the entity to check
+            strcpy(TextureName, "Entity");
+
             pentity = static_cast<Ogre::MovableObject*>(query_result[qr_idx].movable);
 
-        
             // get the mesh information
             GetMeshInformation(((Ogre::Entity*)pentity)->getMesh(),
                 pentity->getParentNode()->_getDerivedPosition(),
@@ -280,6 +322,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                 closest_result = ray.getPoint(closest_distance);
             }
         }
+       
     }
 
     // return the result
@@ -294,6 +337,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
     {
         // raycast failed
         Selected_Ok = 0;
+        Pl_Entity_Name = "---------";
         return (false);
     }
 }
@@ -547,5 +591,80 @@ void SB_Picking::Get_Material_Data()
         strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Face)->getMaterialName().c_str());
         Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
         strcpy(TextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+    }
+}
+
+// *************************************************************************
+// *		  Ray_Test_Particles:- Terry and Hazel Flanigan 2023	   	   *
+// *************************************************************************
+bool SB_Picking::Ray_Test_Particles(const Ogre::Ray& ray)
+{
+    bool Hit = 0;
+
+    if (mParticleSceneQuery != NULL)
+    {
+        mParticleSceneQuery->clearResults();
+        mParticleSceneQuery->setRay(ray);
+        mParticleSceneQuery->setSortByDistance(true);
+       // mRaySceneQuery->setQueryMask(Ogre::SceneManager::FX_TYPE_MASK);
+        mParticleSceneQuery->setQueryTypeMask(Ogre::SceneManager::FX_TYPE_MASK);
+        // execute the query, returns a vector of hits
+        if (mParticleSceneQuery->execute().size() <= 0)
+        {
+            // raycast did not hit an objects bounding box
+            Selected_Ok = 0;
+            return (false);
+        }
+    }
+    else
+    {
+        App->Say("No Ray Query");
+        Selected_Ok = 0;
+        return (false);
+    }
+
+    closest_distance = -1.0f;
+    Ogre::Vector3 closest_result;
+    Ogre::RaySceneQueryResult& query_result = mParticleSceneQuery->getLastResults();
+
+    for (size_t qr_idx = 0; qr_idx < query_result.size(); qr_idx++)
+    {
+        if ((query_result[qr_idx].movable != NULL) &&
+            (query_result[qr_idx].movable->getMovableType().compare("ParticleSystem") == 0))
+        {
+            strcpy(TextureName, "Particle");
+            Ogre::ParticleSystem* Particle = static_cast<Ogre::ParticleSystem*>(query_result[qr_idx].movable);
+            //App->Say(Particle->getName().c_str());
+            Pl_Entity_Name = Particle->getName();
+            strcpy(ParticleName, Particle->getName().c_str());
+
+            char buff[255];
+            int IntNum = 0;
+
+            strcpy(buff, Pl_Entity_Name.c_str());
+
+            sscanf((buff + 9), "%i", &IntNum);
+            //App->Say_Int(IntNum);
+            App->SBC_Markers->MarkerBB_Addjust(IntNum);
+
+            App->CL_Ogre->OgreListener->Selected_Entity_Index = IntNum;
+            strcpy(App->CL_Ogre->OgreListener->Selected_Object_Name, App->SBC_Scene->V_Object[IntNum]->Mesh_Name);
+
+            App->SBC_FileView->SelectItem(App->SBC_Scene->V_Object[App->CL_Ogre->OgreListener->Selected_Entity_Index]->FileViewItem);
+            
+            Hit = 1;
+        }
+    }
+
+    if (Hit == 1)
+    {
+        mParticleSceneQuery->clearResults();
+        return true;
+    }
+    else
+    {
+        mParticleSceneQuery->clearResults();
+        Pl_Entity_Name = " -------- ";
+        return false;
     }
 }
