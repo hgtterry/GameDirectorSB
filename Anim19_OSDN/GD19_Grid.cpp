@@ -58,8 +58,8 @@ SB_Grid::SB_Grid(void)
 	ColourDivision = ColourValue(1, 1, 1, 0.4);
 
 	HitVertices[0] = Ogre::Vector3(0, 0, 0);
-	HitVertices[1] = Ogre::Vector3(10, 0, 0);
-	HitVertices[2] = Ogre::Vector3(0, 10, 0);
+	HitVertices[1] = Ogre::Vector3(0, 0, 0);
+	HitVertices[2] = Ogre::Vector3(0, 0, 0);
 
 	YAxis_min = -8;
 	YAxis_max = 8;

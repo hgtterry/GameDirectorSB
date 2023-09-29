@@ -44,6 +44,7 @@ SB_Picking::SB_Picking(Ogre::SceneManager* sceneMgr)
     Face_Index = 0;
     Sub_Mesh_Count = 0;
     SubMesh_Face = 0;
+    Selected_Ok = 0;
 }
 
 SB_Picking::~SB_Picking()
@@ -55,16 +56,33 @@ SB_Picking::~SB_Picking()
 }
 
 // *************************************************************************
-// *		Mouse_Pick_Entity:- Terry and Hazel Flanigan 2022			   *
+// *		  Clear_Picking_Data:- Terry and Hazel Flanigan 2023	   	   *
 // *************************************************************************
-void SB_Picking::Mouse_Pick_Entity()
+void SB_Picking::Clear_Picking_Data()
 {
     Total_vertex_count = 0;
     Total_index_count = 0;
     Face_Index = 0;
     Sub_Mesh_Count = 0;
     SubMesh_Face = 0;
+    Selected_Ok = 0;
 
+    App->SBC_Grid->HitVertices[0] = Ogre::Vector3(0, 0, 0);
+    App->SBC_Grid->HitVertices[1] = Ogre::Vector3(0, 0, 0);
+    App->SBC_Grid->HitVertices[2] = Ogre::Vector3(0, 0, 0);
+
+    App->SBC_Grid->HitFaceUVs[0] = Ogre::Vector2(0, 0);
+    App->SBC_Grid->HitFaceUVs[1] = Ogre::Vector2(0, 0);
+    App->SBC_Grid->HitFaceUVs[2] = Ogre::Vector2(0, 0);
+}
+
+// *************************************************************************
+// *		Mouse_Pick_Entity:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+void SB_Picking::Mouse_Pick_Entity()
+{
+    Clear_Picking_Data();
+   
     Ogre::RenderWindow* rw = App->CL_Ogre->mWindow;
     Ogre::Camera* camera = App->CL_Ogre->mCamera;
 
@@ -141,6 +159,7 @@ void SB_Picking::Mouse_Pick_Entity()
     else
     {
         Pl_Entity_Name = "---------";
+        Selected_Ok = 0;
     }
 
 }
@@ -161,12 +180,14 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
         if (mRaySceneQuery->execute().size() <= 0)
         {
             // raycast did not hit an objects bounding box
+            Selected_Ok = 0;
             return (false);
         }
     }
     else
     {
         App->Say("No Ray Query");
+        Selected_Ok = 0;
         return (false);
     }
 
@@ -223,7 +244,7 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
 
                         Face_Index = i;
 
-                        App->SBC_Grid->HitVertices[0] = vertices[indices[i]];
+                        /*App->SBC_Grid->HitVertices[0] = vertices[indices[i]];
                         App->SBC_Grid->HitVertices[1] = vertices[indices[i + 1]];
                         App->SBC_Grid->HitVertices[2] = vertices[indices[i + 2]];
 
@@ -233,11 +254,11 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
                         App->SBC_Grid->HitFaceUVs[1] = TextCords[Face_Index + 1];
                         App->SBC_Grid->HitFaceUVs[2] = TextCords[Face_Index + 2];
 
-                        SubMesh_Face = Sub_Mesh_Indexs[Face_Index];
+                        SubMesh_Face = Sub_Mesh_Indexs[Face_Index];*/
 
-                        Get_Material_Data();
+                        //Get_Material_Data();
                   
-                        App->SBC_Grid->FaceNode->setVisible(true);
+                        //App->SBC_Grid->FaceNode->setVisible(true);
                     }
                 }
             }
@@ -266,11 +287,13 @@ bool SB_Picking::raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::Mova
     {
         // raycast success
         result = closest_result;
+        Selected_Ok = 1;
         return (true);
     }
     else
     {
         // raycast failed
+        Selected_Ok = 0;
         return (false);
     }
 }
@@ -513,7 +536,16 @@ void SB_Picking::Set_Face_UV()
 // *************************************************************************
 void SB_Picking::Get_Material_Data()
 {
-	strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Face)->getMaterialName().c_str());
-	Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
-	strcpy(TextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+    int test = ((Ogre::Entity*)pentity)->getMesh()->getNumSubMeshes();
+
+    if (SubMesh_Face > test)
+    {
+        //App->Say("Sub Mesh Out of bounds");
+    }
+    else
+    {
+        strcpy(FaceMaterial, ((Ogre::Entity*)pentity)->getMesh()->getSubMesh(SubMesh_Face)->getMaterialName().c_str());
+        Ogre::MaterialPtr  MatCurent = static_cast<Ogre::MaterialPtr> (Ogre::MaterialManager::getSingleton().getByName(FaceMaterial));
+        strcpy(TextureName, MatCurent->getTechnique(0)->getPass(0)->getTextureUnitState(0)->getTextureName().c_str());
+    }
 }

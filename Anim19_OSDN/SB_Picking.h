@@ -31,6 +31,7 @@ public:
 
 	void Mouse_Pick_Entity();
 	void Set_Face_UV();
+	void Clear_Picking_Data();
 
 	Ogre::String Pl_Entity_Name;
 	float closest_distance;
@@ -51,6 +52,8 @@ public:
 
 	int Face_Index;
 	int Sub_Mesh_Count;
+
+	bool Selected_Ok;
 
 private:
 	bool raycast(const Ogre::Ray& ray, Ogre::Vector3& result, Ogre::MovableObject*& target, float& closest_distance, const Ogre::uint32 queryMask);

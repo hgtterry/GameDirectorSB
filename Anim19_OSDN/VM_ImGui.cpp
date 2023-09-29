@@ -314,7 +314,7 @@ void VM_ImGui::Object_Selection(void)
 		{
 			int Face_Index = App->CL_Picking->Face_Index;
 
-			ImGui::Text("Sub Mesh: = %i", App->CL_Picking->SubMesh_Face);
+			/*ImGui::Text("Sub Mesh: = %i", App->CL_Picking->SubMesh_Face);
 			ImGui::Text("Face Index: = %i", Face_Index / 3);
 			ImGui::Text("");
 			ImGui::Text("Vert1: = %.3f %.3f %.3f", App->SBC_Grid->HitVertices[0].x, App->SBC_Grid->HitVertices[0].y, App->SBC_Grid->HitVertices[0].z);
@@ -326,13 +326,16 @@ void VM_ImGui::Object_Selection(void)
 			ImGui::Text("UV3: = %f %f", App->SBC_Grid->HitFaceUVs[2].x, App->SBC_Grid->HitFaceUVs[2].y);
 			ImGui::Text("");
 			ImGui::Text("Face Material: = %s", App->CL_Picking->FaceMaterial);
-			ImGui::Text("Texture: = %s", App->CL_Picking->TextureName);
+			ImGui::Text("Texture: = %s", App->CL_Picking->TextureName);*/
 
 		}
 
 		if (ImGui::Button("Test"))
 		{
-			App->CL_Picking->Set_Face_UV();
+			if (App->CL_Picking->Selected_Ok == 1)
+			{
+				//App->CL_Picking->Set_Face_UV();
+			}
 		}
 
 		ImGui::End();
