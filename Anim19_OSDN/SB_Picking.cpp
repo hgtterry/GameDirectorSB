@@ -101,10 +101,10 @@ void SB_Picking::Mouse_Pick_Entity()
 
     Ogre::Ray ray = camera->getCameraToViewportRay(tx, ty);
 
-    if (Ray_Test_Particles(ray) == 1)
-    {
-        return;
-    }
+   // if (Ray_Test_Particles(ray) == 1)
+  //  {
+     //   return;
+   // }
 
     Pl_Entity_Name = "-----";
 
