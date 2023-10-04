@@ -2297,7 +2297,7 @@ void CFusionView::OnToolsSettexturescale()
 		if(ModalResult == IDOK)
 		{
 			sscanf((LPCSTR)szVal, "%f", &scf);
-			pDoc->SetAllFacesTextureScale(scf);
+			App->CLSB_Doc->SetAllFacesTextureScale(scf);
 			pDoc->SetModifiedFlag();
 		}
 	}

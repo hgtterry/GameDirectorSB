@@ -615,58 +615,58 @@ static geBoolean fdocBrushCSGCallback (const Brush *pBrush, void *lParam)
 
 
 
-typedef struct
-{
-    BOOL Select;
-    int WhichGroup;
-    CFusionDoc *pDoc;
-} BrushSelectCallbackData;
-
-// ::BrushList_CB Enumeration function to select/deselect brushes
-static geBoolean BrushSelect( Brush *pBrush, void *lParam)
-{
-    BrushSelectCallbackData *pData;
-
-    pData = (BrushSelectCallbackData *)lParam;
-
-    // select/deselect all group brushes
-    if( Brush_GetGroupId( pBrush ) == pData->WhichGroup )
-    {
-        if( pData->Select )
-        {	// add this brush to the selected list
-            SelBrushList_Add (App->CLSB_Doc->pSelBrushes, pBrush);
-        }
-        else
-        {
-            // remove this brush from the selection list
-            SelBrushList_Remove (App->CLSB_Doc->pSelBrushes, pBrush);
-        }
-    }
-    return GE_TRUE ;	// Continue enumeration
-}/* ::BrushSelect */
-
-// ::EntityList_CB Enumeration function to select/deselect brushes
-static geBoolean EntitySelect( CEntity& Entity, void * lParam )
-{
-    BrushSelectCallbackData *pData;
-    CFusionDoc *pDoc;
-
-    pData = (BrushSelectCallbackData *)lParam;
-    pDoc = pData->pDoc;
-
-    if( Entity.GetGroupId () == pData->WhichGroup )
-    {
-        if( pData->Select )
-        {
-            pDoc->SelectEntity( &Entity );
-        }
-        else
-        {
-            pDoc->DeselectEntity( &Entity );
-        }
-    }
-    return GE_TRUE ;	// Continue enumeration
-}/* ::EntitySelect */
+//typedef struct
+//{
+//    BOOL Select;
+//    int WhichGroup;
+//    CFusionDoc *pDoc;
+//} BrushSelectCallbackData;
+//
+//// ::BrushList_CB Enumeration function to select/deselect brushes
+//static geBoolean BrushSelect( Brush *pBrush, void *lParam)
+//{
+//    BrushSelectCallbackData *pData;
+//
+//    pData = (BrushSelectCallbackData *)lParam;
+//
+//    // select/deselect all group brushes
+//    if( Brush_GetGroupId( pBrush ) == pData->WhichGroup )
+//    {
+//        if( pData->Select )
+//        {	// add this brush to the selected list
+//            SelBrushList_Add (App->CLSB_Doc->pSelBrushes, pBrush);
+//        }
+//        else
+//        {
+//            // remove this brush from the selection list
+//            SelBrushList_Remove (App->CLSB_Doc->pSelBrushes, pBrush);
+//        }
+//    }
+//    return GE_TRUE ;	// Continue enumeration
+//}/* ::BrushSelect */
+//
+//// ::EntityList_CB Enumeration function to select/deselect brushes
+//static geBoolean EntitySelect( CEntity& Entity, void * lParam )
+//{
+//    BrushSelectCallbackData *pData;
+//    CFusionDoc *pDoc;
+//
+//    pData = (BrushSelectCallbackData *)lParam;
+//    pDoc = pData->pDoc;
+//
+//    if( Entity.GetGroupId () == pData->WhichGroup )
+//    {
+//        if( pData->Select )
+//        {
+//            pDoc->SelectEntity( &Entity );
+//        }
+//        else
+//        {
+//            pDoc->DeselectEntity( &Entity );
+//        }
+//    }
+//    return GE_TRUE ;	// Continue enumeration
+//}/* ::EntitySelect */
 
 #define fdoc_SHOW_ALL_GROUPS -1
 
@@ -3501,28 +3501,6 @@ void CFusionDoc::RotateSelectedBrushesDirect(geVec3d const *v)
     geVec3d_Clear (&App->CLSB_Doc->FinalRot);
 }
 
-static geBoolean fdocBrushTextureScaleCallback (Brush *pBrush, void *lParam)
-{
-    const geFloat *pScaleVal = (geFloat *)lParam;
-
-    Brush_SetTextureScale (pBrush, *pScaleVal);
-    return GE_TRUE;
-}
-
-// Sets texture scale on all faces of all selected brushes.
-void CFusionDoc::SetAllFacesTextureScale(geFloat ScaleVal)
-{
-    if (SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes) > 0)
-    {
-        SelBrushList_Enum (App->CLSB_Doc->pSelBrushes, fdocBrushTextureScaleCallback, &ScaleVal);
-        if (Level_RebuildBspAlways (App->CLSB_Doc->pLevel))
-        {
-            RebuildTrees();
-            App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
-        }
-    }
-}
-
 void CFusionDoc::UpdateSelectedModel
     (
       int MoveRotate,
@@ -4527,23 +4505,6 @@ void CFusionDoc::RemovesSelFromGroup
     }
 
     Level_EnumEntities (App->CLSB_Doc->pLevel, &entData, ::fdocRemoveEntityFromGroupCallback);
-}
-
-void CFusionDoc::SelectGroupBrushes
-    (
-      BOOL Select,
-      int WhichGroup
-    ) // select/unselect all brushes & entities in the current group
-{
-    BrushSelectCallbackData SelectData;
-
-    SelectData.Select = Select;
-    SelectData.WhichGroup = WhichGroup;
-    SelectData.pDoc = this;
-
-    Level_EnumBrushes (App->CLSB_Doc->pLevel, &SelectData, ::BrushSelect ) ;
-    Level_EnumEntities (App->CLSB_Doc->pLevel, &SelectData, ::EntitySelect ) ;
-    App->CLSB_Doc->UpdateSelected ();		// update selection information
 }
 
 

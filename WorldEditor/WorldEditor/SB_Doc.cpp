@@ -16,6 +16,12 @@
 #define CAMERA_MOVEMENT_DISTANCE (32.0f)
 #define CAMERA_MOVEMENT_ANGLE (M_PI/16.0f)
 
+typedef struct
+{
+    BOOL Select;
+    int WhichGroup;
+    CFusionDoc* pDoc;
+} BrushSelectCallbackData;
 
 SB_Doc::SB_Doc(void)
 {
@@ -1616,7 +1622,7 @@ void SB_Doc::DoEntitySelection(CEntity* pEntity)
         if (GroupLocked)
         {
             // deselect entire group
-            App->m_pDoc->SelectGroupBrushes(FALSE, GroupId);
+            SelectGroupBrushes(FALSE, GroupId);
         }
         else
         {
@@ -1628,7 +1634,7 @@ void SB_Doc::DoEntitySelection(CEntity* pEntity)
         if (GroupLocked)
         {
             // select entire group
-            App->m_pDoc->SelectGroupBrushes(TRUE, GroupId);
+            SelectGroupBrushes(TRUE, GroupId);
         }
         else
         {
@@ -1699,7 +1705,7 @@ void SB_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelToggl
         else if (GroupLocked)
         {
             // group is locked, so deselect entire group
-            App->m_pDoc->SelectGroupBrushes(FALSE, GroupId);
+            SelectGroupBrushes(FALSE, GroupId);
         }
         else
         {
@@ -1733,7 +1739,7 @@ void SB_Doc::DoBrushSelection(Brush* pBrush, BrushSel	nSelType) //	brushSelToggl
         else if (GroupLocked)
         {
             // group is locked.  Select everything in the group
-            App->m_pDoc->SelectGroupBrushes(TRUE, GroupId);
+            SelectGroupBrushes(TRUE, GroupId);
         }
         else
         {
@@ -1802,6 +1808,96 @@ void SB_Doc::SelectModelBrushes(BOOL Select,int ModelId)
     // this model's id to the selection list.
     Level_EnumBrushes(App->CLSB_Doc->pLevel, &bsData, fdocSelectBrushCallback);
 
-    App->CLSB_Doc->UpdateSelected();
+    UpdateSelected();
+}
+
+static geBoolean fdocBrushTextureScaleCallback(Brush* pBrush, void* lParam)
+{
+    const geFloat* pScaleVal = (geFloat*)lParam;
+
+    Brush_SetTextureScale(pBrush, *pScaleVal);
+    return GE_TRUE;
+}
+
+// *************************************************************************
+// *         SetAllFacesTextureScale:- Terry and Hazel Flanigan 2023       *
+// *************************************************************************
+void SB_Doc::SetAllFacesTextureScale(geFloat ScaleVal)
+{
+    App->Get_Current_Document();
+
+    if (SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes) > 0)
+    {
+        SelBrushList_Enum(App->CLSB_Doc->pSelBrushes, fdocBrushTextureScaleCallback, &ScaleVal);
+        if (Level_RebuildBspAlways(App->CLSB_Doc->pLevel))
+        {
+            App->m_pDoc->RebuildTrees();
+            UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+        }
+    }
+}
+
+
+static geBoolean BrushSelect(Brush* pBrush, void* lParam)
+{
+    BrushSelectCallbackData* pData;
+
+    pData = (BrushSelectCallbackData*)lParam;
+
+    // select/deselect all group brushes
+    if (Brush_GetGroupId(pBrush) == pData->WhichGroup)
+    {
+        if (pData->Select)
+        {	// add this brush to the selected list
+            SelBrushList_Add(App->CLSB_Doc->pSelBrushes, pBrush);
+        }
+        else
+        {
+            // remove this brush from the selection list
+            SelBrushList_Remove(App->CLSB_Doc->pSelBrushes, pBrush);
+        }
+    }
+    return GE_TRUE;
+}
+
+
+static geBoolean EntitySelect(CEntity& Entity, void* lParam)
+{
+    BrushSelectCallbackData* pData;
+    CFusionDoc* pDoc;
+
+    pData = (BrushSelectCallbackData*)lParam;
+    pDoc = pData->pDoc;
+
+    if (Entity.GetGroupId() == pData->WhichGroup)
+    {
+        if (pData->Select)
+        {
+            pDoc->SelectEntity(&Entity);
+        }
+        else
+        {
+            pDoc->DeselectEntity(&Entity);
+        }
+    }
+    return GE_TRUE;
+}
+
+// *************************************************************************
+// *            SelectGroupBrushes:- Terry and Hazel Flanigan 2023         *
+// *************************************************************************
+void SB_Doc::SelectGroupBrushes(BOOL Select,int WhichGroup)
+{
+    App->Get_Current_Document();
+
+    BrushSelectCallbackData SelectData;
+
+    SelectData.Select = Select;
+    SelectData.WhichGroup = WhichGroup;
+    SelectData.pDoc = App->m_pDoc;
+
+    Level_EnumBrushes(App->CLSB_Doc->pLevel, &SelectData, ::BrushSelect);
+    Level_EnumEntities(App->CLSB_Doc->pLevel, &SelectData, EntitySelect);
+    App->CLSB_Doc->UpdateSelected();		// update selection information
 }
 

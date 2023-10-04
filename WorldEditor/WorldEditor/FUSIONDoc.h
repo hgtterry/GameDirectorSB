@@ -124,7 +124,7 @@ public:
 	void SelectAllEntities();
 	void SelectAllFacesInBrushes();
 
-	void SelectGroupBrushes (BOOL Select, int WhichGroup);
+	
 
 
 	void OnBrushAddtoworld();
@@ -195,7 +195,7 @@ public:
 	void BrushListToMeters(void);
 	void BrushListToTexels(void);
 	void MakeSelectedBrushNewest(void);
-	void SetAllFacesTextureScale(geFloat ScaleVal);
+	
 
 	void SetDefaultBrushTexInfo(Brush *);
 	void SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v) ;

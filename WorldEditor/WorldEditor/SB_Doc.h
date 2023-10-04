@@ -79,6 +79,9 @@ public:
 
 	void SelectModelBrushes(BOOL Select, int ModelId);
 
+	void SetAllFacesTextureScale(geFloat ScaleVal);
+	void SelectGroupBrushes(BOOL Select, int WhichGroup);
+
 	// ----------------------------------------------------------- Varibles
 	fdocAdjustEnum mAdjustMode;
 
