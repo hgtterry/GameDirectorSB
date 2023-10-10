@@ -55,6 +55,10 @@ public:
 
 	void MoveSelectedBrushes(geVec3d const* v);
 	void MoveSelectedBrushList(SelBrushList* pList, geVec3d const* v);
+	void MoveTemplateBrush(geVec3d* v);
+	void MoveSelectedClone(geVec3d const* v);
+
+	void RotateTemplateBrush(geVec3d* v);
 
 	void AddCameraEntityToLevel(void);
 	geBoolean CreateEntityFromName(char const* pEntityType, CEntity& NewEnt);

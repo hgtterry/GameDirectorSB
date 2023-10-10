@@ -170,8 +170,8 @@ public:
 	void ResizeSelected(float dx, float dy, int sides, int inidx);
 	void ShearSelected(float dx, float dy, int sides, int inidx);
 
-	void MoveSelectedClone (geVec3d const *v);
-	void MoveTemplateBrush (geVec3d *);
+	
+	
 //	void ChangeGridSize(geFloat Increment, CView* pSender );
 	void UpdateGridInformation();
 	void MoveEntity(geVec3d *);
@@ -188,7 +188,7 @@ public:
 	void SaveBrushUndo();
 	int CanUndo();
 	void RenderWorld(ViewVars *v, CDC* pDC);
-	void RotateTemplateBrush(geVec3d *);
+	
 	
 	void ShearBrush(geVec3d*);
 	void ResetSelectedBrushAttributes();

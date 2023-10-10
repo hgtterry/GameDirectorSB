@@ -3372,44 +3372,6 @@ void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
     }
 }
 
-
-void CFusionDoc::MoveSelectedClone(geVec3d const *v)
-{
-    App->CLSB_Doc->MoveSelectedBrushList (App->CLSB_Doc->pSelBrushes, v);
-}
-
-void CFusionDoc::MoveTemplateBrush(geVec3d *v)
-{
-    App->CLSB_Doc->mLastOp	=BRUSH_MOVE;
-
-    geVec3d_Add (&App->CLSB_Doc->SelectedGeoCenter, v, &App->CLSB_Doc->SelectedGeoCenter);
-    geVec3d_Add (v, &App->CLSB_Doc->FinalPos, &App->CLSB_Doc->FinalPos);
-
-    if(App->CLSB_Doc->TempEnt)
-    {
-        App->CLSB_Doc->mRegularEntity.Move (v);
-    }
-    else
-    {
-        geVec3d *pTemplatePos;
-
-        Brush_Move (App->CLSB_Doc->CurBrush, v);
-        pTemplatePos = Level_GetTemplatePos (App->CLSB_Doc->pLevel);
-        Brush_Center (App->CLSB_Doc->CurBrush, pTemplatePos);
-    }
-}
-
-void CFusionDoc::RotateTemplateBrush(geVec3d *v)
-{
-    geXForm3d	rm;
-
-    App->CLSB_Doc->mLastOp	=BRUSH_ROTATE;
-
-    geVec3d_Add(v, &App->CLSB_Doc->FinalRot, &App->CLSB_Doc->FinalRot);
-    geXForm3d_SetEulerAngles(&rm, v);
-    Brush_Rotate (App->CLSB_Doc->CurBrush, &rm, &App->CLSB_Doc->SelectedGeoCenter);
-}
-
 void CFusionDoc::GetRotationPoint
     (
       geVec3d *pVec

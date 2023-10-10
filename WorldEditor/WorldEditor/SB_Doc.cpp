@@ -893,6 +893,52 @@ void SB_Doc::MoveSelectedBrushList(SelBrushList* pList,geVec3d const* v)
 }
 
 // *************************************************************************
+// *          MoveTemplateBrush:- Terry and Hazel Flanigan 2023            *
+// *************************************************************************
+void SB_Doc::MoveTemplateBrush(geVec3d* v)
+{
+    mLastOp = BRUSH_MOVE;
+
+    geVec3d_Add(&SelectedGeoCenter, v, &SelectedGeoCenter);
+    geVec3d_Add(v, &FinalPos, &FinalPos);
+
+    if (TempEnt)
+    {
+        mRegularEntity.Move(v);
+    }
+    else
+    {
+        geVec3d* pTemplatePos;
+
+        Brush_Move(CurBrush, v);
+        pTemplatePos = Level_GetTemplatePos(pLevel);
+        Brush_Center(CurBrush, pTemplatePos);
+    }
+}
+
+// *************************************************************************
+// *          MoveSelectedClone:- Terry and Hazel Flanigan 2023            *
+// *************************************************************************
+void SB_Doc::MoveSelectedClone(geVec3d const* v)
+{
+    MoveSelectedBrushList(pSelBrushes, v);
+}
+
+// *************************************************************************
+// *          RotateTemplateBrush:- Terry and Hazel Flanigan 2023          *
+// *************************************************************************
+void SB_Doc::RotateTemplateBrush(geVec3d* v)
+{
+    geXForm3d	rm;
+
+    App->CLSB_Doc->mLastOp = BRUSH_ROTATE;
+
+    geVec3d_Add(v, &FinalRot, &FinalRot);
+    geXForm3d_SetEulerAngles(&rm, v);
+    Brush_Rotate(CurBrush, &rm, &SelectedGeoCenter);
+}
+
+// *************************************************************************
 // *         AddCameraEntityToLevel:- Terry and Hazel Flanigan 2023        *
 // *************************************************************************
 void SB_Doc::AddCameraEntityToLevel(void)

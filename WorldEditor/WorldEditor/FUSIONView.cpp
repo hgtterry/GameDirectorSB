@@ -206,7 +206,7 @@ void CFusionView::OnCenterthing()
 
 	// We've computed the delta, so move the thing...
 	if (App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-		pDoc->MoveTemplateBrush (&MoveDelta);
+		App->CLSB_Doc->MoveTemplateBrush (&MoveDelta);
 	else
 		App->CLSB_Doc->MoveSelectedBrushList(App->CLSB_Doc->pSelBrushes, &MoveDelta);
 
@@ -287,7 +287,7 @@ void CFusionView::OnToolsBrushRotate45()
 
 	if(GetModeTool()!=ID_GENERALSELECT)
 	{
-		pDoc->RotateTemplateBrush(&rp);
+		App->CLSB_Doc->RotateTemplateBrush(&rp);
 		App->CLSB_Doc->UpdateSelected();
 		App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 	}
@@ -827,12 +827,12 @@ void CFusionView::OnMouseMove (UINT nFlags, CPoint point) // hgtterry OnMouseMov
 						if (LButtonIsDown)
 						{
 							LockAxis (&dv);
-							pDoc->MoveTemplateBrush(&dv);
+							App->CLSB_Doc->MoveTemplateBrush(&dv);
 						}
 						else if (RButtonIsDown)
 						{
 							Render_ViewDeltaToRotation (VCam, (float)dx, &dv);
-							pDoc->RotateTemplateBrush(&dv);
+							App->CLSB_Doc->RotateTemplateBrush(&dv);
 						}
 						break;
 
@@ -3088,7 +3088,7 @@ void CFusionView::OnModifyRotate()
 
 		if(GetModeTool()==ID_TOOLS_TEMPLATE)
 		{
-			pDoc->RotateTemplateBrush(&RotateVector);
+			App->CLSB_Doc->RotateTemplateBrush(&RotateVector);
 			App->CLSB_Doc->UpdateSelected();
 			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 		}
