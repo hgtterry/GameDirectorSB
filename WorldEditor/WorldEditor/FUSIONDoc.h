@@ -38,6 +38,7 @@
 #include "mainfrm.h"
 #include "undostack.h"
 
+
 #define WINDOW_TOP_VIEW 0
 #define WINDOW_FRONT_VIEW 1
 #define WINDOW_SIDE_VIEW 2
@@ -87,7 +88,7 @@ typedef geBoolean (*BrushFlagTest)(const Brush *pBrush);
 
 class CFusionView;
 
-class CMainFrame;
+//class CMainFrame;
 
 class CFusionDoc : public CDocument
 {
@@ -99,8 +100,7 @@ public:
 	
 	//dialogs / controls
 	CFrameWnd *mpActiveViewFrame;
-	CMainFrame *mpMainFrame;
-
+	
 	geBoolean BrushIsVisible( const Brush * pBrush ) const ;
 	geBoolean EntityIsVisible( const CEntity *pEntity ) const ;
 	void TempCopySelectedBrushes();
@@ -167,8 +167,8 @@ public:
 //	void UpdateAllViews(int Mode, CView* pSender, BOOL Override = FALSE );
 	int SubtractBrushFromList(Brush& Brush);
 	void ResetSelectedFaceAttributes ();
-	void ResizeSelected(float dx, float dy, int sides, int inidx);
-	void ShearSelected(float dx, float dy, int sides, int inidx);
+	
+	
 
 	
 	
@@ -229,7 +229,9 @@ public:
 	geBoolean	bShowLeakFinder(void) { return bShowLeak; }
 	void		SetShowLeakFinder(geBoolean bShow) { bShowLeak=bShow; }
 	geBoolean	IsLeakFileLoaded(void) { return bLeakLoaded; }
-	geVec3d		*GetLeakPoints(void) { assert(LeakPoints); return LeakPoints; }
+
+	
+	
 	int			GetNumLeakPoints(void) { return NumLeakPoints; }
 	void CompileDone (CompilerErrorEnum CompileRslt);
 	void UpdateFaceAttributesDlg (void);
@@ -277,7 +279,7 @@ public:
 
 // Implementation
 public:
-	void LinkViewports();
+	
 	void OnToolsTemplate();
 	virtual ~CFusionDoc();
 
@@ -407,12 +409,11 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
-	geVec3d		*LeakPoints;
+	
 	int			NumLeakPoints;
 	geBoolean	bLeakLoaded, bShowLeak;
 	geBoolean	LoadLeakFile(const char *Filename);
 	geBoolean	LoadMapFile(const char *Filename);
-	UndoStack	*pUndoStack;
 
 public:
 	char		LastPath[MAX_PATH];  //no cstrings for dialog action

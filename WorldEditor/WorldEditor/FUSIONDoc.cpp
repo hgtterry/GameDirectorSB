@@ -65,7 +65,6 @@
 #include "util.h"
 #include "BrushTemplate.h"
 
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -281,12 +280,11 @@ const char *CFusionDoc::FindTextureLibrary (char const *WadName)
 
 CFusionDoc::CFusionDoc() : CDocument(),
 
-LeakPoints(NULL), NumLeakPoints(0), bLeakLoaded(FALSE), bShowLeak(TRUE),
+NumLeakPoints(0), bLeakLoaded(FALSE), bShowLeak(TRUE),
 bShowClipBrushes(GE_TRUE), bShowDetailBrushes(GE_TRUE), bShowHintBrushes(GE_TRUE), bShowActors(GE_TRUE)/*changed QD*/,
 mpActiveViewFrame(NULL)
     
 {
-
     const char *DefaultWadName;
     const Prefs  *pPrefs = GetPrefs ();
 
@@ -319,7 +317,7 @@ mpActiveViewFrame(NULL)
         AfxMessageBox (Msg, MB_OK + MB_ICONERROR);
     }
 
-    mpMainFrame=(CMainFrame*)AfxGetMainWnd();
+    App->CLSB_Doc->mpMainFrame=(CMainFrame*)AfxGetMainWnd();
 
     App->MainHwnd = AfxGetApp()->m_pMainWnd->m_hWnd; // hgtterry
     App->hInst = AfxGetApp()->m_hInstance;
@@ -346,28 +344,11 @@ mpActiveViewFrame(NULL)
 
     //AddCameraEntityToLevel ();
 
-    pUndoStack = UndoStack_Create ();
 }/* CFusionDoc::CFusionDoc */
 
 CFusionDoc::~CFusionDoc()
 {
-    if (App->CLSB_Doc->mWorldBsp != NULL)		Node_ClearBsp(App->CLSB_Doc->mWorldBsp);
-    App->CLSB_Doc->mWorldBsp = NULL;
-    if (App->CLSB_Doc->pLevel != NULL)				Level_Destroy (&App->CLSB_Doc->pLevel);
-    App->CLSB_Doc->pLevel = NULL;
-    if (App->CLSB_Doc->BTemplate != NULL)		Brush_Destroy (&App->CLSB_Doc->BTemplate);
-    App->CLSB_Doc->BTemplate = NULL;
-    if (pUndoStack != NULL)		UndoStack_Destroy (&pUndoStack);
-    pUndoStack = NULL;
-    if (App->CLSB_Doc->pSelBrushes != NULL)	SelBrushList_Destroy (&App->CLSB_Doc->pSelBrushes);
-    App->CLSB_Doc->pSelBrushes = NULL;
-    if (App->CLSB_Doc->pTempSelBrushes != NULL)SelBrushList_Destroy (&App->CLSB_Doc->pTempSelBrushes);
-    App->CLSB_Doc->pTempSelBrushes = NULL;
-    if (LeakPoints != NULL)		geRam_Free(LeakPoints);
-    LeakPoints = NULL;
-    if (App->CLSB_Doc->pSelFaces != NULL)		SelFaceList_Destroy (&App->CLSB_Doc->pSelFaces);
-    App->CLSB_Doc->pSelFaces = NULL;
-
+  
 //	OpenClipboard(mpMainFrame->GetSafeHwnd());
 //	EmptyClipboard();
 //	CloseClipboard();
@@ -1751,7 +1732,7 @@ void CFusionDoc::OnUpdateViewShowCurrentGroup(CCmdUI* pCmdUI)
 
 int CFusionDoc::CanUndo()
 {
-    return !(UndoStack_IsEmpty (pUndoStack));
+    return !(UndoStack_IsEmpty (App->CLSB_Doc->pUndoStack));
 }
 
 void CFusionDoc::SaveBrushUndo()
@@ -2214,42 +2195,6 @@ void CFusionDoc::SelectOrthoRect(CPoint ptStart, CPoint ptEnd, ViewVars *v)
         App->CLSB_Doc->UpdateSelected ();
 
 }/* CFusionDoc::SelectOrthoRect */
-
-void CFusionDoc::ResizeSelected(float dx, float dy, int sides, int inidx)
-{
-    App->CLSB_Doc->mLastOp				=BRUSH_SCALE;
-
-    if(App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-    {
-        Brush_Resize(App->CLSB_Doc->CurBrush, dx, dy, sides, inidx, &App->CLSB_Doc->FinalScale, &App->CLSB_Doc->ScaleNum);
-        if(Brush_IsMulti(App->CLSB_Doc->CurBrush))
-        {
-            BrushList_ClearCSGAndHollows((BrushList *)App->CL_Brush->Brush_GetBrushList(App->CLSB_Doc->CurBrush), Brush_GetModelId(App->CLSB_Doc->CurBrush));
-            BrushList_RebuildHollowFaces((BrushList *)App->CL_Brush->Brush_GetBrushList(App->CLSB_Doc->CurBrush), Brush_GetModelId(App->CLSB_Doc->CurBrush), ::fdocBrushCSGCallback, this);
-        }
-    }
-    else
-    {
-        int i;
-        int NumBrushes;
-
-        NumBrushes = SelBrushList_GetSize (App->CLSB_Doc->pTempSelBrushes);
-
-        for (i = 0; i < NumBrushes; ++i)
-        {
-            Brush *pBrush;
-            
-            pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, i);
-
-            Brush_Resize (pBrush, dx, dy, sides, inidx, &App->CLSB_Doc->FinalScale, &App->CLSB_Doc->ScaleNum);
-            if (Brush_IsMulti(pBrush))
-            {
-                BrushList_ClearCSGAndHollows((BrushList *)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush));
-                BrushList_RebuildHollowFaces((BrushList *)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush), ::fdocBrushCSGCallback, this);
-            }
-        }
-    }
-}
 
 void CFusionDoc::ScaleSelectedBrushes(geVec3d *ScaleVector)
 {
@@ -2722,7 +2667,7 @@ void CFusionDoc::SelectTextureFromFace3D(CPoint point, ViewVars *v)
         {
             char TextName[MAX_PATH];
             strcpy(TextName, Face_GetTextureName(bdat.CurFace));
-            mpMainFrame->m_wndTabControls->SelectTexture(Face_GetTextureDibId(bdat.CurFace));
+            App->CLSB_Doc->mpMainFrame->m_wndTabControls->SelectTexture(Face_GetTextureDibId(bdat.CurFace));
            
             App->CL_TabsControl->Select_Texture_Tab(Face_GetTextureDibId(bdat.CurFace), TextName);
 
@@ -2734,10 +2679,10 @@ void CFusionDoc::SelectTextureFromFace3D(CPoint point, ViewVars *v)
 void CFusionDoc::UpdateFaceAttributesDlg (void)
 {
 //	if (mpFaceAttributes != NULL)
-    if (mpMainFrame->mpFaceAttributes != NULL)
+    if (App->CLSB_Doc->mpMainFrame->mpFaceAttributes != NULL)
     {
 //		mpFaceAttributes->UpdatePolygonFocus ();
-        mpMainFrame->mpFaceAttributes->UpdatePolygonFocus();
+        App->CLSB_Doc->mpMainFrame->mpFaceAttributes->UpdatePolygonFocus();
 
         if (App->CL_FaceDialog->f_FaceDlg_Active == 1)
         {
@@ -2751,10 +2696,10 @@ void CFusionDoc::UpdateFaceAttributesDlg (void)
 void CFusionDoc::UpdateBrushAttributesDlg (void)
 {
 //	if (mpBrushAttributes != NULL)
-    if (mpMainFrame->mpBrushAttributes != NULL)
+    if (App->CLSB_Doc->mpMainFrame->mpBrushAttributes != NULL)
     {
 //		mpBrushAttributes->UpdateBrushFocus ();
-        mpMainFrame->mpBrushAttributes->UpdateBrushFocus ();
+        App->CLSB_Doc->mpMainFrame->mpBrushAttributes->UpdateBrushFocus ();
     }
 }
 
@@ -3146,9 +3091,9 @@ void CFusionDoc::OnGbspnowater()
 //===============================================
 void CFusionDoc::UpdateGridInformation()
 {
-    if( mpMainFrame )
+    if(App->CLSB_Doc->mpMainFrame )
     {
-        CMDIChildWnd	*pMDIChild	=(CMDIChildWnd *)mpMainFrame->MDIGetActive();
+        CMDIChildWnd	*pMDIChild	=(CMDIChildWnd *)App->CLSB_Doc->mpMainFrame->MDIGetActive();
         if(pMDIChild)
         {
             CFusionView	*cv	=(CFusionView *)pMDIChild->GetActiveView();
@@ -3156,7 +3101,7 @@ void CFusionDoc::UpdateGridInformation()
             {
                 GridInfo *pGridInfo = Level_GetGridInfo (App->CLSB_Doc->pLevel);
 
-                mpMainFrame->UpdateGridSize(
+                App->CLSB_Doc->mpMainFrame->UpdateGridSize(
                     Render_GetFineGrid(cv->VCam, (pGridInfo->GridType == GridMetric) ? GRID_TYPE_METRIC : GRID_TYPE_TEXEL),
                     pGridInfo->UseGrid,
                     ((pGridInfo->SnapType == GridMetric) ? pGridInfo->MetricSnapSize : pGridInfo->TexelSnapSize),
@@ -3389,7 +3334,7 @@ void CFusionDoc::GetRotationPoint
         // we're animating a model, so use its current position
         Model_GetCurrentPos (pModel, pVec);
         // We have to add the current move translation
-        ModelTab = mpMainFrame->GetModelTab ();
+        ModelTab = App->CLSB_Doc->mpMainFrame->GetModelTab ();
         if (ModelTab != NULL)
         {
             //ModelTab->GetTranslation (&Xlate);
@@ -3475,7 +3420,7 @@ void CFusionDoc::UpdateSelectedModel
     BrushList *BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
 
     // notify model dialog so that it can update animation deltas if required
-    mpMainFrame->UpdateSelectedModel (MoveRotate, pVecDelta);
+    App->CLSB_Doc->mpMainFrame->UpdateSelectedModel (MoveRotate, pVecDelta);
 
     // For each model that is fully selected, update its reference position.
     pModel = ModelList_GetFirst (ModelInfo->Models, &mi);
@@ -3685,6 +3630,8 @@ void CFusionDoc::OnCloseDocument() // hgtterry Exit Aplication
         delete App->CLSB_Ogre->mRoot;
         App->CLSB_Ogre->mRoot = NULL;
     }
+
+    delete App->CLSB_Doc;
 
     //App->Say("Last Close");
     CDocument::OnCloseDocument();
@@ -3911,36 +3858,6 @@ void CFusionDoc::OnEditPaste()
     App->CLSB_Doc->UpdateSelected();
     App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
     
-    SetModifiedFlag();
-}
-
-void CFusionDoc::ShearSelected(float dx, float dy, int sides, int inidx)
-{
-    App->CLSB_Doc->mLastOp				=BRUSH_SHEAR;
-
-    if(App->CLSB_Doc->mModeTool == ID_TOOLS_TEMPLATE)
-    {
-        Brush_Destroy(&App->CLSB_Doc->CurBrush);
-        App->CLSB_Doc->CurBrush	= App->CLSB_Doc->BTemplate	=Brush_Clone(App->CLSB_Doc->TempShearTemplate);
-        Brush_ShearFixed(App->CLSB_Doc->CurBrush, dx, dy, sides, inidx, &App->CLSB_Doc->FinalScale, &App->CLSB_Doc->ScaleNum);
-    }
-    else
-    {
-        int i;
-        int NumSelBrushes;
-
-        App->CLSB_Doc->TempDeleteSelected();
-        TempCopySelectedBrushes();
-        NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pTempSelBrushes);
-        for (i = 0; i < NumSelBrushes; ++i)
-        {
-            Brush *pBrush;
-
-            pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pTempSelBrushes, i);
-            Brush_ShearFixed(pBrush, dx, dy, sides, inidx, &App->CLSB_Doc->FinalScale, &App->CLSB_Doc->ScaleNum);
-        }
-    }
-
     SetModifiedFlag();
 }
 
@@ -4880,9 +4797,9 @@ geBoolean CFusionDoc::ValidateBrushes( void )
 
 void CFusionDoc::SelectTab( int nTabIndex )
 {
-    if( mpMainFrame )
+    if(App->CLSB_Doc->mpMainFrame )
     {
-        mpMainFrame->SelectTab( nTabIndex ) ;
+        App->CLSB_Doc->mpMainFrame->SelectTab( nTabIndex ) ;
     }
 }/* CFusionDoc::SelectTab */
 
@@ -4976,18 +4893,18 @@ geBoolean	CFusionDoc::LoadLeakFile(const char *Filename)
 //	ConPrintf("Loaded leak file %s with %d Points...\n", Filename, PointsToRead);
 
     NumLeakPoints = (PointsToRead > 1) ? PointsToRead : 2;
-    LeakPoints	=(geVec3d *)geRam_Allocate(sizeof(geVec3d)*NumLeakPoints);
+    App->CLSB_Doc->LeakPoints	=(geVec3d *)geRam_Allocate(sizeof(geVec3d)*NumLeakPoints);
 
-    if (!LeakPoints)
+    if (!App->CLSB_Doc->LeakPoints)
     {
         SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
         return FALSE;
     }
 
-    Infile.Read(LeakPoints, sizeof(geVec3d)*PointsToRead);
+    Infile.Read(App->CLSB_Doc->LeakPoints, sizeof(geVec3d)*PointsToRead);
     if (PointsToRead == 1)
     {
-        geVec3d_Clear (&LeakPoints[1]);
+        geVec3d_Clear (&App->CLSB_Doc->LeakPoints[1]);
     }
 
     SetShowLeakFinder(GE_TRUE);
@@ -7188,138 +7105,15 @@ void CFusionDoc::OnUpdateToolsBrushMakenewest(CCmdUI* pCmdUI)
         pCmdUI->Enable( FALSE );
 }
 
-void CFusionDoc::LinkViewports()
-{
-    if (!Prefs_GetLinkViewports(((CFusionApp *)AfxGetApp())->GetPreferencesNormal()))
-        return;
-
-    CView	*pAView = NULL;
-    CFusionView	*pActiveView = NULL;
-
-    CMDIChildWnd *pMDIChild	=(CMDIChildWnd *)mpMainFrame->MDIGetActive();
-    if(pMDIChild)
-    {
-        pAView	= (CFusionView *)pMDIChild->GetActiveView();
-        if (!pAView)
-            return;
-
-        if ( pAView->IsKindOf( RUNTIME_CLASS (CFusionView)) )
-        {	
-            pActiveView	= (CFusionView *)pAView;
-        }
-        else
-            return;
-    }
-
-    if ( (pActiveView->mViewType != ID_VIEW_TOPVIEW) &&
-             (pActiveView->mViewType != ID_VIEW_FRONTVIEW) &&
-             (pActiveView->mViewType != ID_VIEW_SIDEVIEW)
-         )
-        return;
-    
-    POSITION		pos;
-    pos = GetFirstViewPosition();
-    CFusionView	*pView;
-
-    while( pos != NULL )
-    {
-        pView = (CFusionView*)GetNextView(pos) ;
-        
-        if (pView != pActiveView)
-        {
-            switch (pActiveView->mViewType)
-            {
-                case ID_VIEW_TOPVIEW :
-                    
-                    switch (pView->mViewType)
-                    {
-                        case ID_VIEW_TOPVIEW :
-                            pView->VCam->CamPos.X = pActiveView->VCam->CamPos.X;
-                            pView->VCam->CamPos.Z = pActiveView->VCam->CamPos.Z;
-                            break;
-
-                        case ID_VIEW_FRONTVIEW :
-                            pView->VCam->CamPos.X = pActiveView->VCam->CamPos.X;
-                            break;
-
-                        case ID_VIEW_SIDEVIEW :
-                            pView->VCam->CamPos.Z = pActiveView->VCam->CamPos.Z;
-                            break;
-                    }
-
-                    break;
-
-                case ID_VIEW_FRONTVIEW :
-                    
-                    switch (pView->mViewType)
-                    {
-                        case ID_VIEW_TOPVIEW :
-                            pView->VCam->CamPos.X = pActiveView->VCam->CamPos.X;
-                            break;
-
-                        case ID_VIEW_FRONTVIEW :
-                            pView->VCam->CamPos.X = pActiveView->VCam->CamPos.X;
-                            pView->VCam->CamPos.Y = pActiveView->VCam->CamPos.Y;
-                            break;
-
-                        case ID_VIEW_SIDEVIEW :
-                            pView->VCam->CamPos.Y = pActiveView->VCam->CamPos.Y;
-                            break;
-                    }
-
-                    break;
-
-                case ID_VIEW_SIDEVIEW :
-                    
-                    switch (pView->mViewType)
-                    {
-                        case ID_VIEW_TOPVIEW :
-                            pView->VCam->CamPos.Z = pActiveView->VCam->CamPos.Z;
-                            break;
-
-                        case ID_VIEW_FRONTVIEW :
-                            pView->VCam->CamPos.Y = pActiveView->VCam->CamPos.Y;
-                            break;
-
-                        case VIEWSIDE :
-                            pView->VCam->CamPos.Y = pActiveView->VCam->CamPos.Y;
-                            pView->VCam->CamPos.Z = pActiveView->VCam->CamPos.Z;
-                            break;
-                    }
-
-                    break;
-
-                default :
-                    assert(0);
-            }
-        }
-    }
-
-    App->CLSB_Doc->UpdateAllViews(UAV_GRID_ONLY, NULL, FALSE);
-}
 
 void CFusionDoc::OnLinkviewports() 
 {
-    Prefs *CurrentPrefs = ((CFusionApp *)AfxGetApp())->GetPreferencesNormal();
-
-    if (Prefs_GetLinkViewports(CurrentPrefs))
-    {
-        Prefs_SetLinkViewports(CurrentPrefs, FALSE);
-        return;
-    }
-    else
-    {
-        Prefs_SetLinkViewports(CurrentPrefs, TRUE);
-        LinkViewports();
-    }
+    App->CLSB_Doc->OnLinkviewports();
 }
 
 void CFusionDoc::OnUpdateLinkviewports(CCmdUI* pCmdUI) 
 {
-    if (Prefs_GetLinkViewports(((CFusionApp *)AfxGetApp())->GetPreferencesNormal()))
-        pCmdUI->SetCheck(TRUE);
-    else
-        pCmdUI->SetCheck(FALSE);
+    App->CLSB_Doc->OnUpdateLinkviewports(pCmdUI);
 }
 
 void CFusionDoc::OnTemplateSunlight() 

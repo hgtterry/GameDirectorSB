@@ -15,6 +15,8 @@ SB_ViewMgrDlg::SB_ViewMgrDlg(void)
 	MgrDlg_hWnd = nullptr;
 	View_MgrDlg_Active = 0;
 
+	LinkViews_Flag = 1;
+
 }
 
 SB_ViewMgrDlg::~SB_ViewMgrDlg(void)
@@ -53,11 +55,22 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 		SendDlgItemMessage(hDlg, IDC_BT_LOWERRIGHT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BT_RESTORE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_LINKVIEWS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_BT_SELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		SendDlgItemMessage(hDlg, IDC_BT_PREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_VIEWUPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		if (Prefs_GetLinkViewports(((CFusionApp*)AfxGetApp())->GetPreferencesNormal()))
+		{
+			App->CLSB_ViewMgrDlg->LinkViews_Flag = 1;
+		}
+		else
+		{
+			App->CLSB_ViewMgrDlg->LinkViews_Flag = 0;
+		}
+
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -100,6 +113,13 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_LINKVIEWS && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_ViewMgrDlg->LinkViews_Flag);
 			return CDRF_DODEFAULT;
 		}
 
@@ -200,6 +220,22 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 			App->CLSB_ViewMgrDlg->RestoreAllPanes();
 			App->CLSB_ViewMgrDlg->Reset_Flags();
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_LINKVIEWS)
+		{
+			if (App->CLSB_ViewMgrDlg->LinkViews_Flag == 1)
+			{
+				App->CLSB_ViewMgrDlg->LinkViews_Flag = 0;
+				App->CLSB_Doc->OnLinkviewports();
+			}
+			else
+			{
+				App->CLSB_ViewMgrDlg->LinkViews_Flag = 1;
+				App->CLSB_Doc->OnLinkviewports();
+			}
+
 			return TRUE;
 		}
 

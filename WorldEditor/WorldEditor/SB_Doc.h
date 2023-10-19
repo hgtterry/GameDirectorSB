@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SelFaceList.h"
+#include "undostack.h"
 
 enum BrushSel
 {
@@ -15,6 +16,8 @@ enum fdocAdjustEnum
 	ADJUST_MODE_BRUSH,
 	ADJUST_MODE_FACE
 };
+
+//class CMainFrame;
 
 class SB_Doc
 {
@@ -86,7 +89,19 @@ public:
 	void SetAllFacesTextureScale(geFloat ScaleVal);
 	void SelectGroupBrushes(BOOL Select, int WhichGroup);
 
+	void ShearSelected(float dx, float dy, int sides, int inidx);
+	void ResizeSelected(float dx, float dy, int sides, int inidx);
+
+	geVec3d* GetLeakPoints(void) { assert(LeakPoints); return LeakPoints; }
+
+	void OnUpdateLinkviewports(CCmdUI* pCmdUI);
+	void OnLinkviewports();
+	void LinkViewports();
+
 	// ----------------------------------------------------------- Varibles
+
+	CMainFrame* mpMainFrame;
+
 	fdocAdjustEnum mAdjustMode;
 
 	int	NumSelEntities;
@@ -114,6 +129,9 @@ public:
 
 	GNode* mWorldBsp;
 	CEntity	mRegularEntity;
+
+	UndoStack* pUndoStack;
+	geVec3d* LeakPoints;
 
 	Level* pLevel;
 };

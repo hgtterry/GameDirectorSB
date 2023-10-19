@@ -9,6 +9,7 @@ public:
 	void RestoreAllPanes();
 
 	bool View_MgrDlg_Active;
+	bool LinkViews_Flag;
 
 	HWND MgrDlg_hWnd;
 

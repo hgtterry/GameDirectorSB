@@ -501,7 +501,7 @@ void CFusionView::Pan
 		if (LButtonIsDown)
 		{
 			Render_MoveCamPosOrtho(VCam, &dcamv);
-			pDoc->LinkViewports();
+			App->CLSB_Doc->LinkViewports();
 		}
 		else if (RButtonIsDown)
 		{
@@ -521,7 +521,7 @@ void CFusionView::ScaleSelected (CFusionDoc *pDoc, int dx, int dy)
 	ZoomInv	=(ZoomInv > .5)? 0.5f / ZoomInv : 1.0f;
 
 	// negated here because Brush_Resize is still thinking weird
-	pDoc->ResizeSelected (-(((float)dx)*ZoomInv), -(((float)dy)*ZoomInv), sides, Render_GetInidx(VCam));
+	App->CLSB_Doc->ResizeSelected (-(((float)dx)*ZoomInv), -(((float)dy)*ZoomInv), sides, Render_GetInidx(VCam));
 }
 
 void CFusionView::ShearSelected (CFusionDoc *pDoc, int dx, int dy)
@@ -533,7 +533,7 @@ void CFusionView::ShearSelected (CFusionDoc *pDoc, int dx, int dy)
 
 	ZoomInv	=(ZoomInv > .5)? 0.5f / ZoomInv : 1.0f;
 
-	pDoc->ShearSelected(-(((float)dy)*ZoomInv), -(((float)dx)*ZoomInv), sides, Render_GetInidx(VCam));
+	App->CLSB_Doc->ShearSelected(-(((float)dy)*ZoomInv), -(((float)dx)*ZoomInv), sides, Render_GetInidx(VCam));
 }
 
 void CFusionView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) // hgtterry KeyDown
@@ -2055,7 +2055,7 @@ void CFusionView::OnBrushGroupsAddtogroup()
 	
 	pDoc->AddSelToGroup() ;
 
-	pDoc->mpMainFrame->UpdateActiveDoc() ;
+	App->CLSB_Doc->mpMainFrame->UpdateActiveDoc() ;
 
 	pDoc->SetModifiedFlag();
 }
@@ -2070,7 +2070,7 @@ void CFusionView::OnBrushRemoveselectedfromgroup()
 	CFusionDoc* pDoc = GetDocument();
 	
 	pDoc->RemovesSelFromGroup() ;
-	pDoc->mpMainFrame->UpdateActiveDoc() ;
+	App->CLSB_Doc->mpMainFrame->UpdateActiveDoc() ;
 
 	pDoc->SetModifiedFlag();
 
@@ -2880,7 +2880,7 @@ void CFusionView::OnViewportCenteroncamera()
 		
 		Render_SetCameraPos(VCam, &p->mOrigin);
 
-		pDoc->LinkViewports();
+		App->CLSB_Doc->LinkViewports();
 		pDoc->SetModifiedFlag();
 		RedrawWindow();
 	}
@@ -2901,7 +2901,7 @@ void CFusionView::OnViewportCenteronselection()
 
 	Render_SetCameraPos(VCam, &App->CLSB_Doc->SelectedGeoCenter);
 
-	pDoc->LinkViewports();
+	App->CLSB_Doc->LinkViewports();
 	pDoc->SetModifiedFlag();
 	RedrawWindow();
 }

@@ -4,6 +4,7 @@
 
 #include "FUSIONView.h"
 #include "units.h"
+#include "node.h"
 
 #define MAX_PIXEL_SELECT_DIST (50)
 #define MIN_ENTITY_SELECT_DIST (8.0f)
@@ -52,10 +53,63 @@ SB_Doc::SB_Doc(void)
     mConstrainHollows = GE_TRUE,
     PlaceObjectFlag = FALSE;
     mAdjustMode = ADJUST_MODE_FACE;
+
+    LeakPoints = NULL;
+
+    pUndoStack = UndoStack_Create();
 }
 
 SB_Doc::~SB_Doc(void)
 {
+    if (pLevel != NULL)
+    {
+        Level_Destroy(&pLevel);
+        pLevel = NULL;
+    }
+
+    if (mWorldBsp != NULL)
+    {
+        Node_ClearBsp(App->CLSB_Doc->mWorldBsp);
+        mWorldBsp = NULL;
+    }
+
+    if (BTemplate != NULL)
+    {
+        Brush_Destroy(&BTemplate);
+        BTemplate = NULL;
+    }
+
+    if (pUndoStack != NULL)
+    {
+        UndoStack_Destroy(&pUndoStack);
+        pUndoStack = NULL;
+    }
+
+    if (pSelBrushes != NULL)
+    {
+        SelBrushList_Destroy(&pSelBrushes);
+        pSelBrushes = NULL;
+    }
+
+    if (pTempSelBrushes != NULL)
+    {
+        SelBrushList_Destroy(&pTempSelBrushes);
+        pTempSelBrushes = NULL;
+    }
+
+    if (LeakPoints != NULL)
+    {
+        geRam_Free(LeakPoints);
+        LeakPoints = NULL;
+    }
+
+    if (pSelFaces != NULL)
+    {
+        SelFaceList_Destroy(&pSelFaces);
+        pSelFaces = NULL;
+    }
+
+   // App->Say("Deleting SB_Doc");
 }
 
 // *************************************************************************
@@ -1872,10 +1926,10 @@ void SB_Doc::SetAllFacesTextureScale(geFloat ScaleVal)
 {
     App->Get_Current_Document();
 
-    if (SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes) > 0)
+    if (SelBrushList_GetSize(pSelBrushes) > 0)
     {
-        SelBrushList_Enum(App->CLSB_Doc->pSelBrushes, fdocBrushTextureScaleCallback, &ScaleVal);
-        if (Level_RebuildBspAlways(App->CLSB_Doc->pLevel))
+        SelBrushList_Enum(pSelBrushes, fdocBrushTextureScaleCallback, &ScaleVal);
+        if (Level_RebuildBspAlways(pLevel))
         {
             App->m_pDoc->RebuildTrees();
             UpdateAllViews(UAV_ALL3DVIEWS, NULL);
@@ -1942,8 +1996,236 @@ void SB_Doc::SelectGroupBrushes(BOOL Select,int WhichGroup)
     SelectData.WhichGroup = WhichGroup;
     SelectData.pDoc = App->m_pDoc;
 
-    Level_EnumBrushes(App->CLSB_Doc->pLevel, &SelectData, ::BrushSelect);
-    Level_EnumEntities(App->CLSB_Doc->pLevel, &SelectData, EntitySelect);
-    App->CLSB_Doc->UpdateSelected();		// update selection information
+    Level_EnumBrushes(pLevel, &SelectData, ::BrushSelect);
+    Level_EnumEntities(pLevel, &SelectData, EntitySelect);
+    UpdateSelected();		// update selection information
+}
+
+// *************************************************************************
+// * Genesis      ShearSelected:- Terry and Hazel Flanigan 2023            *
+// *************************************************************************
+void SB_Doc::ShearSelected(float dx, float dy, int sides, int inidx)
+{
+    App->Get_Current_Document();
+
+    mLastOp = BRUSH_SHEAR;
+
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        Brush_Destroy(&CurBrush);
+        CurBrush = BTemplate = Brush_Clone(TempShearTemplate);
+        Brush_ShearFixed(CurBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
+    }
+    else
+    {
+        int i;
+        int NumSelBrushes;
+
+        TempDeleteSelected();
+        App->m_pDoc->TempCopySelectedBrushes();
+        NumSelBrushes = SelBrushList_GetSize(pTempSelBrushes);
+        for (i = 0; i < NumSelBrushes; ++i)
+        {
+            Brush* pBrush;
+
+            pBrush = SelBrushList_GetBrush(pTempSelBrushes, i);
+            Brush_ShearFixed(pBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
+        }
+    }
+
+    App->m_pDoc->SetModifiedFlag();
+}
+
+// *************************************************************************
+// * Genesis      ResizeSelected:- Terry and Hazel Flanigan 2023           *
+// *************************************************************************
+void SB_Doc::ResizeSelected(float dx, float dy, int sides, int inidx)
+{
+    mLastOp = BRUSH_SCALE;
+
+    if (mModeTool == ID_TOOLS_TEMPLATE)
+    {
+        Brush_Resize(CurBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
+        if (Brush_IsMulti(CurBrush))
+        {
+            BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(CurBrush), Brush_GetModelId(CurBrush));
+            BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(CurBrush), Brush_GetModelId(CurBrush), ::fdocBrushCSGCallback, this);
+        }
+    }
+    else
+    {
+        int i;
+        int NumBrushes;
+
+        NumBrushes = SelBrushList_GetSize(pTempSelBrushes);
+
+        for (i = 0; i < NumBrushes; ++i)
+        {
+            Brush* pBrush;
+
+            pBrush = SelBrushList_GetBrush(pTempSelBrushes, i);
+
+            Brush_Resize(pBrush, dx, dy, sides, inidx, &FinalScale, &ScaleNum);
+            if (Brush_IsMulti(pBrush))
+            {
+                BrushList_ClearCSGAndHollows((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush));
+                BrushList_RebuildHollowFaces((BrushList*)App->CL_Brush->Brush_GetBrushList(pBrush), Brush_GetModelId(pBrush), ::fdocBrushCSGCallback, this);
+            }
+        }
+    }
+}
+
+// *************************************************************************
+// * Genesis    OnUpdateLinkviewports:- Terry and Hazel Flanigan 2023      *
+// *************************************************************************
+void SB_Doc::OnUpdateLinkviewports(CCmdUI* pCmdUI)
+{
+    if (Prefs_GetLinkViewports(((CFusionApp*)AfxGetApp())->GetPreferencesNormal()))
+    {
+        pCmdUI->SetCheck(TRUE);
+        App->CLSB_ViewMgrDlg->LinkViews_Flag = 0;
+    }
+    else
+    {
+        pCmdUI->SetCheck(FALSE);
+        App->CLSB_ViewMgrDlg->LinkViews_Flag = 1;
+    }
+
+    RedrawWindow(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+}
+
+// *************************************************************************
+// * Genesis      OnLinkviewports:- Terry and Hazel Flanigan 2023          *
+// *************************************************************************
+void SB_Doc::OnLinkviewports()
+{
+    Prefs* CurrentPrefs = ((CFusionApp*)AfxGetApp())->GetPreferencesNormal();
+
+    if (Prefs_GetLinkViewports(CurrentPrefs))
+    {
+        Prefs_SetLinkViewports(CurrentPrefs, FALSE);
+        return;
+    }
+    else
+    {
+        Prefs_SetLinkViewports(CurrentPrefs, TRUE);
+        LinkViewports();
+    }
+}
+
+// *************************************************************************
+// * Genesis      LinkViewports:- Terry and Hazel Flanigan 2023            *
+// *************************************************************************
+void SB_Doc::LinkViewports()
+{
+    App->Get_Current_Document();
+
+
+    if (!Prefs_GetLinkViewports(((CFusionApp*)AfxGetApp())->GetPreferencesNormal()))
+        return;
+
+    CView* pAView = NULL;
+    CFusionView* pActiveView = NULL;
+
+    CMDIChildWnd* pMDIChild = (CMDIChildWnd*)mpMainFrame->MDIGetActive();
+    if (pMDIChild)
+    {
+        pAView = (CFusionView*)pMDIChild->GetActiveView();
+        if (!pAView)
+            return;
+
+        if (pAView->IsKindOf(RUNTIME_CLASS(CFusionView)))
+        {
+            pActiveView = (CFusionView*)pAView;
+        }
+        else
+            return;
+    }
+
+    if ((pActiveView->mViewType != ID_VIEW_TOPVIEW) &&
+        (pActiveView->mViewType != ID_VIEW_FRONTVIEW) &&
+        (pActiveView->mViewType != ID_VIEW_SIDEVIEW)
+        )
+        return;
+
+    POSITION		pos;
+    pos = App->m_pDoc->GetFirstViewPosition();
+    CFusionView* pView;
+
+    while (pos != NULL)
+    {
+        pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
+
+        if (pView != pActiveView)
+        {
+            switch (pActiveView->mViewType)
+            {
+            case ID_VIEW_TOPVIEW:
+
+                switch (pView->mViewType)
+                {
+                case ID_VIEW_TOPVIEW:
+                    pView->VCam->CamPos.X = pActiveView->VCam->CamPos.X;
+                    pView->VCam->CamPos.Z = pActiveView->VCam->CamPos.Z;
+                    break;
+
+                case ID_VIEW_FRONTVIEW:
+                    pView->VCam->CamPos.X = pActiveView->VCam->CamPos.X;
+                    break;
+
+                case ID_VIEW_SIDEVIEW:
+                    pView->VCam->CamPos.Z = pActiveView->VCam->CamPos.Z;
+                    break;
+                }
+
+                break;
+
+            case ID_VIEW_FRONTVIEW:
+
+                switch (pView->mViewType)
+                {
+                case ID_VIEW_TOPVIEW:
+                    pView->VCam->CamPos.X = pActiveView->VCam->CamPos.X;
+                    break;
+
+                case ID_VIEW_FRONTVIEW:
+                    pView->VCam->CamPos.X = pActiveView->VCam->CamPos.X;
+                    pView->VCam->CamPos.Y = pActiveView->VCam->CamPos.Y;
+                    break;
+
+                case ID_VIEW_SIDEVIEW:
+                    pView->VCam->CamPos.Y = pActiveView->VCam->CamPos.Y;
+                    break;
+                }
+
+                break;
+
+            case ID_VIEW_SIDEVIEW:
+
+                switch (pView->mViewType)
+                {
+                case ID_VIEW_TOPVIEW:
+                    pView->VCam->CamPos.Z = pActiveView->VCam->CamPos.Z;
+                    break;
+
+                case ID_VIEW_FRONTVIEW:
+                    pView->VCam->CamPos.Y = pActiveView->VCam->CamPos.Y;
+                    break;
+
+                case VIEWSIDE:
+                    pView->VCam->CamPos.Y = pActiveView->VCam->CamPos.Y;
+                    pView->VCam->CamPos.Z = pActiveView->VCam->CamPos.Z;
+                    break;
+                }
+
+                break;
+
+            default:
+                assert(0);
+            }
+        }
+    }
+
+    UpdateAllViews(UAV_GRID_ONLY, NULL, FALSE);
 }
 
