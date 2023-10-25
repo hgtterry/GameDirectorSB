@@ -1111,3 +1111,429 @@ bool SB_Export_World::AddTexture_GL(geVFile* BaseFile, const char* TextureName, 
 
 	return TRUE;
 }
+
+//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
+ 
+// *************************************************************************
+// * 		Export_World_Text_XX:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Export_World::Export_World_Text_XX(int ExpSelected)
+{
+	App->CLSB_Model->BrushCount = 0;
+
+	WriteScene_TXT = NULL;
+
+	char Path[MAX_PATH];
+	strcpy(Path, App->WorldEditor_Directory);
+	strcat(Path, "Data\\3DSTemp.txt");
+
+	WriteScene_TXT = fopen(Path, "wt");
+	if (!WriteScene_TXT)
+	{
+		App->Say("Cant Create Save File");
+		return;
+	}
+
+	fprintf(WriteScene_TXT, "%s\n", "[GameDirector]");
+
+	BrushList* BList;
+	geBoolean fResult;
+
+	BList = Level_GetBrushes(App->CLSB_Doc->pLevel);
+	if (!ExpSelected)
+	{
+		fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), "FileName", BList, 0, 0, -1);
+	}
+	else
+	{
+		int i, GroupID, GroupCount;
+		char NewFileName[MAX_PATH];
+		GroupID = -1;
+		GroupCount = 1;
+
+		for (i = 0; i < GroupCount; i++)
+		{
+			BrushList* SBList;
+			Brush* pBrush;
+			BrushIterator bi;
+
+			SBList = BrushList_Create();
+			pBrush = BrushList_GetFirst(BList, &bi);
+
+			while (pBrush != NULL)
+			{
+
+				if (SelBrushList_Find(App->CLSB_Doc->pSelBrushes, pBrush))
+				{
+					Brush* pClone = Brush_Clone(pBrush);
+					BrushList_Append(SBList, pClone);
+				}
+
+				pBrush = BrushList_GetNext(&bi);
+			}
+			// do CSG
+			{
+				ModelIterator	mi;
+				int				i, CurId = 0;
+				ModelInfo_Type* ModelInfo;
+				Model* pMod;
+
+				BrushList_ClearAllCSG(SBList);
+
+				BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
+
+				//build individual model mini trees
+				ModelInfo = Level_GetModelInfo(App->CLSB_Doc->pLevel);
+				pMod = ModelList_GetFirst(ModelInfo->Models, &mi);
+
+				for (i = 0; i < ModelList_GetCount(ModelInfo->Models); i++)
+				{
+					CurId = Model_GetId(pMod);
+
+					BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
+				}
+			}
+
+			fResult = Level_Build_Text_G3ds_XX(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), NewFileName, SBList, 0, 0, -1);
+			if (!fResult)
+			{
+				App->Say("Error exporting group");
+			}
+
+			BrushList_Destroy(&SBList);
+		}
+	}
+
+	fclose(WriteScene_TXT);
+
+	App->Say("Converted T");
+}
+
+// *************************************************************************
+// *		Level_Build_Text_G3ds_XX:- Terry and Hazel Flanigan 2023	   *
+// *************************************************************************
+bool SB_Export_World::Level_Build_Text_G3ds_XX(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
+{
+	int i;
+	geBoolean* WrittenTex;
+
+	WrittenTex = (geBoolean*)calloc(sizeof(geBoolean), pLevel->WadFile->mBitmapCount);
+
+	// which textures are used?
+	BrushList_GetUsedTextures(BList, WrittenTex, pLevel->WadFile);
+
+	// Add Textures GL
+	int AdjustedIndex = 0;
+	for (i = 0; i < pLevel->WadFile->mBitmapCount; i++)
+	{
+		if (WrittenTex[i])
+		{
+			char matname[MAX_PATH];
+			int j, k;
+			strncpy(matname, pLevel->WadFile->mBitmaps[i].Name, MAX_PATH - 1);
+			fprintf(WriteScene_TXT, "%i %s %i\n", AdjustedIndex, matname, i);
+			AdjusedIndex_Store[AdjustedIndex] = i;
+
+			AddTexture_GL(NULL, matname, AdjustedIndex);
+
+			AdjustedIndex++;
+
+		}
+	}
+
+	BrushList_ExportToText(BList, GE_FALSE);
+
+	free(WrittenTex);
+
+	return 1;
+}
+
+// *************************************************************************
+// *	BrushList_ExportToText_XX:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_Export_World::BrushList_ExportToText_XX(BrushList* BList, geBoolean SubBrush)
+{
+	Brush* pBrush;
+	BrushIterator bi;
+
+	pBrush = BrushList_GetFirst(BList, &bi);
+
+	while (pBrush != NULL)
+	{
+		if (!Brush_ExportToText_XX(pBrush)) return GE_FALSE;
+		pBrush = BrushList_GetNext(&bi);
+
+		if (SubBrush)
+			SubBrushCount++;
+		else
+			BrushCount++;
+	}
+
+	SubBrushCount = 0;
+	if (!SubBrush)
+		BrushCount = 0;
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *		Brush_ExportToText_XX:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_Export_World::Brush_ExportToText_XX(const Brush* b)
+{
+	assert(ofile);
+	assert(b);
+
+	switch (b->Type)
+	{
+	case	BRUSH_MULTI:
+		return BrushList_ExportToText(b->BList, GE_TRUE);
+
+	case	BRUSH_LEAF:
+		if (b->BList)
+		{
+			return BrushList_ExportToText(b->BList, GE_TRUE);
+		}
+		else
+		{
+			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+			{
+				return FaceList_ExportToText(b, b->Faces, BrushCount, SubBrushCount);
+			}
+			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
+				BrushCount--;
+		}
+		break;
+
+
+	case	BRUSH_CSG:
+		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+			return FaceList_ExportToText(b, b->Faces, BrushCount, SubBrushCount);
+		break;
+	default:
+		assert(0);		// invalid brush type
+		break;
+	}
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *							FaceList_ExportToText_XX				   *
+// *************************************************************************
+bool SB_Export_World::FaceList_ExportToText_XX(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
+{
+
+	App->CLSB_Model->Create_Brush_XX(App->CLSB_Model->BrushCount);
+
+
+	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
+	char matname[MAX_PATH];
+
+	char* matf = (char*)calloc(sizeof(char), pList->NumFaces);
+
+	assert(pList != NULL);
+	assert(f != NULL);
+
+	num_faces = num_verts = num_mats = num_chars = 0;
+	// get the total number of verts, faces and materials of the object
+
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+		num_faces += (curnum_verts - 2);
+		num_verts += curnum_verts;
+
+		if (!matf[i])
+		{
+			matf[i] = 1;
+			num_mats++;
+
+			for (j = i + 1; j < pList->NumFaces; j++)
+			{
+				if (strcmp(Face_GetTextureName(pList->Faces[i]), Face_GetTextureName(pList->Faces[j])) == 0)
+					matf[j] = 1;
+			}
+
+			strncpy(matname, Face_GetTextureName(pList->Faces[i]), MAX_PATH);
+		}
+	}
+
+	for (i = 0; i < pList->NumFaces; i++)
+		matf[i] = 0;
+
+	// Name of Brush SubBrush
+	fprintf(WriteScene_TXT, "%s_%i_%i\n", b->Name, BrushCount, SubBrushCount);
+
+	// -----------------------------------  Vertices
+	int VertIndex = 0;
+	fprintf(WriteScene_TXT, "# Number of Vertices = %i \n", num_verts);
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Vertice_Count = num_verts;
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data.resize(num_verts);
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data.resize(num_verts);
+
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		const geVec3d* verts;
+		verts = Face_GetPoints(pList->Faces[i]);
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+		for (j = 0; j < curnum_verts; j++)
+		{
+			fprintf(WriteScene_TXT, "V = %f %f %f\n", verts[j].X, verts[j].Y, verts[j].Z);
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].x = verts[j].X;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].y = verts[j].Y;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].z = verts[j].Z;
+
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].x = 0.5;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].y = 0.5;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].z = 0.5;
+
+			VertIndex++;
+		}
+	}
+
+	int UVIndex = 0;
+	// -----------------------------------  UVS
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data.resize(num_verts);
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		const TexInfo_Vectors* TVecs = Face_GetTextureVecs(pList->Faces[i]);
+		const geVec3d* verts;
+		geVec3d uVec, vVec;
+		geFloat U, V;
+
+		int txSize, tySize;
+
+		Face_GetTextureSize(pList->Faces[i], &txSize, &tySize);
+
+		// make sure that the texture size is set correctly (division!)
+		if (txSize == 0)
+			txSize = 32;
+		if (tySize == 0)
+			tySize = 32;
+
+		geVec3d_Scale(&TVecs->uVec, 1.f / (geFloat)txSize, &uVec);
+		geVec3d_Scale(&TVecs->vVec, -1.f / (geFloat)tySize, &vVec);
+
+		verts = Face_GetPoints(pList->Faces[i]);
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+
+		for (j = 0; j < curnum_verts; j++)
+		{
+			U = geVec3d_DotProduct(&(verts[j]), &uVec);
+			V = geVec3d_DotProduct(&(verts[j]), &vVec);
+			U += (TVecs->uOffset / txSize);
+			V -= (TVecs->vOffset / tySize);
+
+			fprintf(WriteScene_TXT, "UV = %f %f\n", U, V);
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].u = U;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].v = V;
+			UVIndex++;
+		}
+	}
+
+	int FaceIndex = 0;
+	// -----------------------------------  Faces
+	fprintf(WriteScene_TXT, "# Number of Faces = %i \n", num_faces);
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Count = num_faces;
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data.resize(num_faces);
+	num_verts = 0;
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+		for (j = 0; j < curnum_verts - 2; j++)
+		{
+			fprintf(WriteScene_TXT, "F = %i %i %i\n", num_verts, num_verts + 2 + j, num_verts + 1 + j);
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
+
+			FaceIndex++;
+		}
+
+		num_verts += curnum_verts;
+	}
+
+	// -----------------------------------  Texture IDs
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data.resize(200);
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		if (!matf[i])
+		{
+			matf[i] = 1;
+
+			int curnum_faces = (Face_GetNumPoints(pList->Faces[i]) - 2);
+
+			for (j = i + 1; j < pList->NumFaces; j++)
+			{
+				if (strcmp(Face_GetTextureName(pList->Faces[i]), Face_GetTextureName(pList->Faces[j])) == 0)
+				{
+					curnum_faces += (Face_GetNumPoints(pList->Faces[j]) - 2);
+				}
+			}
+
+			strncpy(matname, Face_GetTextureName(pList->Faces[i]), 11);
+
+			// Material Name
+			int DibId = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+			fprintf(WriteScene_TXT, "MT = %i %s %i\n", i, matname, DibId);
+
+			// write number of faces that have this texture
+			fprintf(WriteScene_TXT, "# Number of Faces = %i \n", curnum_faces);
+
+			// write face numbers
+			curnum_faces = 0;
+			for (j = 0; j < i; j++)
+			{
+				curnum_faces += (Face_GetNumPoints(pList->Faces[j]) - 2);
+			}
+
+			curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+			for (j = 0; j < curnum_verts - 2; j++)
+			{
+				int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+				App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + j].ID = DibId2;
+				fprintf(WriteScene_TXT, "FN %i %i\n", curnum_faces + j, DibId2);
+
+			}
+
+			curnum_faces += (curnum_verts - 2);
+
+			for (j = i + 1; j < pList->NumFaces; j++)
+			{
+				curnum_verts = Face_GetNumPoints(pList->Faces[j]);
+				if (strcmp(Face_GetTextureName(pList->Faces[i]), Face_GetTextureName(pList->Faces[j])) == 0)
+				{
+					matf[j] = 1;
+					for (k = 0; k < curnum_verts - 2; k++)
+					{
+						int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+						App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + k].ID = DibId2;
+						fprintf(WriteScene_TXT, "FN = %i %i\n", curnum_faces + k, DibId2);
+
+					}
+				}
+
+				curnum_faces += (curnum_verts - 2);
+			}
+		}
+	}
+
+	fprintf(WriteScene_TXT, "%s\n", "-----------------------");
+	int poo = 0;
+	while (poo < num_faces)
+	{
+		int dd = App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[poo].ID;
+		fprintf(WriteScene_TXT, "DN = %i\n", dd);
+		poo++;
+	}
+	fprintf(WriteScene_TXT, "%s\n", "-----------------------");
+
+
+	free(matf);
+
+	App->CLSB_Model->BrushCount++;
+
+	return GE_TRUE;
+}

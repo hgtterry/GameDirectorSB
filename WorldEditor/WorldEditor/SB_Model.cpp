@@ -38,6 +38,7 @@ SB_Model::SB_Model(void)
 	Model_Loaded = 0;
 
 	XBrushCount = 0;
+	BrushCount = 0;
 
 	Model_Type = Enums::LoadedFile_None;
 
@@ -58,6 +59,13 @@ SB_Model::SB_Model(void)
 	while (Count < 111999)
 	{
 		B_XBrush[Count] = nullptr;
+		Count++;
+	}
+
+	Count = 0;
+	while (Count < 11999)
+	{
+		B_Brush[Count] = nullptr;
 		Count++;
 	}
 
@@ -415,6 +423,23 @@ void SB_Model::Clear_Model_And_Reset(void)
 	//App->CL_Export_Ogre3D->Export_As_RF = 0;
 
 	SetWindowText(App->Equity_Dlg_hWnd, "Equity_ME");
+}
+
+// *************************************************************************
+// *			Create_Brush_XX:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+void SB_Model::Create_Brush_XX(int Index)
+{
+	if (B_Brush[Index] != nullptr)
+	{
+		delete B_Brush[Index];
+		B_Brush[Index] = nullptr;
+	}
+
+	B_Brush[Index] = new Base_Brush();
+
+	B_Brush[Index]->Vertice_Count = 0;
+	B_Brush[Index]->Face_Count = 0;
 }
 
 
