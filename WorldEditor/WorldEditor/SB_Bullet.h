@@ -21,6 +21,7 @@ public:
 
 	btBvhTriangleMeshShape* create_New_Trimesh(int Index);
 	btBvhTriangleMeshShape* Create_Brush_Trimesh(int Index);
+	btBvhTriangleMeshShape* Create_Brush_Trimesh_XX(int Index);
 
 	btRigidBody* Phys_Body;
 protected:

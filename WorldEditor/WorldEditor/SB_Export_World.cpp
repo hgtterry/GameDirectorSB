@@ -1144,7 +1144,7 @@ void SB_Export_World::Export_World_Text_XX(int ExpSelected)
 	BList = Level_GetBrushes(App->CLSB_Doc->pLevel);
 	if (!ExpSelected)
 	{
-		fResult = Level_Build_Text_G3ds(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), "FileName", BList, 0, 0, -1);
+		fResult = Level_Build_Text_G3ds_XX(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), "FileName", BList, 0, 0, -1);
 	}
 	else
 	{
@@ -1243,7 +1243,7 @@ bool SB_Export_World::Level_Build_Text_G3ds_XX(Level3* pLevel, const char* Filen
 		}
 	}
 
-	BrushList_ExportToText(BList, GE_FALSE);
+	BrushList_ExportToText_XX(BList, GE_FALSE);
 
 	free(WrittenTex);
 
@@ -1288,18 +1288,18 @@ bool SB_Export_World::Brush_ExportToText_XX(const Brush* b)
 	switch (b->Type)
 	{
 	case	BRUSH_MULTI:
-		return BrushList_ExportToText(b->BList, GE_TRUE);
+		return BrushList_ExportToText_XX(b->BList, GE_TRUE);
 
 	case	BRUSH_LEAF:
 		if (b->BList)
 		{
-			return BrushList_ExportToText(b->BList, GE_TRUE);
+			return BrushList_ExportToText_XX(b->BList, GE_TRUE);
 		}
 		else
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
-				return FaceList_ExportToText(b, b->Faces, BrushCount, SubBrushCount);
+				return FaceList_ExportToText_XX(b, b->Faces, BrushCount, SubBrushCount);
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
 				BrushCount--;
@@ -1309,7 +1309,7 @@ bool SB_Export_World::Brush_ExportToText_XX(const Brush* b)
 
 	case	BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-			return FaceList_ExportToText(b, b->Faces, BrushCount, SubBrushCount);
+			return FaceList_ExportToText_XX(b, b->Faces, BrushCount, SubBrushCount);
 		break;
 	default:
 		assert(0);		// invalid brush type

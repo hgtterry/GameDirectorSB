@@ -129,9 +129,11 @@ bool SB_Project::Load_Project()
 	if (Options->Has_Area > 0)
 	{
 		//bool test = Load_Project_Aera();
-		App->CLSB_Scene->Build_World(0);
-		App->CLSB_Bullet->Create_Brush_Trimesh(0);
-		App->CLSB_Model->Set_BondingBox_Brushes();
+		//App->CLSB_Scene->Build_World(0);
+		App->CLSB_Export_World->Export_World_Text_XX(0);
+
+		App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
+		//App->CLSB_Model->Set_BondingBox_Brushes();
 
 		App->CLSB_Scene->Area_Added = 1;
 	}

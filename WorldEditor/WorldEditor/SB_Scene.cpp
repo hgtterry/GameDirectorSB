@@ -769,9 +769,11 @@ void SB_Scene::Go_FullScreen_Mode(void)
 // *************************************************************************
 void SB_Scene::Update_Scene(void)
 {
-	Build_World(0);
+	App->CLSB_Export_World->Export_World_Text_XX(0);
+
+	//Build_World(0);
 	App->CLSB_Bullet->Create_Brush_Trimesh(0);
-	App->CLSB_Model->Set_BondingBox_Brushes();
+	//App->CLSB_Model->Set_BondingBox_Brushes();
 }
 
 // *************************************************************************
