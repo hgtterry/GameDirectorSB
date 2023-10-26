@@ -55,6 +55,9 @@ SB_Render::SB_Render()
 
 	JustTexture_ID = 0;
 
+	RenederAllGroups = 1;
+	Selected_Group_Index = 0;
+
 	Selected_Group = 0;
 	GroupNumber = 0;
 	//TestLight();
@@ -388,13 +391,22 @@ bool SB_Render::Brush_Render_Textures(void)
 
 	//glLineWidth(10);
 
-	int BrushCount = App->CLSB_Model->BrushCount;
+	
 
-	Count = 0;
-	while (Count < BrushCount)
+	if (RenederAllGroups == 1)
 	{
-		Brush_Textured_Parts(Count);
-		Count++;
+		int BrushCount = App->CLSB_Model->BrushCount;
+		Count = 0;
+
+		while (Count < BrushCount)
+		{
+			Brush_Textured_Parts(Count);
+			Count++;
+		}
+	}
+	else
+	{
+		Brush_Textured_Parts(Selected_Group_Index);
 	}
 
 	glDisable(GL_TEXTURE_2D);

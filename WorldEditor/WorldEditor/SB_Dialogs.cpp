@@ -1072,7 +1072,7 @@ bool SB_Dialogs::Start_Brush_Viewer()
 {
 	App->Get_Current_Document();
 
-	DialogBox(App->hInst, (LPCTSTR)IDD_SB_BRUSH_VIEWER, App->Equity_Dlg_hWnd, (DLGPROC)Brush_Viewer_Proc);
+	CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSH_VIEWER, App->Equity_Dlg_hWnd, (DLGPROC)Brush_Viewer_Proc);
 	
 	return 1;
 }
@@ -1104,6 +1104,7 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 		
 		return TRUE;
 	}
+
 	case WM_CTLCOLORSTATIC:
 	{
 		return FALSE;
@@ -1123,6 +1124,22 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BTJUSTBRUSH)
+		{
+			if (App->CLSB_Ogre->RenderListener->RenederAllGroups == 1)
+			{
+				App->CLSB_Ogre->RenderListener->RenederAllGroups = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->RenderListener->RenederAllGroups = 1;
+			}
+
+			App->CLSB_Ogre->RenderFrame();
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_LISTBRUSHES)
 		{
 			char buff[256];
@@ -1133,6 +1150,8 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 			{
 				return 1;
 			}
+
+			App->CLSB_Ogre->RenderListener->Selected_Group_Index = Index;
 
 			SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(Index,buff,10));
 			
@@ -1157,6 +1176,7 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 
 		break;
 	}
+
 	return FALSE;
 }
 

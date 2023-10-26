@@ -59,6 +59,9 @@ public:
 	bool Show_HideGroup;
 	bool Show_Crosshair;
 
+	bool RenederAllGroups;
+	int Selected_Group_Index;
+
 	int JustTexture_ID;
 
 	int Selected_Group;
