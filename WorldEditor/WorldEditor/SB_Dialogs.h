@@ -65,6 +65,7 @@ private:
 	void UnCheck_All_SpeedMouseOption();
 	void ListGroups(HWND List);
 	void UpdateGroupDetails(HWND List);
+	void UpdateBrushData(HWND hDlg, int Index);
 
 	bool F_ListData_Dlg_Active;
 	int mWhatList;

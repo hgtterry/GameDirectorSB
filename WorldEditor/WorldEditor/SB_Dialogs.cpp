@@ -1070,12 +1070,6 @@ void SB_Dialogs::UpdateGroupDetails(HWND List)
 // *************************************************************************
 bool SB_Dialogs::Start_Brush_Viewer()
 {
-	
-	/*if (F_ListData_Dlg_Active == 1)
-	{
-		return 1;
-	}*/
-
 	App->Get_Current_Document();
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_BRUSH_VIEWER, App->Equity_Dlg_hWnd, (DLGPROC)Brush_Viewer_Proc);
@@ -1094,6 +1088,7 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 	case WM_INITDIALOG:
 	{
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
@@ -1105,8 +1100,8 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 			Count++;
 		}
 
-		//App->CLSB_Dialogs->F_ListData_Dlg_Active = 1;
-
+		App->CLSB_Dialogs->UpdateBrushData(hDlg, 0);
+		
 		return TRUE;
 	}
 	case WM_CTLCOLORSTATIC:
@@ -1127,6 +1122,25 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 	}
 
 	case WM_COMMAND:
+
+		if (LOWORD(wParam) == IDC_LISTBRUSHES)
+		{
+			char buff[256];
+			int Index = 0;
+			Index = SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+
+			if (Index == -1)
+			{
+				return 1;
+			}
+
+			SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(Index,buff,10));
+			
+			App->CLSB_Dialogs->UpdateBrushData(hDlg, Index);
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
 			//App->CLSB_Dialogs->F_ListData_Dlg_Active = 0;
@@ -1144,6 +1158,22 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 		break;
 	}
 	return FALSE;
+}
+
+// *************************************************************************
+// *			UpdateBrushData:- Terry and Hazel Flanigan 2023		 	   *
+// *************************************************************************
+void SB_Dialogs::UpdateBrushData(HWND hDlg,int Index)
+{
+	SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	char buf[MAX_PATH];
+
+	sprintf(buf, "Faces %i", App->CLSB_Model->B_Brush[Index]->Face_Count);
+	SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "Vertices %i", App->CLSB_Model->B_Brush[Index]->Vertice_Count);
+	SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 }
 
 	
