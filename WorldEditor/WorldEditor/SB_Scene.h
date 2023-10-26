@@ -45,6 +45,12 @@ public:
 	bool Delete_Resources_Group();
 	bool Add_Resource_Location_Project(char* Resource_Location);
 
+	void SB_Scene::Build_Area_List(int ExpSelected);
+	bool SB_Scene::Level_Build_Text_G3ds_XX(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
+	bool SB_Scene::BrushList_ExportToText_XX(BrushList* BList, geBoolean SubBrush);
+	bool SB_Scene::Brush_ExportToText_XX(const Brush* b);
+	bool SB_Scene::FaceList_ExportToText_XX(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
+
 	Brush* Selected_Brush;
 
 	std::vector<Base_Player*> B_Player;

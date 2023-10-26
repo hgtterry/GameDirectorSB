@@ -58,15 +58,6 @@ public:
 	int Get_Adjusted_Index(int RealIndex);
 	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 
-
-
-	void Export_World_Text_XX(int ExpSelected);
-	bool Level_Build_Text_G3ds_XX(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
-	bool BrushList_ExportToText_XX(BrushList* BList, geBoolean SubBrush);
-	bool Brush_ExportToText_XX(const Brush* b);
-	bool FaceList_ExportToText_XX(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
-
-
 	int AdjusedIndex_Store[500];
 
 private:
