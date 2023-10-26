@@ -55,7 +55,7 @@ SB_Render::SB_Render()
 
 	JustTexture_ID = 0;
 
-	RenederAllGroups = 1;
+	Render_Just_Group = 0;
 	Selected_Group_Index = 0;
 
 	Selected_Group = 0;
@@ -393,7 +393,7 @@ bool SB_Render::Brush_Render_Textures(void)
 
 	
 
-	if (RenederAllGroups == 1)
+	if (Render_Just_Group == 0)
 	{
 		int BrushCount = App->CLSB_Model->BrushCount;
 		Count = 0;

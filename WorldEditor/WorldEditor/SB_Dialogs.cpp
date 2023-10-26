@@ -1090,6 +1090,11 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_BTJUSTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 		char buf[MAX_PATH];
@@ -1102,6 +1107,8 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 
 		App->CLSB_Dialogs->UpdateBrushData(hDlg, 0);
 		
+		App->CLSB_Ogre->RenderListener->Render_Just_Group = 0;
+
 		return TRUE;
 	}
 
@@ -1119,6 +1126,27 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 	{
 		LPNMHDR some_item = (LPNMHDR)lParam;
 
+		if (some_item->idFrom == IDC_BTJUSTBRUSH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_Ogre->RenderListener->Render_Just_Group);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -1126,13 +1154,13 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_BTJUSTBRUSH)
 		{
-			if (App->CLSB_Ogre->RenderListener->RenederAllGroups == 1)
+			if (App->CLSB_Ogre->RenderListener->Render_Just_Group == 1)
 			{
-				App->CLSB_Ogre->RenderListener->RenederAllGroups = 0;
+				App->CLSB_Ogre->RenderListener->Render_Just_Group = 0;
 			}
 			else
 			{
-				App->CLSB_Ogre->RenderListener->RenederAllGroups = 1;
+				App->CLSB_Ogre->RenderListener->Render_Just_Group = 1;
 			}
 
 			App->CLSB_Ogre->RenderFrame();
@@ -1194,6 +1222,15 @@ void SB_Dialogs::UpdateBrushData(HWND hDlg,int Index)
 
 	sprintf(buf, "Vertices %i", App->CLSB_Model->B_Brush[Index]->Vertice_Count);
 	SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	int Count = 0;
+
+	while (Count < App->CLSB_Model->B_Brush[Index]->Face_Count)
+	{
+		sprintf(buf, "Text_ID %i", App->CLSB_Model->B_Brush[Index]->TextID_Data[Count].ID);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		Count++;
+	}
 }
 
 	
