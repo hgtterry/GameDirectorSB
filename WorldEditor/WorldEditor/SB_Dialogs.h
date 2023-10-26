@@ -35,6 +35,7 @@ public:
 	void Start_Speed_Camera();
 	bool Start_Dialog_DropGen();
 	void Dialog_TrueFlase();
+	bool Start_Brush_Viewer();
 
 	bool Canceled;
 	bool TrueFlase;
@@ -56,6 +57,7 @@ private:
 	static LRESULT CALLBACK Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_TrueFlase_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_SceneData(HWND hDlg);
 	void List_BoundingBox(HWND hDlg);

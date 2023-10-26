@@ -289,7 +289,8 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 		{
 			if (App->CLSB_Model->Model_Loaded == 1)
 			{
-				App->CLSB_Dialogs->Start_ListData(2);
+				//App->CLSB_Dialogs->Start_ListData(2);
+				App->CLSB_Dialogs->Start_Brush_Viewer();
 			}
 			return 1;
 		}

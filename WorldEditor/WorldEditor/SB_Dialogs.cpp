@@ -857,6 +857,7 @@ LRESULT CALLBACK SB_Dialogs::Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM
 
 		break;
 	}
+
 	return FALSE;
 }
 
@@ -882,16 +883,16 @@ void SB_Dialogs::ListGroups(HWND List)
 	sprintf(buf, " -----------------------");
 	SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 	
-	sprintf(buf,"%s %i","X_Brush Count = ", App->CLSB_Model->XBrushCount);
+	sprintf(buf,"%s %i","Brush Count = ", App->CLSB_Model->BrushCount);
 	SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	
 	SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)" ");
 
 	Count = 0;
-	while (Count < App->CLSB_Model->XBrushCount)
+	while (Count < App->CLSB_Model->BrushCount)
 	{
-		sprintf(buf, "%i %s %s %i", App->CLSB_Model->B_XBrush[Count]->Index, App->CLSB_Model->B_XBrush[Count]->BrushName ,"        Count = ", App->CLSB_Model->B_XBrush[Count]->Brush_Count);
+		sprintf(buf, "Faces %i Vertices %i", App->CLSB_Model->B_Brush[Count]->Face_Count,App->CLSB_Model->B_Brush[Count]->Vertice_Count);
 		SendDlgItemMessage(List, IDC_LISTGROUP, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 		/*int loop = 0;
@@ -1062,7 +1063,87 @@ void SB_Dialogs::UpdateGroupDetails(HWND List)
 
 	sprintf(buf, "Size X= %f Y= %f Z = %f", App->CLSB_Model->Group[Num]->Size.x, App->CLSB_Model->Group[Num]->Size.y, App->CLSB_Model->Group[Num]->Size.z);
 	SendMessage(List, LB_ADDSTRING, 0, (LPARAM)(LPCTSTR)buf);
+}
 
+// *************************************************************************
+// *	  		Start_Brush_Viewer:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_Dialogs::Start_Brush_Viewer()
+{
+	
+	/*if (F_ListData_Dlg_Active == 1)
+	{
+		return 1;
+	}*/
+
+	App->Get_Current_Document();
+
+	DialogBox(App->hInst, (LPCTSTR)IDD_SB_BRUSH_VIEWER, App->Equity_Dlg_hWnd, (DLGPROC)Brush_Viewer_Proc);
+	
+	return 1;
+}
+
+// *************************************************************************
+// *			Brush_Viewer_Proc:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+		char buf[MAX_PATH];
+		int Count = 0;
+		while (Count < App->CLSB_Model->BrushCount)
+		{
+			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)itoa(Count,buf,10));
+			Count++;
+		}
+
+		//App->CLSB_Dialogs->F_ListData_Dlg_Active = 1;
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK)
+		{
+			//App->CLSB_Dialogs->F_ListData_Dlg_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			//App->CLSB_Dialogs->F_ListData_Dlg_Active = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		break;
+	}
+	return FALSE;
 }
 
 	
