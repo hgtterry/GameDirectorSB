@@ -480,13 +480,35 @@ bool SB_Render::Brushes_Render_Faces_XX(void)
 {
 	int Count = 0;
 
-	glColor3f(1, 1, 1);
-
 	int BrushCount = App->CLSB_Model->BrushCount;
 
 	while (Count < BrushCount)
 	{
-		Brushes_Face_Parts_XX(Count);
+		if (Render_Just_Group == 0)
+		{
+			glColor3f(1, 1, 1);
+			glLineWidth(1);
+
+			Brushes_Face_Parts_XX(Count);
+		}
+		else
+		{
+			if (Count == Selected_Group_Index)
+			{
+				glColor3f(1, 0, 0);
+				glLineWidth(3);
+
+				Brushes_Face_Parts_XX(Count);
+			}
+			else
+			{
+				glColor3f(1, 1, 1);
+				glLineWidth(1);
+
+				Brushes_Face_Parts_XX(Count);
+			}
+		}
+
 		Count++;
 	}
 
