@@ -62,6 +62,9 @@ public:
 	int Player_Count;
 	int Object_Count;
 
+	int Brush_Index;
+	char Brush_Name[200];
+
 	int AdjusedIndex_Store[500];
 	int AdjustedIndex_Count;
 

@@ -151,6 +151,8 @@ SB_Scene::SB_Scene()
 	Player_Added = 0;
 	Object_Count = 0;
 
+	Brush_Index = 0;
+
 	Project_Resources_Created = 0;
 
 	B_Player.reserve(2);
@@ -958,18 +960,42 @@ bool SB_Scene::BrushList_ExportToText_XX(BrushList* BList, geBoolean SubBrush)
 
 	while (pBrush != NULL)
 	{
-		if (!Brush_ExportToText_XX(pBrush)) return GE_FALSE;
+		if (SubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
+		{
+			if (SubBrush == 0)
+			{
+				strcpy(Brush_Name, pBrush->Name);
+				//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Group_Index = BrushCount;
+
+				Brush_Index = BrushCount;
+			}
+
+		}
+
+		if (!Brush_ExportToText_XX(pBrush))
+		{
+			return GE_FALSE;
+		}
+
 		pBrush = BrushList_GetNext(&bi);
 
 		if (SubBrush)
+		{
 			SubBrushCount++;
+		}
 		else
+		{
 			BrushCount++;
+		}
 	}
 
 	SubBrushCount = 0;
+
 	if (!SubBrush)
+	{
 		BrushCount = 0;
+	}
+
 	return GE_TRUE;
 }
 
@@ -1022,7 +1048,8 @@ bool SB_Scene::FaceList_ExportToText_XX(const Brush* b, const FaceList* pList, i
 {
 
 	App->CLSB_Model->Create_Brush_XX(App->CLSB_Model->BrushCount);
-
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Group_Index = Brush_Index;
+	strcpy(App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Brush_Name, Brush_Name);
 
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	char matname[MAX_PATH];

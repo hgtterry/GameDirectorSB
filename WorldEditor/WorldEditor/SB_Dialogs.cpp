@@ -1217,6 +1217,9 @@ void SB_Dialogs::UpdateBrushData(HWND hDlg,int Index)
 
 	char buf[MAX_PATH];
 
+	sprintf(buf, "Group Index %i %s", App->CLSB_Model->B_Brush[Index]->Group_Index, App->CLSB_Model->B_Brush[Index]->Brush_Name);
+	SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
 	sprintf(buf, "Faces %i", App->CLSB_Model->B_Brush[Index]->Face_Count);
 	SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 

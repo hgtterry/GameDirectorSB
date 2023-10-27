@@ -20,5 +20,8 @@ public:
 
 	int Vertice_Count;
 	int Face_Count;
+
+	int Group_Index;
+	char Brush_Name[200];
 };
 
