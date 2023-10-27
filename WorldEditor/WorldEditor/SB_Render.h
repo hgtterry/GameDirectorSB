@@ -97,8 +97,10 @@ protected:
 	void Assimp_Render_Normals(void);
 	void Render_As_Normals_Parts(int Count);
 
-	bool Brush_Render_Textures(void);
-	bool Brush_Textured_Parts(int Count);
+	bool Brush_Render_Textures_XX(void);
+	bool Brush_Textured_Parts_XX(int Count);
+	bool Brushes_Render_Faces_XX(void);
+	bool Brushes_Face_Parts_XX(int Count);
 
 	bool Brush_Render_Points(void);
 	bool Brush_As_Points_Parts(int Count);

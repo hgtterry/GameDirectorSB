@@ -254,7 +254,7 @@ void SB_Render::Render_Loop()
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 		{
-			Brush_Render_Textures();
+			Brush_Render_Textures_XX();
 			//XBrush_Render_Textures();
 		}
 
@@ -278,7 +278,8 @@ void SB_Render::Render_Loop()
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 		{
 			//Brushes_Render_Faces();
-			XBrushes_Render_Faces();
+			//XBrushes_Render_Faces();
+			Brushes_Render_Faces_XX();
 		}
 	}
 
@@ -380,7 +381,7 @@ void SB_Render::Translate(void)
 // *************************************************************************
 // *						Brush_Render_Textures_Terry Bernie	   		   *
 // *************************************************************************
-bool SB_Render::Brush_Render_Textures(void)
+bool SB_Render::Brush_Render_Textures_XX(void)
 {
 	int Count = 0;
 	glEnable(GL_BLEND);
@@ -400,13 +401,13 @@ bool SB_Render::Brush_Render_Textures(void)
 
 		while (Count < BrushCount)
 		{
-			Brush_Textured_Parts(Count);
+			Brush_Textured_Parts_XX(Count);
 			Count++;
 		}
 	}
 	else
 	{
-		Brush_Textured_Parts(Selected_Group_Index);
+		Brush_Textured_Parts_XX(Selected_Group_Index);
 	}
 
 	glDisable(GL_TEXTURE_2D);
@@ -417,7 +418,7 @@ bool SB_Render::Brush_Render_Textures(void)
 // *************************************************************************
 // *					Brush_Textured_Parts Terry Bernie		 		   *
 // *************************************************************************
-bool SB_Render::Brush_Textured_Parts(int Count)
+bool SB_Render::Brush_Textured_Parts_XX(int Count)
 {
 	int FaceCount = 0;
 	int A = 0;
@@ -467,6 +468,62 @@ bool SB_Render::Brush_Textured_Parts(int Count)
 
 		glEnd();
 
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *						Bruses_Render_Faces_XX Terry Bernie	   		   *
+// *************************************************************************
+bool SB_Render::Brushes_Render_Faces_XX(void)
+{
+	int Count = 0;
+
+	glColor3f(1, 1, 1);
+
+	int BrushCount = App->CLSB_Model->BrushCount;
+
+	while (Count < BrushCount)
+	{
+		Brushes_Face_Parts_XX(Count);
+		Count++;
+	}
+
+	return 1;
+}
+// *************************************************************************
+// *					Bruses_Face_Parts_xx Terry Bernie		   			   *
+// *************************************************************************
+bool SB_Render::Brushes_Face_Parts_XX(int Count)
+{
+	int FaceCount = 0;
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	
+	while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
+	{
+		A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
+		B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;
+		C = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].c;
+
+		glBegin(GL_POLYGON);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[A].x);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[B].x);
+
+		//-----------------------------------------------
+		glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[C].x);
+
+		FaceCount++;
+
+		glEnd();
 	}
 
 	return 1;
