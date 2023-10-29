@@ -1152,6 +1152,13 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BT_LOOKAT)
+		{
+			App->CLSB_Model->Set_BondingBox_Selected_Brush(App->CLSB_Ogre->RenderListener->Selected_Brush_Index);
+			App->CLSB_Ogre->mCamera->lookAt(Ogre::Vector3(App->CLSB_Model->Sel_Brush_Centre.x, App->CLSB_Model->Sel_Brush_Centre.y, App->CLSB_Model->Sel_Brush_Centre.z));
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BTJUSTBRUSH)
 		{
 			if (App->CLSB_Ogre->RenderListener->Render_Just_Brush == 1)
@@ -1235,6 +1242,8 @@ void SB_Dialogs::UpdateBrushData(HWND hDlg,int Index)
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 		Count++;
 	}
+
+	App->CLSB_Model->Set_BondingBox_Selected_Brush(Index);
 }
 
 	

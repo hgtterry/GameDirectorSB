@@ -406,7 +406,7 @@ void SB_Model::Set_BondingBoxes_AllGroups()
 // *************************************************************************
 // *	 Set_BondingBox_Selected_Brushe:- Terry and Hazel Flanigan 2023	   *
 // *************************************************************************
-void SB_Model::Set_BondingBox_Selected_Brushe(int Index)
+void SB_Model::Set_BondingBox_Selected_Brush(int Index)
 {
 	Sel_Brush_BB_Min.x = B_Brush[0]->vertex_Data[0].x;
 	Sel_Brush_BB_Min.y = B_Brush[0]->vertex_Data[0].y;
@@ -420,13 +420,13 @@ void SB_Model::Set_BondingBox_Selected_Brushe(int Index)
 
 	while (VertCount < B_Brush[Index]->Vertice_Count)
 	{
-		if (B_Brush[Index]->vertex_Data[VertCount].x < BB_Min.x) BB_Min.x = B_Brush[Index]->vertex_Data[VertCount].x;
-		if (B_Brush[Index]->vertex_Data[VertCount].y < BB_Min.y) BB_Min.y = B_Brush[Index]->vertex_Data[VertCount].y;
-		if (B_Brush[Index]->vertex_Data[VertCount].z < BB_Min.z) BB_Min.z = B_Brush[Index]->vertex_Data[VertCount].z;
+		if (B_Brush[Index]->vertex_Data[VertCount].x < Sel_Brush_BB_Min.x) Sel_Brush_BB_Min.x = B_Brush[Index]->vertex_Data[VertCount].x;
+		if (B_Brush[Index]->vertex_Data[VertCount].y < Sel_Brush_BB_Min.y) Sel_Brush_BB_Min.y = B_Brush[Index]->vertex_Data[VertCount].y;
+		if (B_Brush[Index]->vertex_Data[VertCount].z < Sel_Brush_BB_Min.z) Sel_Brush_BB_Min.z = B_Brush[Index]->vertex_Data[VertCount].z;
 
-		if (B_Brush[Index]->vertex_Data[VertCount].x > BB_Max.x) BB_Max.x = B_Brush[Index]->vertex_Data[VertCount].x;
-		if (B_Brush[Index]->vertex_Data[VertCount].y > BB_Max.y) BB_Max.y = B_Brush[Index]->vertex_Data[VertCount].y;
-		if (B_Brush[Index]->vertex_Data[VertCount].z > BB_Max.z) BB_Max.z = B_Brush[Index]->vertex_Data[VertCount].z;
+		if (B_Brush[Index]->vertex_Data[VertCount].x > Sel_Brush_BB_Max.x) Sel_Brush_BB_Max.x = B_Brush[Index]->vertex_Data[VertCount].x;
+		if (B_Brush[Index]->vertex_Data[VertCount].y > Sel_Brush_BB_Max.y) Sel_Brush_BB_Max.y = B_Brush[Index]->vertex_Data[VertCount].y;
+		if (B_Brush[Index]->vertex_Data[VertCount].z > Sel_Brush_BB_Max.z) Sel_Brush_BB_Max.z = B_Brush[Index]->vertex_Data[VertCount].z;
 
 		VertCount++;
 	}
