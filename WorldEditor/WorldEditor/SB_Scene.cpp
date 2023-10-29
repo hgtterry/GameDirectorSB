@@ -1238,14 +1238,6 @@ bool SB_Scene::FaceList_ExportToText_XX(const Brush* b, const FaceList* pList, i
 		}
 	}
 
-	int poo = 0;
-	while (poo < num_faces)
-	{
-		int dd = App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[poo].ID;
-		
-		poo++;
-	}
-	
 	free(matf);
 
 	App->CLSB_Model->BrushCount++;

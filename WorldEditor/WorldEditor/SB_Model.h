@@ -106,6 +106,7 @@ public:
 	void Set_BondingBox_Group(int GroupID);
 	void Set_BondingBoxes_AllGroups();
 	void Set_BondingBox_Brushes();
+	void Set_BondingBox_Selected_Brushe(int Index);
 
 	void Set_Paths(void);
 	void Set_Equity(void);
@@ -135,7 +136,14 @@ public:
 	vertex_type BB_Min;
 	vertex_type Size;
 	vertex_type Centre;
+
+	vertex_type Sel_Brush_BB_Max;
+	vertex_type Sel_Brush_BB_Min;
+	vertex_type Sel_Brush_Size;
+	vertex_type Sel_Brush_Centre;
+
 	float radius;
+	float Sel_Brush_radius;
 
 	bool Model_Loaded;
 

@@ -55,7 +55,9 @@ SB_Render::SB_Render()
 
 	JustTexture_ID = 0;
 
-	Render_Just_Group = 0;
+	// Brushes
+	Render_Just_Brush = 0;
+	Selected_Brush_Index = 0;
 	Selected_Group_Index = 0;
 
 	Selected_Group = 0;
@@ -394,7 +396,7 @@ bool SB_Render::Brush_Render_Textures_XX(void)
 
 	
 
-	if (Render_Just_Group == 0)
+	if (Render_Just_Brush == 0)
 	{
 		int BrushCount = App->CLSB_Model->BrushCount;
 		Count = 0;
@@ -407,7 +409,7 @@ bool SB_Render::Brush_Render_Textures_XX(void)
 	}
 	else
 	{
-		Brush_Textured_Parts_XX(Selected_Group_Index);
+		Brush_Textured_Parts_XX(Selected_Brush_Index);
 	}
 
 	glDisable(GL_TEXTURE_2D);
@@ -484,7 +486,7 @@ bool SB_Render::Brushes_Render_Faces_XX(void)
 
 	while (Count < BrushCount)
 	{
-		if (Render_Just_Group == 0)
+		if (Render_Just_Brush == 0)
 		{
 			glColor3f(1, 1, 1);
 			glLineWidth(1);
@@ -493,7 +495,7 @@ bool SB_Render::Brushes_Render_Faces_XX(void)
 		}
 		else
 		{
-			if (Count == Selected_Group_Index)
+			if (Count == Selected_Brush_Index)
 			{
 				glColor3f(1, 0, 0);
 				glLineWidth(3);

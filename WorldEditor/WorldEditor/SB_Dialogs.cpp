@@ -1107,7 +1107,7 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 
 		App->CLSB_Dialogs->UpdateBrushData(hDlg, 0);
 		
-		App->CLSB_Ogre->RenderListener->Render_Just_Group = 0;
+		App->CLSB_Ogre->RenderListener->Render_Just_Brush = 0;
 
 		return TRUE;
 	}
@@ -1129,7 +1129,7 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 		if (some_item->idFrom == IDC_BTJUSTBRUSH && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
-			App->Custom_Button_Toggle(item, App->CLSB_Ogre->RenderListener->Render_Just_Group);
+			App->Custom_Button_Toggle(item, App->CLSB_Ogre->RenderListener->Render_Just_Brush);
 			return CDRF_DODEFAULT;
 		}
 
@@ -1154,13 +1154,13 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 
 		if (LOWORD(wParam) == IDC_BTJUSTBRUSH)
 		{
-			if (App->CLSB_Ogre->RenderListener->Render_Just_Group == 1)
+			if (App->CLSB_Ogre->RenderListener->Render_Just_Brush == 1)
 			{
-				App->CLSB_Ogre->RenderListener->Render_Just_Group = 0;
+				App->CLSB_Ogre->RenderListener->Render_Just_Brush = 0;
 			}
 			else
 			{
-				App->CLSB_Ogre->RenderListener->Render_Just_Group = 1;
+				App->CLSB_Ogre->RenderListener->Render_Just_Brush = 1;
 			}
 
 			App->CLSB_Ogre->RenderFrame();
@@ -1179,8 +1179,9 @@ LRESULT CALLBACK SB_Dialogs::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM w
 				return 1;
 			}
 
-			App->CLSB_Ogre->RenderListener->Selected_Group_Index = Index;
-
+			App->CLSB_Ogre->RenderListener->Selected_Brush_Index = Index;
+			App->CLSB_Ogre->RenderListener->Selected_Group_Index = App->CLSB_Model->B_Brush[Index]->Group_Index;
+			
 			SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(Index,buff,10));
 			
 			App->CLSB_Dialogs->UpdateBrushData(hDlg, Index);

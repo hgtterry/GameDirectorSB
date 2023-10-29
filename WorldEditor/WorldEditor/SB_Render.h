@@ -59,8 +59,11 @@ public:
 	bool Show_HideGroup;
 	bool Show_Crosshair;
 
-	bool Render_Just_Group;
+	// Brushes
+	bool Render_Just_Brush;
+	int Selected_Brush_Index;
 	int Selected_Group_Index;
+
 
 	int JustTexture_ID;
 
