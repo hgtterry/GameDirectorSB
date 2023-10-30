@@ -118,6 +118,7 @@ protected:
 
 	void Render_BoundingBoxModel(void);
 	void Render_BoundingBoxGroup(void);
+	void Render_BB_Selected_Brush(void);
 
 	bool RF_Render_Points(void);
 	bool RF_Render_Faces(void);

@@ -330,7 +330,8 @@ void SB_Render::Render_Loop()
 	{
 		//if (App->CL_Vm_Model->Model_Type == LoadedFile_Obj)
 		{
-			Render_BoundingBoxModel();
+			//Render_BoundingBoxModel();
+			Render_BB_Selected_Brush();
 		}
 		/*if (App->CL_Vm_Model->Model_Type == LoadedFile_Actor)
 		{
@@ -1138,6 +1139,63 @@ bool SB_Render::As_RenderBones()
 	//}
 
 	return 1;
+}
+
+// *************************************************************************
+// *				Render_BB_Selected_Brush Terry Bernie	  			   *
+// *************************************************************************
+void SB_Render::Render_BB_Selected_Brush(void)
+{
+	float m_xMin = App->CLSB_Model->Sel_Brush_BB_Min.x;
+	float m_yMin = App->CLSB_Model->Sel_Brush_BB_Min.y;
+	float m_zMin = App->CLSB_Model->Sel_Brush_BB_Min.z;
+
+	float m_xMax = App->CLSB_Model->Sel_Brush_BB_Max.x;
+	float m_yMax = App->CLSB_Model->Sel_Brush_BB_Max.y;
+	float m_zMax = App->CLSB_Model->Sel_Brush_BB_Max.z;
+
+	glDisable(GL_TEXTURE_2D);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glBegin(GL_LINES);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+
+	glVertex3f(m_xMin, m_yMin, m_zMin);
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+
+	glVertex3f(m_xMax, m_yMin, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+
+	glVertex3f(m_xMin, m_yMax, m_zMin);
+	glVertex3f(m_xMax, m_yMax, m_zMin);
+
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+
+	glVertex3f(m_xMin, m_yMin, m_zMax);
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+
+	glVertex3f(m_xMax, m_yMin, m_zMax);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glVertex3f(m_xMin, m_yMax, m_zMax);
+	glVertex3f(m_xMax, m_yMax, m_zMax);
+
+	glEnd();
+	glEnable(GL_TEXTURE_2D);
 }
 
 // *************************************************************************

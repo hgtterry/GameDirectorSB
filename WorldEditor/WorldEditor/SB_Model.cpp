@@ -408,13 +408,13 @@ void SB_Model::Set_BondingBoxes_AllGroups()
 // *************************************************************************
 void SB_Model::Set_BondingBox_Selected_Brush(int Index)
 {
-	Sel_Brush_BB_Min.x = B_Brush[0]->vertex_Data[0].x;
-	Sel_Brush_BB_Min.y = B_Brush[0]->vertex_Data[0].y;
-	Sel_Brush_BB_Min.z = B_Brush[0]->vertex_Data[0].z;
+	Sel_Brush_BB_Min.x = B_Brush[Index]->vertex_Data[0].x;
+	Sel_Brush_BB_Min.y = B_Brush[Index]->vertex_Data[0].y;
+	Sel_Brush_BB_Min.z = B_Brush[Index]->vertex_Data[0].z;
 
-	Sel_Brush_BB_Max.x = B_Brush[0]->vertex_Data[0].x;
-	Sel_Brush_BB_Max.y = B_Brush[0]->vertex_Data[0].y;
-	Sel_Brush_BB_Max.z = B_Brush[0]->vertex_Data[0].z;
+	Sel_Brush_BB_Max.x = B_Brush[Index]->vertex_Data[0].x;
+	Sel_Brush_BB_Max.y = B_Brush[Index]->vertex_Data[0].y;
+	Sel_Brush_BB_Max.z = B_Brush[Index]->vertex_Data[0].z;
 
 	int VertCount = 0;
 
