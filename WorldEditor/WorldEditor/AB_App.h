@@ -100,6 +100,8 @@ distribution.
 #include "SB_Environment.h"
 #include "SB_SoundMgr.h"
 #include "SB_Picking.h"
+#include "SB_Mesh_Mgr.h"
+
 
 class SB_App
 {
@@ -178,6 +180,7 @@ public:
 	SB_Environment*				CLSB_Environment;
 	SB_SoundMgr*				CLSB_SoundMgr;
 	SB_Picking*					CLSB_Picking;
+	SB_Mesh_Mgr*				CLSB_Mesh_Mgr;
 
 	bool InitApp(void);
 	void InitMFC(void);

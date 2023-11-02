@@ -200,6 +200,7 @@
     <ClCompile Include="SB_Keyboard.cpp" />
     <ClCompile Include="SB_Level.cpp" />
     <ClCompile Include="SB_Loader.cpp" />
+    <ClCompile Include="SB_Mesh_Mgr.cpp" />
     <ClCompile Include="SB_Model.cpp" />
     <ClCompile Include="SB_Object.cpp" />
     <ClCompile Include="SB_Objects_Create.cpp" />
@@ -300,6 +301,7 @@
     <ClInclude Include="SB_Keyboard.h" />
     <ClInclude Include="SB_Level.h" />
     <ClInclude Include="SB_Loader.h" />
+    <ClInclude Include="SB_Mesh_Mgr.h" />
     <ClInclude Include="SB_Model.h" />
     <ClInclude Include="SB_Object.h" />
     <ClInclude Include="SB_Objects_Create.h" />
