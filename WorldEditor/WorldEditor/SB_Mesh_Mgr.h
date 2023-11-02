@@ -28,5 +28,14 @@ class SB_Mesh_Mgr
 public:
 	SB_Mesh_Mgr(void);
 	~SB_Mesh_Mgr(void);
+
+	void Start_Brush_Viewer();
+
+private:
+
+	static LRESULT CALLBACK Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void UpdateBrushData(HWND hDlg, int Index);
+
 };
 
