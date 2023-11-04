@@ -99,6 +99,7 @@ void SB_Render::Reset_Class(void)
 	Show_HideGroup = 0;
 	Show_Crosshair = 0;
 
+	Render_Brush_Group_Flag = 0;
 }
 
 // *************************************************************************
@@ -256,7 +257,17 @@ void SB_Render::Render_Loop()
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 		{
-			Brush_Render_Textures_XX();
+			
+			if (Render_Brush_Group_Flag == 1)
+			{
+				Brush_Render_Group_Texture();
+			}
+			else
+			{
+				Brush_Render_Brush_Texture();
+			}
+ 
+ 
 			//XBrush_Render_Textures();
 		}
 
@@ -384,7 +395,7 @@ void SB_Render::Translate(void)
 // *************************************************************************
 // *						Brush_Render_Textures_Terry Bernie	   		   *
 // *************************************************************************
-bool SB_Render::Brush_Render_Textures_XX(void)
+bool SB_Render::Brush_Render_Brush_Texture(void)
 {
 	int Count = 0;
 	glEnable(GL_BLEND);
@@ -392,10 +403,6 @@ bool SB_Render::Brush_Render_Textures_XX(void)
 
 	glEnable(GL_TEXTURE_2D);
 	glColor3f(1, 1, 1);
-
-	//glLineWidth(10);
-
-	
 
 	if (Render_Just_Brush == 0)
 	{
@@ -413,6 +420,36 @@ bool SB_Render::Brush_Render_Textures_XX(void)
 		Brush_Textured_Parts_XX(Selected_Brush_Index);
 	}
 
+	glDisable(GL_TEXTURE_2D);
+
+	return 1;
+}
+
+// *************************************************************************
+// *				Brush_Render_Group_Texture Terry Bernie	   			   *
+// *************************************************************************
+bool SB_Render::Brush_Render_Group_Texture(void)
+{
+	int Count = 0;
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
+	glColor3f(1, 1, 1);
+
+	int BrushCount = App->CLSB_Model->BrushCount;
+	Count = 0;
+
+	while (Count < BrushCount)
+	{
+		if (App->CLSB_Model->B_Brush[Count]->Group_Index == Selected_Group_Index)
+		{
+			Brush_Textured_Parts_XX(Count);
+		}
+
+		Count++;
+	}
+	
 	glDisable(GL_TEXTURE_2D);
 
 	return 1;

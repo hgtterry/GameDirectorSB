@@ -59,6 +59,8 @@ public:
 	bool Show_HideGroup;
 	bool Show_Crosshair;
 
+	bool Render_Brush_Group_Flag;
+
 	// Brushes
 	bool Render_Just_Brush;
 	int Selected_Brush_Index;
@@ -100,7 +102,7 @@ protected:
 	void Assimp_Render_Normals(void);
 	void Render_As_Normals_Parts(int Count);
 
-	bool Brush_Render_Textures_XX(void);
+	bool Brush_Render_Brush_Texture(void);
 	bool Brush_Textured_Parts_XX(int Count);
 	bool Brushes_Render_Faces_XX(void);
 	bool Brushes_Face_Parts_XX(int Count);
@@ -115,10 +117,12 @@ protected:
 	bool XBrush_Textured_Parts(int Count);
 
 	bool As_RenderBones();
-
+	
 	void Render_BoundingBoxModel(void);
 	void Render_BoundingBoxGroup(void);
 	void Render_BB_Selected_Brush(void);
+	bool Brush_Render_Group_Texture(void);
+
 
 	bool RF_Render_Points(void);
 	bool RF_Render_Faces(void);

@@ -26,7 +26,7 @@ distribution.
 #include "SB_Mesh_Mgr.h"
 
 #include "EntTypeName.h"
-#include "facelist.h"
+//#include "facelist.h"
 
 enum BrushFlags
 {
@@ -109,9 +109,9 @@ struct tag_Level3
 
 SB_Mesh_Mgr::SB_Mesh_Mgr(void)
 {
-	Brush_Index = 0;
-	Brush_Name[0] = 0;
-	memset(AdjusedIndex_Store, 0, 500);
+	mBrush_Index = 0;
+	mBrush_Name[0] = 0;
+	memset(mAdjusedIndex_Store, 0, 500);
 
 	mBrushCount = 0;
 	mSubBrushCount = 0;
@@ -146,7 +146,8 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_BTJUSTBRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_LOOKAT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
@@ -188,6 +189,13 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_LOOKAT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+		
 		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
@@ -207,9 +215,15 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BT_BRUSH)
+		{
+			App->CLSB_Ogre->RenderListener->Render_Brush_Group_Flag = 0;
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_BT_GROUP)
 		{
-			Debug
+			App->CLSB_Ogre->RenderListener->Render_Brush_Group_Flag = 1;
 			return TRUE;
 		}
 		
@@ -403,7 +417,7 @@ void SB_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 		}
 	}
 
-	App->Say("Converted NEW");
+	//App->Say("Converted NEW");
 }
 
 // *************************************************************************
@@ -429,7 +443,7 @@ bool SB_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, B
 			int j, k;
 			strncpy(matname, pLevel->WadFile->mBitmaps[i].Name, MAX_PATH - 1);
 
-			AdjusedIndex_Store[AdjustedIndex] = i;
+			mAdjusedIndex_Store[AdjustedIndex] = i;
 
 			AddTexture_GL(NULL, matname, AdjustedIndex);
 
@@ -461,8 +475,8 @@ bool SB_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 		{
 			if (SubBrush == 0)
 			{
-				strcpy(Brush_Name, pBrush->Name);
-				Brush_Index = mBrushCount;
+				strcpy(mBrush_Name, pBrush->Name);
+				mBrush_Index = mBrushCount;
 			}
 		}
 
@@ -542,8 +556,8 @@ bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int 
 {
 
 	App->CLSB_Model->Create_Brush_XX(App->CLSB_Model->BrushCount);
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Group_Index = Brush_Index;
-	strcpy(App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Brush_Name, Brush_Name);
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Group_Index = mBrush_Index;
+	strcpy(App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Brush_Name, mBrush_Name);
 
 	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
 	char matname[MAX_PATH];
@@ -579,9 +593,6 @@ bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int 
 
 	for (i = 0; i < pList->NumFaces; i++)
 		matf[i] = 0;
-
-	// Name of Brush SubBrush
-
 
 	// -----------------------------------  Vertices
 	int VertIndex = 0;
@@ -784,14 +795,14 @@ bool SB_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int 
 }
 
 // *************************************************************************
-// *							Get_Adjusted_Index						   *
+// *			Get_Adjusted_Index:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 int SB_Mesh_Mgr::Get_Adjusted_Index(int RealIndex)
 {
 	int Count = 0;
 	while (Count < 500)
 	{
-		if (AdjusedIndex_Store[Count] == RealIndex)
+		if (mAdjusedIndex_Store[Count] == RealIndex)
 		{
 			return Count;
 		}

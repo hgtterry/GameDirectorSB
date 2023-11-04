@@ -861,7 +861,9 @@
 #define IDC_STBRUSHINDEX                1551
 #define IDC_BTJUSTBRUSH                 1552
 #define IDC_BT_LOOKAT                   1553
-#define IDC_BT_GROUP                    1554
+#define IDC_BT_BRUSH                    1554
+#define IDC_BT_GROUP2                   1555
+#define IDC_BT_GROUP                    1555
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773

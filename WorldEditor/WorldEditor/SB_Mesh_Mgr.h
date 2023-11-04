@@ -48,9 +48,9 @@ private:
 	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 	int Get_Adjusted_Index(int RealIndex);
 
-	int AdjusedIndex_Store[500];
-	int Brush_Index;
-	char Brush_Name[200];
+	int mAdjusedIndex_Store[500];
+	int mBrush_Index;
+	char mBrush_Name[200];
 
 	int	mBrushCount;
 	int	mSubBrushCount;
