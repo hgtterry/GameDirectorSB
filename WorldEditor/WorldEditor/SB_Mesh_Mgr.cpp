@@ -25,6 +25,88 @@ distribution.
 #include "AB_App.h"
 #include "SB_Mesh_Mgr.h"
 
+#include "EntTypeName.h"
+#include "facelist.h"
+
+enum BrushFlags
+{
+	BRUSH_SOLID = 0x0001,
+	BRUSH_WINDOW = 0x0002,
+	BRUSH_WAVY = 0x0004,
+	BRUSH_DETAIL = 0x0008,	//not included in vis calculations
+	BRUSH_HOLLOWCUT = 0x0010,
+	BRUSH_TRANSLUCENT = 0x0020,
+	BRUSH_EMPTY = 0x0040,
+	BRUSH_SUBTRACT = 0x0080,
+	BRUSH_CLIP = 0x0100,
+	BRUSH_FLOCKING = 0x0200,
+	BRUSH_HOLLOW = 0x0400,
+	BRUSH_SHEET = 0x0800,
+	BRUSH_HIDDEN = 0x1000,
+	BRUSH_LOCKED = 0x2000,
+	BRUSH_HINT = 0x4000,
+	BRUSH_AREA = 0x8000
+	// All flags larger than 0x8000 (i.e. 0x00010000 through 0x80000000)
+	// are reserved for user contents.
+};
+
+struct tag_FaceList
+{
+	int NumFaces;
+	int Limit;
+	Face** Faces;
+	geBoolean Dirty;
+	Box3d Bounds;
+};
+
+#define NUM_VIEWS (4)
+
+struct tag_Level3
+{
+	BrushList* Brushes;
+	CEntityArray* Entities;
+	char* WadPath;
+	char* HeadersDir;
+	// changed QD Actors
+	char* ActorsDir;
+	geBoolean ShowActors;
+	char* PawnIniPath;
+	// end change
+	EntTypeNameList* EntTypeNames;
+	GroupListType* Groups;
+	SizeInfo* WadSizeInfos;
+	CWadFile* WadFile;
+	EntityTable* pEntityDefs;
+
+	ModelInfo_Type	ModelInfo;
+
+	SkyFaceTexture SkyFaces[6];
+	geVec3d SkyRotationAxis;
+	geFloat SkyRotationSpeed;
+	geFloat	SkyTextureScale;
+
+	// level edit settings
+	CompileParamsType CompileParams;
+	int GroupVisSetting;
+	EntityViewList* pEntityView;
+
+	GridInfo GridSettings;
+	geBoolean BspRebuildFlag;
+	ViewStateInfo ViewInfo[NUM_VIEWS];
+
+	BrushTemplate_Arch ArchTemplate;
+	BrushTemplate_Box	BoxTemplate;
+	BrushTemplate_Cone	ConeTemplate;
+	BrushTemplate_Cylinder CylinderTemplate;
+	BrushTemplate_Spheroid	SpheroidTemplate;
+	BrushTemplate_Staircase StaircaseTemplate;
+
+	geVec3d TemplatePos;
+
+	float DrawScale;		// default draw scale
+	float LightmapScale;	// default lightmap scale
+};
+
 SB_Mesh_Mgr::SB_Mesh_Mgr(void)
 {
 }
@@ -41,7 +123,7 @@ void SB_Mesh_Mgr::Start_Brush_Viewer()
 	App->Get_Current_Document();
 
 	CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSH_VIEWER, App->Equity_Dlg_hWnd, (DLGPROC)Brush_Viewer_Proc);
-	Debug
+	
 }
 
 // *************************************************************************
@@ -119,6 +201,12 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BT_GROUP)
+		{
+			Debug
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_LOOKAT)
 		{
 			App->CLSB_Model->Set_BondingBox_Selected_Brush(App->CLSB_Ogre->RenderListener->Selected_Brush_Index);
@@ -211,4 +299,497 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 	}
 
 	App->CLSB_Model->Set_BondingBox_Selected_Brush(Index);
+}
+
+//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------
+
+static int	BrushCount;
+static int	SubBrushCount;
+
+static geBoolean fdocBrushCSGCallback2(const Brush* pBrush, void* lParam)
+{
+	return (App->m_pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
+}
+
+// *************************************************************************
+// * 		Build_Brush_List:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Mesh_Mgr::Build_Brush_List(int ExpSelected)
+{
+	App->CLSB_Model->BrushCount = 0;
+
+	char Path[MAX_PATH];
+	strcpy(Path, App->WorldEditor_Directory);
+	strcat(Path, "Data\\3DSTemp.txt");
+
+	BrushList* BList;
+	geBoolean fResult;
+
+	BList = Level_GetBrushes(App->CLSB_Doc->pLevel);
+	if (!ExpSelected)
+	{
+		fResult = Level_Build_Brushes(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), "FileName", BList, 0, 0, -1);
+	}
+	else
+	{
+		int i, GroupID, GroupCount;
+		char NewFileName[MAX_PATH];
+		GroupID = -1;
+		GroupCount = 1;
+
+		for (i = 0; i < GroupCount; i++)
+		{
+			BrushList* SBList;
+			Brush* pBrush;
+			BrushIterator bi;
+
+			SBList = BrushList_Create();
+			pBrush = BrushList_GetFirst(BList, &bi);
+
+			while (pBrush != NULL)
+			{
+
+				if (SelBrushList_Find(App->CLSB_Doc->pSelBrushes, pBrush))
+				{
+					Brush* pClone = Brush_Clone(pBrush);
+					BrushList_Append(SBList, pClone);
+				}
+
+				pBrush = BrushList_GetNext(&bi);
+			}
+			// do CSG
+			{
+				ModelIterator	mi;
+				int				i, CurId = 0;
+				ModelInfo_Type* ModelInfo;
+				Model* pMod;
+
+				BrushList_ClearAllCSG(SBList);
+
+				BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
+
+				//build individual model mini trees
+				ModelInfo = Level_GetModelInfo(App->CLSB_Doc->pLevel);
+				pMod = ModelList_GetFirst(ModelInfo->Models, &mi);
+
+				for (i = 0; i < ModelList_GetCount(ModelInfo->Models); i++)
+				{
+					CurId = Model_GetId(pMod);
+
+					BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
+				}
+			}
+
+			fResult = Level_Build_Brushes(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), NewFileName, SBList, 0, 0, -1);
+			if (!fResult)
+			{
+				App->Say("Error exporting group");
+			}
+
+			BrushList_Destroy(&SBList);
+		}
+	}
+
+	//App->Say("Converted TT");
+}
+
+// *************************************************************************
+// *		Level_Build_Brushes:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Mesh_Mgr::Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
+{
+	int i;
+	geBoolean* WrittenTex;
+
+	WrittenTex = (geBoolean*)calloc(sizeof(geBoolean), pLevel->WadFile->mBitmapCount);
+
+	// which textures are used?
+	BrushList_GetUsedTextures(BList, WrittenTex, pLevel->WadFile);
+
+	// Add Textures GL
+	int AdjustedIndex = 0;
+	for (i = 0; i < pLevel->WadFile->mBitmapCount; i++)
+	{
+		if (WrittenTex[i])
+		{
+			char matname[MAX_PATH];
+			int j, k;
+			strncpy(matname, pLevel->WadFile->mBitmaps[i].Name, MAX_PATH - 1);
+
+			AdjusedIndex_Store[AdjustedIndex] = i;
+
+			AddTexture_GL(NULL, matname, AdjustedIndex);
+
+			AdjustedIndex++;
+
+		}
+	}
+
+	BrushList_Decode(BList, GE_FALSE);
+
+	free(WrittenTex);
+
+	return 1;
+}
+
+// *************************************************************************
+// *			BrushList_Decode:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_Mesh_Mgr::BrushList_Decode(BrushList* BList, geBoolean SubBrush)
+{
+	Brush* pBrush;
+	BrushIterator bi;
+
+	pBrush = BrushList_GetFirst(BList, &bi);
+
+	while (pBrush != NULL)
+	{
+		if (SubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
+		{
+			if (SubBrush == 0)
+			{
+				strcpy(Brush_Name, pBrush->Name);
+				//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Group_Index = BrushCount;
+
+				Brush_Index = BrushCount;
+			}
+
+		}
+
+		if (!Brush_Create_X(pBrush))
+		{
+			return GE_FALSE;
+		}
+
+		pBrush = BrushList_GetNext(&bi);
+
+		if (SubBrush)
+		{
+			SubBrushCount++;
+		}
+		else
+		{
+			BrushCount++;
+		}
+	}
+
+	SubBrushCount = 0;
+
+	if (!SubBrush)
+	{
+		BrushCount = 0;
+	}
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *			Brush_Create_X:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Mesh_Mgr::Brush_Create_X(const Brush* b)
+{
+	assert(ofile);
+	assert(b);
+
+	switch (b->Type)
+	{
+	case	BRUSH_MULTI:
+		return BrushList_Decode(b->BList, GE_TRUE);
+
+	case	BRUSH_LEAF:
+		if (b->BList)
+		{
+			return BrushList_Decode(b->BList, GE_TRUE);
+		}
+		else
+		{
+			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+			{
+				return FaceList_Create(b, b->Faces, BrushCount, SubBrushCount);
+			}
+			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
+				BrushCount--;
+		}
+		break;
+
+
+	case	BRUSH_CSG:
+		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
+			return FaceList_Create(b, b->Faces, BrushCount, SubBrushCount);
+		break;
+	default:
+		assert(0);		// invalid brush type
+		break;
+	}
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *							FaceList_Create				   *
+// *************************************************************************
+bool SB_Mesh_Mgr::FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
+{
+
+	App->CLSB_Model->Create_Brush_XX(App->CLSB_Model->BrushCount);
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Group_Index = Brush_Index;
+	strcpy(App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Brush_Name, Brush_Name);
+
+	int i, j, k, num_faces, num_verts, num_mats, num_chars, curnum_verts;
+	char matname[MAX_PATH];
+
+	char* matf = (char*)calloc(sizeof(char), pList->NumFaces);
+
+	assert(pList != NULL);
+	assert(f != NULL);
+
+	num_faces = num_verts = num_mats = num_chars = 0;
+	// get the total number of verts, faces and materials of the object
+
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+		num_faces += (curnum_verts - 2);
+		num_verts += curnum_verts;
+
+		if (!matf[i])
+		{
+			matf[i] = 1;
+			num_mats++;
+
+			for (j = i + 1; j < pList->NumFaces; j++)
+			{
+				if (strcmp(Face_GetTextureName(pList->Faces[i]), Face_GetTextureName(pList->Faces[j])) == 0)
+					matf[j] = 1;
+			}
+
+			strncpy(matname, Face_GetTextureName(pList->Faces[i]), MAX_PATH);
+		}
+	}
+
+	for (i = 0; i < pList->NumFaces; i++)
+		matf[i] = 0;
+
+	// Name of Brush SubBrush
+
+
+	// -----------------------------------  Vertices
+	int VertIndex = 0;
+
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Vertice_Count = num_verts;
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data.resize(num_verts);
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data.resize(num_verts);
+
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		const geVec3d* verts;
+		verts = Face_GetPoints(pList->Faces[i]);
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+		for (j = 0; j < curnum_verts; j++)
+		{
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].x = verts[j].X;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].y = verts[j].Y;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->vertex_Data[VertIndex].z = verts[j].Z;
+
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].x = 0.5;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].y = 0.5;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Normal_Data[VertIndex].z = 0.5;
+
+			VertIndex++;
+		}
+	}
+
+	int UVIndex = 0;
+	// -----------------------------------  UVS
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data.resize(num_verts);
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		const TexInfo_Vectors* TVecs = Face_GetTextureVecs(pList->Faces[i]);
+		const geVec3d* verts;
+		geVec3d uVec, vVec;
+		geFloat U, V;
+
+		int txSize, tySize;
+
+		Face_GetTextureSize(pList->Faces[i], &txSize, &tySize);
+
+		// make sure that the texture size is set correctly (division!)
+		if (txSize == 0)
+			txSize = 32;
+		if (tySize == 0)
+			tySize = 32;
+
+		geVec3d_Scale(&TVecs->uVec, 1.f / (geFloat)txSize, &uVec);
+		geVec3d_Scale(&TVecs->vVec, -1.f / (geFloat)tySize, &vVec);
+
+		verts = Face_GetPoints(pList->Faces[i]);
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+
+		for (j = 0; j < curnum_verts; j++)
+		{
+			U = geVec3d_DotProduct(&(verts[j]), &uVec);
+			V = geVec3d_DotProduct(&(verts[j]), &vVec);
+			U += (TVecs->uOffset / txSize);
+			V -= (TVecs->vOffset / tySize);
+
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].u = U;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->MapCord_Data[UVIndex].v = V;
+			UVIndex++;
+		}
+	}
+
+	int FaceIndex = 0;
+	// -----------------------------------  Faces
+
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Count = num_faces;
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data.resize(num_faces);
+	num_verts = 0;
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+		for (j = 0; j < curnum_verts - 2; j++)
+		{
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].a = num_verts;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].b = num_verts + 2 + j;
+			App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[FaceIndex].c = num_verts + 1 + j;
+
+			FaceIndex++;
+		}
+
+		num_verts += curnum_verts;
+	}
+
+	// -----------------------------------  Texture IDs
+	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data.resize(200);
+	for (i = 0; i < pList->NumFaces; i++)
+	{
+		if (!matf[i])
+		{
+			matf[i] = 1;
+
+			int curnum_faces = (Face_GetNumPoints(pList->Faces[i]) - 2);
+
+			for (j = i + 1; j < pList->NumFaces; j++)
+			{
+				if (strcmp(Face_GetTextureName(pList->Faces[i]), Face_GetTextureName(pList->Faces[j])) == 0)
+				{
+					curnum_faces += (Face_GetNumPoints(pList->Faces[j]) - 2);
+				}
+			}
+
+			strncpy(matname, Face_GetTextureName(pList->Faces[i]), 11);
+
+			// Material Name
+			int DibId = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+
+
+			// write number of faces that have this texture
+
+
+			// write face numbers
+			curnum_faces = 0;
+			for (j = 0; j < i; j++)
+			{
+				curnum_faces += (Face_GetNumPoints(pList->Faces[j]) - 2);
+			}
+
+			curnum_verts = Face_GetNumPoints(pList->Faces[i]);
+			for (j = 0; j < curnum_verts - 2; j++)
+			{
+				int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+				App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + j].ID = DibId2;
+
+			}
+
+			curnum_faces += (curnum_verts - 2);
+
+			for (j = i + 1; j < pList->NumFaces; j++)
+			{
+				curnum_verts = Face_GetNumPoints(pList->Faces[j]);
+				if (strcmp(Face_GetTextureName(pList->Faces[i]), Face_GetTextureName(pList->Faces[j])) == 0)
+				{
+					matf[j] = 1;
+					for (k = 0; k < curnum_verts - 2; k++)
+					{
+						int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+						App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + k].ID = DibId2;
+
+					}
+				}
+
+				curnum_faces += (curnum_verts - 2);
+			}
+		}
+	}
+
+	free(matf);
+
+	App->CLSB_Model->BrushCount++;
+
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *			AddTexture_GL:- Terry and Hazel Flanigan 2023		  	   *
+// *************************************************************************
+bool SB_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex)
+{
+	App->Get_Current_Document();
+
+	//Debug
+	HWND	PreviewWnd;
+	HBITMAP	hbm;
+	HDC		hDC;
+
+	geBitmap* Bitmap = NULL;
+	CWadFile* pWad;
+	pWad = NULL;
+	pWad = Level_GetWadFile(App->CLSB_Doc->pLevel);
+	for (int index = 0; index < pWad->mBitmapCount; index++)
+	{
+		char mName[MAX_PATH];
+
+		CString Name = pWad->mBitmaps[index].Name;
+		strcpy(mName, Name);
+
+		bool test = strcmp(mName, TextureName);
+		if (test == 0)
+		{
+			Bitmap = pWad->mBitmaps[index].bmp;
+
+			char TempTextureFile_BMP[MAX_PATH];
+			strcpy(TempTextureFile_BMP, App->WorldEditor_Directory);
+			strcat(TempTextureFile_BMP, "\\");
+			strcat(TempTextureFile_BMP, "TextureLoad.bmp");
+
+			App->CLSB_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
+
+			App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_BrushTexture, TempTextureFile_BMP, GroupIndex);
+
+			DeleteFile((LPCTSTR)TempTextureFile_BMP);
+		}
+	}
+
+	return TRUE;
+}
+
+// *************************************************************************
+// *							Get_Adjusted_Index						   *
+// *************************************************************************
+int SB_Mesh_Mgr::Get_Adjusted_Index(int RealIndex)
+{
+	int Count = 0;
+	while (Count < 500)
+	{
+		if (AdjusedIndex_Store[Count] == RealIndex)
+		{
+			return Count;
+		}
+
+		Count++;
+	}
+
+	return -1;
 }

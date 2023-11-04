@@ -1467,7 +1467,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.27 - [01-11-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.27 - [04-11-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2441,6 +2441,7 @@ BEGIN
     PUSHBUTTON      "Just Brush",IDC_BTJUSTBRUSH,7,260,64,19
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,284,375,1
     PUSHBUTTON      "Look At",IDC_BT_LOOKAT,76,260,64,19
+    PUSHBUTTON      "Groups",IDC_BT_GROUP,162,260,64,19
 END
 
 
