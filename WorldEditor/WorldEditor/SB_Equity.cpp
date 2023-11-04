@@ -1176,7 +1176,8 @@ void SB_Equity::Do_Preview_Selected()
 
 		RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
-		App->CLSB_Scene->Build_Area_List(1);
+		App->CLSB_Mesh_Mgr->WE_Build_Brush_List(1);
+		//App->CLSB_Scene->Build_Area_List(1);
 
 		//App->CLSB_Bullet->Create_Brush_Trimesh(0);
 		//App->CLSB_Model->Set_BondingBox_Brushes();
@@ -1270,7 +1271,8 @@ void SB_Equity::Do_Preview_All()
 	}
 	else
 	{
-		App->CLSB_Scene->Build_Area_List(0);
+		//App->CLSB_Scene->Build_Area_List(0);
+		App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
 		App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
 		//App->CLSB_Model->Set_BondingBox_Brushes();
 

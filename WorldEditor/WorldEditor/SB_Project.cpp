@@ -131,7 +131,8 @@ bool SB_Project::Load_Project()
 		//bool test = Load_Project_Aera();
 		//App->CLSB_Scene->Build_World(0);
 		
-		App->CLSB_Scene->Build_Area_List(0);
+		App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+		//App->CLSB_Scene->Build_Area_List(0);
 
 		App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
 		//App->CLSB_Model->Set_BondingBox_Brushes();

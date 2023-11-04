@@ -29,8 +29,9 @@ public:
 	SB_Mesh_Mgr(void);
 	~SB_Mesh_Mgr(void);
 
+
 	void Start_Brush_Viewer();
-	void Build_Brush_List(int ExpSelected);
+	void WE_Build_Brush_List(int ExpSelected);
 
 private:
 
@@ -38,10 +39,10 @@ private:
 
 	void UpdateBrushData(HWND hDlg, int Index);
 
-	bool Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
-	bool BrushList_Decode(BrushList* BList, geBoolean SubBrush);
-	bool Brush_Create_X(const Brush* b);
-	bool FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
+	bool WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
+	bool WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush);
+	bool WE_Brush_Create(const Brush* b);
+	bool WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
 	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 	int Get_Adjusted_Index(int RealIndex);
 

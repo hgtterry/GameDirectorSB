@@ -109,6 +109,9 @@ struct tag_Level3
 
 SB_Mesh_Mgr::SB_Mesh_Mgr(void)
 {
+	Brush_Index = 0;
+	Brush_Name[0] = 0;
+	memset(AdjusedIndex_Store, 0, 500);
 }
 
 SB_Mesh_Mgr::~SB_Mesh_Mgr(void)
@@ -316,7 +319,7 @@ static geBoolean fdocBrushCSGCallback2(const Brush* pBrush, void* lParam)
 // *************************************************************************
 // * 		Build_Brush_List:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Mesh_Mgr::Build_Brush_List(int ExpSelected)
+void SB_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 {
 	App->CLSB_Model->BrushCount = 0;
 
@@ -330,7 +333,7 @@ void SB_Mesh_Mgr::Build_Brush_List(int ExpSelected)
 	BList = Level_GetBrushes(App->CLSB_Doc->pLevel);
 	if (!ExpSelected)
 	{
-		fResult = Level_Build_Brushes(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), "FileName", BList, 0, 0, -1);
+		fResult = WE_Level_Build_Brushes(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), "FileName", BList, 0, 0, -1);
 	}
 	else
 	{
@@ -382,7 +385,7 @@ void SB_Mesh_Mgr::Build_Brush_List(int ExpSelected)
 				}
 			}
 
-			fResult = Level_Build_Brushes(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), NewFileName, SBList, 0, 0, -1);
+			fResult = WE_Level_Build_Brushes(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), NewFileName, SBList, 0, 0, -1);
 			if (!fResult)
 			{
 				App->Say("Error exporting group");
@@ -392,13 +395,13 @@ void SB_Mesh_Mgr::Build_Brush_List(int ExpSelected)
 		}
 	}
 
-	//App->Say("Converted TT");
+	App->Say("Converted NEW");
 }
 
 // *************************************************************************
 // *		Level_Build_Brushes:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Mesh_Mgr::Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
+bool SB_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
 {
 	int i;
 	geBoolean* WrittenTex;
@@ -427,7 +430,7 @@ bool SB_Mesh_Mgr::Level_Build_Brushes(Level3* pLevel, const char* Filename, Brus
 		}
 	}
 
-	BrushList_Decode(BList, GE_FALSE);
+	WE_BrushList_Decode(BList, GE_FALSE);
 
 	free(WrittenTex);
 
@@ -437,7 +440,7 @@ bool SB_Mesh_Mgr::Level_Build_Brushes(Level3* pLevel, const char* Filename, Brus
 // *************************************************************************
 // *			BrushList_Decode:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
-bool SB_Mesh_Mgr::BrushList_Decode(BrushList* BList, geBoolean SubBrush)
+bool SB_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 {
 	Brush* pBrush;
 	BrushIterator bi;
@@ -458,7 +461,7 @@ bool SB_Mesh_Mgr::BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 
 		}
 
-		if (!Brush_Create_X(pBrush))
+		if (!WE_Brush_Create(pBrush))
 		{
 			return GE_FALSE;
 		}
@@ -486,9 +489,9 @@ bool SB_Mesh_Mgr::BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 }
 
 // *************************************************************************
-// *			Brush_Create_X:- Terry and Hazel Flanigan 2023			   *
+// *			WE_Brush_Create:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-bool SB_Mesh_Mgr::Brush_Create_X(const Brush* b)
+bool SB_Mesh_Mgr::WE_Brush_Create(const Brush* b)
 {
 	assert(ofile);
 	assert(b);
@@ -496,18 +499,18 @@ bool SB_Mesh_Mgr::Brush_Create_X(const Brush* b)
 	switch (b->Type)
 	{
 	case	BRUSH_MULTI:
-		return BrushList_Decode(b->BList, GE_TRUE);
+		return WE_BrushList_Decode(b->BList, GE_TRUE);
 
 	case	BRUSH_LEAF:
 		if (b->BList)
 		{
-			return BrushList_Decode(b->BList, GE_TRUE);
+			return WE_BrushList_Decode(b->BList, GE_TRUE);
 		}
 		else
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
-				return FaceList_Create(b, b->Faces, BrushCount, SubBrushCount);
+				return WE_FaceList_Create(b, b->Faces, BrushCount, SubBrushCount);
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
 				BrushCount--;
@@ -517,7 +520,7 @@ bool SB_Mesh_Mgr::Brush_Create_X(const Brush* b)
 
 	case	BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-			return FaceList_Create(b, b->Faces, BrushCount, SubBrushCount);
+			return WE_FaceList_Create(b, b->Faces, BrushCount, SubBrushCount);
 		break;
 	default:
 		assert(0);		// invalid brush type
@@ -530,7 +533,7 @@ bool SB_Mesh_Mgr::Brush_Create_X(const Brush* b)
 // *************************************************************************
 // *							FaceList_Create				   *
 // *************************************************************************
-bool SB_Mesh_Mgr::FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
+bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
 {
 
 	App->CLSB_Model->Create_Brush_XX(App->CLSB_Model->BrushCount);
