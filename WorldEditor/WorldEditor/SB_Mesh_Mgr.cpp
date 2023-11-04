@@ -311,13 +311,15 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 static int	BrushCount;
 static int	SubBrushCount;
 
-static geBoolean fdocBrushCSGCallback2(const Brush* pBrush, void* lParam)
+signed int SB_Mesh_Mgr::Brush_CSG_Callback(const Brush* pBrush, void* lParam)
 {
+	App->Say_Int(App->m_pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
+
 	return (App->m_pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
 }
 
 // *************************************************************************
-// * 		Build_Brush_List:- Terry and Hazel Flanigan 2023			   *
+// * 		WE_Build_Brush_List:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 {
@@ -331,11 +333,12 @@ void SB_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 	geBoolean fResult;
 
 	BList = Level_GetBrushes(App->CLSB_Doc->pLevel);
-	if (!ExpSelected)
+
+	if (!ExpSelected)	// Build All
 	{
 		fResult = WE_Level_Build_Brushes(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), "FileName", BList, 0, 0, -1);
 	}
-	else
+	else				// Build Selected
 	{
 		int i, GroupID, GroupCount;
 		char NewFileName[MAX_PATH];
@@ -371,7 +374,7 @@ void SB_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 
 				BrushList_ClearAllCSG(SBList);
 
-				BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
+				BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
 
 				//build individual model mini trees
 				ModelInfo = Level_GetModelInfo(App->CLSB_Doc->pLevel);
@@ -381,7 +384,7 @@ void SB_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 				{
 					CurId = Model_GetId(pMod);
 
-					BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback2, this);
+					BrushList_DoCSG(SBList, CurId, Brush_CSG_Callback, this);
 				}
 			}
 
@@ -399,7 +402,7 @@ void SB_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 }
 
 // *************************************************************************
-// *		Level_Build_Brushes:- Terry and Hazel Flanigan 2023			   *
+// *		WE_Level_Build_Brushes:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 bool SB_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
 {
@@ -438,7 +441,7 @@ bool SB_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, B
 }
 
 // *************************************************************************
-// *			BrushList_Decode:- Terry and Hazel Flanigan 2023		   *
+// *			WE_BrushList_Decode:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 bool SB_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 {
@@ -454,11 +457,8 @@ bool SB_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 			if (SubBrush == 0)
 			{
 				strcpy(Brush_Name, pBrush->Name);
-				//App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Group_Index = BrushCount;
-
 				Brush_Index = BrushCount;
 			}
-
 		}
 
 		if (!WE_Brush_Create(pBrush))
@@ -531,7 +531,7 @@ bool SB_Mesh_Mgr::WE_Brush_Create(const Brush* b)
 }
 
 // *************************************************************************
-// *							FaceList_Create				   *
+// *		WE_FaceList_Create:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount)
 {

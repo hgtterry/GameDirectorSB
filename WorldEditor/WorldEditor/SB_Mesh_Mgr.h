@@ -37,6 +37,8 @@ private:
 
 	static LRESULT CALLBACK Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	static signed int SB_Mesh_Mgr::Brush_CSG_Callback(const Brush* pBrush, void* lParam);
+
 	void UpdateBrushData(HWND hDlg, int Index);
 
 	bool WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
