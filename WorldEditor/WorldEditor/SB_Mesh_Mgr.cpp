@@ -112,6 +112,9 @@ SB_Mesh_Mgr::SB_Mesh_Mgr(void)
 	Brush_Index = 0;
 	Brush_Name[0] = 0;
 	memset(AdjusedIndex_Store, 0, 500);
+
+	mBrushCount = 0;
+	mSubBrushCount = 0;
 }
 
 SB_Mesh_Mgr::~SB_Mesh_Mgr(void)
@@ -308,13 +311,11 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 //---------------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------
 
-static int	BrushCount;
-static int	SubBrushCount;
-
+// *************************************************************************
+// * 		Brush_CSG_Callback:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
 signed int SB_Mesh_Mgr::Brush_CSG_Callback(const Brush* pBrush, void* lParam)
 {
-	App->Say_Int(App->m_pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
-
 	return (App->m_pDoc->BrushIsVisible(pBrush) && (!Brush_IsHint(pBrush)) && (!Brush_IsClip(pBrush)));
 }
 
@@ -323,7 +324,11 @@ signed int SB_Mesh_Mgr::Brush_CSG_Callback(const Brush* pBrush, void* lParam)
 // *************************************************************************
 void SB_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 {
+	App->Get_Current_Document();
+
 	App->CLSB_Model->BrushCount = 0;
+	mBrushCount = 0;
+	mSubBrushCount = 0;
 
 	char Path[MAX_PATH];
 	strcpy(Path, App->WorldEditor_Directory);
@@ -452,12 +457,12 @@ bool SB_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 
 	while (pBrush != NULL)
 	{
-		if (SubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
+		if (mSubBrushCount == 0 && pBrush->Flags & 1 || pBrush->Flags & 1024)
 		{
 			if (SubBrush == 0)
 			{
 				strcpy(Brush_Name, pBrush->Name);
-				Brush_Index = BrushCount;
+				Brush_Index = mBrushCount;
 			}
 		}
 
@@ -470,19 +475,19 @@ bool SB_Mesh_Mgr::WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush)
 
 		if (SubBrush)
 		{
-			SubBrushCount++;
+			mSubBrushCount++;
 		}
 		else
 		{
-			BrushCount++;
+			mBrushCount++;
 		}
 	}
 
-	SubBrushCount = 0;
+	mSubBrushCount = 0;
 
 	if (!SubBrush)
 	{
-		BrushCount = 0;
+		mBrushCount = 0;
 	}
 
 	return GE_TRUE;
@@ -510,17 +515,17 @@ bool SB_Mesh_Mgr::WE_Brush_Create(const Brush* b)
 		{
 			if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
 			{
-				return WE_FaceList_Create(b, b->Faces, BrushCount, SubBrushCount);
+				return WE_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount);
 			}
 			else if ((b->Flags & BRUSH_SUBTRACT) && !(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT)))
-				BrushCount--;
+				mBrushCount--;
 		}
 		break;
 
 
 	case	BRUSH_CSG:
 		if (!(b->Flags & (BRUSH_HOLLOW | BRUSH_HOLLOWCUT | BRUSH_SUBTRACT)))
-			return WE_FaceList_Create(b, b->Faces, BrushCount, SubBrushCount);
+			return WE_FaceList_Create(b, b->Faces, mBrushCount, mSubBrushCount);
 		break;
 	default:
 		assert(0);		// invalid brush type

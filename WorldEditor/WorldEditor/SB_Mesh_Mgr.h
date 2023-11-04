@@ -51,5 +51,8 @@ private:
 	int AdjusedIndex_Store[500];
 	int Brush_Index;
 	char Brush_Name[200];
+
+	int	mBrushCount;
+	int	mSubBrushCount;
 };
 
