@@ -34,7 +34,8 @@ public:
 	void Delete_Brush_List();
 	void WE_Build_Brush_List(int ExpSelected);
 
-	void Set_BondingBox_Selected_Brush(int Index);
+	void Set_BBox_Selected_Brush(int Index);
+	void Set_BBox_All_Selected_Brushes();
 
 private:
 

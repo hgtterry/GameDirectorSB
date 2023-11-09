@@ -1177,11 +1177,11 @@ void SB_Equity::Do_Preview_Selected()
 		RedrawWindow(App->CLSB_TopTabs_Equity->Tabs_TB_hWnd_Eq, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 		App->CLSB_Mesh_Mgr->WE_Build_Brush_List(1);
-		
+		App->CLSB_Mesh_Mgr->Set_BBox_All_Selected_Brushes();
 
 		//App->CLSB_Bullet->Create_Brush_Trimesh(0);
 		//App->CLSB_Model->Set_BondingBox_Brushes();
-		//App->CLSB_Dimensions->Centre_Model_Mid_Brushes();*/
+		App->CLSB_Dimensions->Centre_Model_Mid_Brushes();
 
 		App->CLSB_Model->Model_Loaded = 1;
 		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;

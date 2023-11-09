@@ -1031,32 +1031,24 @@ void SB_Dimensions::Centre_Model_Mid_Brushes(void)
 
 		int Count = 0;
 		int VertCount = 0;
-		int BrushCount = App->CLSB_Model->XBrushCount;
+		int BrushCount = App->CLSB_Model->BrushCount;
 
 		while (Count < BrushCount)
 		{
-			int BrushLoop = 0;
-			int SubBrushCount = App->CLSB_Model->B_XBrush[Count]->Brush_Count;
-
-			while (BrushLoop < SubBrushCount)
+			VertCount = 0;
+			while (VertCount < App->CLSB_Model->B_Brush[Count]->Vertice_Count)
 			{
-				VertCount = 0;
-				while (VertCount < App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->Vertice_Count)
-				{
-					App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].x += X;
-					App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].y += Y;
-					App->CLSB_Model->B_XBrush[Count]->B_Brush[BrushLoop]->vertex_Data[VertCount].z += Z;
+				App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].x += X;
+				App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].y += Y;
+				App->CLSB_Model->B_Brush[Count]->vertex_Data[VertCount].z += Z;
 
-					VertCount++;
-				}
-
-				BrushLoop++;
+				VertCount++;
 			}
 
 			Count++;
 		}
 
-		App->CLSB_Model->Set_BondingBox_Brushes();
+		App->CLSB_Mesh_Mgr->Set_BBox_All_Selected_Brushes();
 
 	}
 }
