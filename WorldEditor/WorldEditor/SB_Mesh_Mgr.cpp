@@ -163,7 +163,8 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		int Count = 0;
 		while (Count < App->CLSB_Model->BrushCount)
 		{
-			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)itoa(Count, buf, 10));
+			sprintf(buf, "%i %s",Count, App->CLSB_Model->B_Brush[Count]->Brush_Name);
+			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 			Count++;
 		}
 
