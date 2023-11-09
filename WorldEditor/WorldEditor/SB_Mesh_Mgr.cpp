@@ -277,7 +277,7 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		if (LOWORD(wParam) == IDC_BT_LOOKAT)
 		{
-			App->CLSB_Model->Set_BondingBox_Selected_Brush(App->CLSB_Ogre->RenderListener->Selected_Brush_Index);
+			App->CLSB_Mesh_Mgr->Set_BondingBox_Selected_Brush(App->CLSB_Ogre->RenderListener->Selected_Brush_Index);
 			App->CLSB_Ogre->mCamera->lookAt(Ogre::Vector3(App->CLSB_Model->Sel_Brush_Centre.x, App->CLSB_Model->Sel_Brush_Centre.y, App->CLSB_Model->Sel_Brush_Centre.z));
 			return TRUE;
 		}
@@ -366,7 +366,7 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 		Count++;
 	}
 
-	App->CLSB_Model->Set_BondingBox_Selected_Brush(Index);
+	App->CLSB_Mesh_Mgr->Set_BondingBox_Selected_Brush(Index);
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -382,11 +382,38 @@ signed int SB_Mesh_Mgr::Brush_CSG_Callback(const Brush* pBrush, void* lParam)
 }
 
 // *************************************************************************
+// * 		Delete_Brush_List:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Mesh_Mgr::Delete_Brush_List()
+{
+	SB_Model* pModel = App->CLSB_Model;
+
+	int Count = 0;
+	while (Count < 11999)
+	{
+		if (pModel->B_Brush[Count] != nullptr)
+		{
+			delete pModel->B_Brush[Count];
+			Debug
+		}
+
+		pModel->B_Brush[Count] = nullptr;
+
+		Count++;
+	}
+
+	App->CLSB_Model->BrushCount = 0;
+
+}
+
+// *************************************************************************
 // * 		WE_Build_Brush_List:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 {
 	App->Get_Current_Document();
+
+	Delete_Brush_List();
 
 	App->CLSB_Model->BrushCount = 0;
 	mBrushCount = 0;
@@ -859,4 +886,45 @@ int SB_Mesh_Mgr::Get_Adjusted_Index(int RealIndex)
 	}
 
 	return -1;
+}
+
+// *************************************************************************
+// *	 Set_BondingBox_Selected_Brush:- Terry and Hazel Flanigan 2023	   *
+// *************************************************************************
+void SB_Mesh_Mgr::Set_BondingBox_Selected_Brush(int Index)
+{
+	SB_Model* pModel = App->CLSB_Model;
+	
+	pModel->Sel_Brush_BB_Min.x = pModel->B_Brush[Index]->vertex_Data[0].x;
+	pModel->Sel_Brush_BB_Min.y = pModel->B_Brush[Index]->vertex_Data[0].y;
+	pModel->Sel_Brush_BB_Min.z = pModel->B_Brush[Index]->vertex_Data[0].z;
+
+	pModel->Sel_Brush_BB_Max.x = pModel->B_Brush[Index]->vertex_Data[0].x;
+	pModel->Sel_Brush_BB_Max.y = pModel->B_Brush[Index]->vertex_Data[0].y;
+	pModel->Sel_Brush_BB_Max.z = pModel->B_Brush[Index]->vertex_Data[0].z;
+
+	int VertCount = 0;
+
+	while (VertCount < pModel->B_Brush[Index]->Vertice_Count)
+	{
+		if (pModel->B_Brush[Index]->vertex_Data[VertCount].x < pModel->Sel_Brush_BB_Min.x) pModel->Sel_Brush_BB_Min.x = pModel->B_Brush[Index]->vertex_Data[VertCount].x;
+		if (pModel->B_Brush[Index]->vertex_Data[VertCount].y < pModel->Sel_Brush_BB_Min.y) pModel->Sel_Brush_BB_Min.y = pModel->B_Brush[Index]->vertex_Data[VertCount].y;
+		if (pModel->B_Brush[Index]->vertex_Data[VertCount].z < pModel->Sel_Brush_BB_Min.z) pModel->Sel_Brush_BB_Min.z = pModel->B_Brush[Index]->vertex_Data[VertCount].z;
+
+		if (pModel->B_Brush[Index]->vertex_Data[VertCount].x > pModel->Sel_Brush_BB_Max.x) pModel->Sel_Brush_BB_Max.x = pModel->B_Brush[Index]->vertex_Data[VertCount].x;
+		if (pModel->B_Brush[Index]->vertex_Data[VertCount].y > pModel->Sel_Brush_BB_Max.y) pModel->Sel_Brush_BB_Max.y = pModel->B_Brush[Index]->vertex_Data[VertCount].y;
+		if (pModel->B_Brush[Index]->vertex_Data[VertCount].z > pModel->Sel_Brush_BB_Max.z) pModel->Sel_Brush_BB_Max.z = pModel->B_Brush[Index]->vertex_Data[VertCount].z;
+
+		VertCount++;
+	}
+
+	pModel->Sel_Brush_Size.x = (fabs(pModel->Sel_Brush_BB_Max.x - pModel->Sel_Brush_BB_Min.x));
+	pModel->Sel_Brush_Size.y = (fabs(pModel->Sel_Brush_BB_Max.y - pModel->Sel_Brush_BB_Min.y));
+	pModel->Sel_Brush_Size.z = (fabs(pModel->Sel_Brush_BB_Max.z - pModel->Sel_Brush_BB_Min.z));
+
+	pModel->Sel_Brush_radius = (pModel->Sel_Brush_Size.x > pModel->Sel_Brush_Size.z) ? pModel->Sel_Brush_Size.z / 2.0f : pModel->Sel_Brush_Size.x / 2.0f;
+
+	pModel->Sel_Brush_Centre.x = (pModel->Sel_Brush_BB_Min.x + pModel->Sel_Brush_BB_Max.x) / 2.0f;
+	pModel->Sel_Brush_Centre.y = (pModel->Sel_Brush_BB_Min.y + pModel->Sel_Brush_BB_Max.y) / 2.0f;
+	pModel->Sel_Brush_Centre.z = (pModel->Sel_Brush_BB_Min.z + pModel->Sel_Brush_BB_Max.z) / 2.0f;
 }

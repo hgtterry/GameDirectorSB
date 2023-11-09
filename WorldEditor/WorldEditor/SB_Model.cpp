@@ -404,46 +404,6 @@ void SB_Model::Set_BondingBoxes_AllGroups()
 }
 
 // *************************************************************************
-// *	 Set_BondingBox_Selected_Brushe:- Terry and Hazel Flanigan 2023	   *
-// *************************************************************************
-void SB_Model::Set_BondingBox_Selected_Brush(int Index)
-{
-	Sel_Brush_BB_Min.x = B_Brush[Index]->vertex_Data[0].x;
-	Sel_Brush_BB_Min.y = B_Brush[Index]->vertex_Data[0].y;
-	Sel_Brush_BB_Min.z = B_Brush[Index]->vertex_Data[0].z;
-
-	Sel_Brush_BB_Max.x = B_Brush[Index]->vertex_Data[0].x;
-	Sel_Brush_BB_Max.y = B_Brush[Index]->vertex_Data[0].y;
-	Sel_Brush_BB_Max.z = B_Brush[Index]->vertex_Data[0].z;
-
-	int VertCount = 0;
-
-	while (VertCount < B_Brush[Index]->Vertice_Count)
-	{
-		if (B_Brush[Index]->vertex_Data[VertCount].x < Sel_Brush_BB_Min.x) Sel_Brush_BB_Min.x = B_Brush[Index]->vertex_Data[VertCount].x;
-		if (B_Brush[Index]->vertex_Data[VertCount].y < Sel_Brush_BB_Min.y) Sel_Brush_BB_Min.y = B_Brush[Index]->vertex_Data[VertCount].y;
-		if (B_Brush[Index]->vertex_Data[VertCount].z < Sel_Brush_BB_Min.z) Sel_Brush_BB_Min.z = B_Brush[Index]->vertex_Data[VertCount].z;
-
-		if (B_Brush[Index]->vertex_Data[VertCount].x > Sel_Brush_BB_Max.x) Sel_Brush_BB_Max.x = B_Brush[Index]->vertex_Data[VertCount].x;
-		if (B_Brush[Index]->vertex_Data[VertCount].y > Sel_Brush_BB_Max.y) Sel_Brush_BB_Max.y = B_Brush[Index]->vertex_Data[VertCount].y;
-		if (B_Brush[Index]->vertex_Data[VertCount].z > Sel_Brush_BB_Max.z) Sel_Brush_BB_Max.z = B_Brush[Index]->vertex_Data[VertCount].z;
-
-		VertCount++;
-	}
-
-	Sel_Brush_Size.x = (fabs(Sel_Brush_BB_Max.x - Sel_Brush_BB_Min.x));
-	Sel_Brush_Size.y = (fabs(Sel_Brush_BB_Max.y - Sel_Brush_BB_Min.y));
-	Sel_Brush_Size.z = (fabs(Sel_Brush_BB_Max.z - Sel_Brush_BB_Min.z));
-
-	Sel_Brush_radius = (Sel_Brush_Size.x > Sel_Brush_Size.z) ? Sel_Brush_Size.z / 2.0f : Sel_Brush_Size.x / 2.0f;
-
-	Sel_Brush_Centre.x = (Sel_Brush_BB_Min.x + Sel_Brush_BB_Max.x) / 2.0f;
-	Sel_Brush_Centre.y = (Sel_Brush_BB_Min.y + Sel_Brush_BB_Max.y) / 2.0f;
-	Sel_Brush_Centre.z = (Sel_Brush_BB_Min.z + Sel_Brush_BB_Max.z) / 2.0f;
-
-}
-
-// *************************************************************************
 // *			Clear Model:- Terry and Hazel Flanigan 2023				   *
 // *************************************************************************
 void SB_Model::Clear_Model_And_Reset(void)

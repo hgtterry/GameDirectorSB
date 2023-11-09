@@ -29,15 +29,18 @@ public:
 	SB_Mesh_Mgr(void);
 	~SB_Mesh_Mgr(void);
 
-
 	void Start_Brush_Viewer();
+
+	void Delete_Brush_List();
 	void WE_Build_Brush_List(int ExpSelected);
+
+	void Set_BondingBox_Selected_Brush(int Index);
 
 private:
 
 	static LRESULT CALLBACK Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
-	static signed int SB_Mesh_Mgr::Brush_CSG_Callback(const Brush* pBrush, void* lParam);
+	static signed int Brush_CSG_Callback(const Brush* pBrush, void* lParam);
 
 	void UpdateBrushData(HWND hDlg, int Index);
 
