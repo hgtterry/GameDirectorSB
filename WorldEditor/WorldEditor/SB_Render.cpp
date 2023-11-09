@@ -456,7 +456,7 @@ bool SB_Render::Brush_Render_Group_Texture(void)
 }
 
 // *************************************************************************
-// *					Brush_Textured_Parts Terry Bernie		 		   *
+// *				Brush_Textured_Parts_XX Terry Bernie		 		   *
 // *************************************************************************
 bool SB_Render::Brush_Textured_Parts_XX(int Count)
 {
@@ -469,19 +469,17 @@ bool SB_Render::Brush_Textured_Parts_XX(int Count)
 
 	if (App->CLSB_Model->B_Brush[Count]->Face_Count > 0)
 	{
-		OldId = App->CLSB_Model->B_Brush[Count]->TextID_Data[0].ID;
-		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->TextID_Data[0].ID]);
-
+		OldId = App->CLSB_Model->B_Brush[Count]->Face_Data[0].TextID;
+		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->Face_Data[0].TextID]);
 	}
 
 	while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
 	{
-		if (OldId > App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID || OldId < App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID)
+		if (OldId > App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID || OldId < App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID)
 		{
-			glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID]);
-			OldId = App->CLSB_Model->B_Brush[Count]->TextID_Data[FaceCount].ID;
+			glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID]);
+			OldId = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID;
 		}
-
 
 		A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
 		B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;

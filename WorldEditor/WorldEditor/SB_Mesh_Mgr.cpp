@@ -159,6 +159,16 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
+		HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
+		if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
+		{
+			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+		}
+		else
+		{
+			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+		}
+
 		char buf[MAX_PATH];
 		int Count = 0;
 		while (Count < App->CLSB_Model->BrushCount)
@@ -236,6 +246,24 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BT_MESH)
+		{
+			HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
+
+			if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
+			{
+				App->CLSB_Ogre->RenderListener->ShowFaces = 0;
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
+			}
+			else
+			{
+				App->CLSB_Ogre->RenderListener->ShowFaces = 1;
+				SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
+			}
+
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_BRUSH)
 		{
 			if (App->CLSB_Ogre->RenderListener->Render_Brush_Group_Flag == 1)
@@ -362,7 +390,7 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 
 	while (Count < App->CLSB_Model->B_Brush[Index]->Face_Count)
 	{
-		sprintf(buf, "Text_ID %i", App->CLSB_Model->B_Brush[Index]->TextID_Data[Count].ID);
+		sprintf(buf, "Text_ID %i", App->CLSB_Model->B_Brush[Index]->Face_Data[Count].TextID);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 		Count++;
 	}
@@ -758,7 +786,8 @@ bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int 
 	}
 
 	// -----------------------------------  Texture IDs
-	App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data.resize(200);
+	int TextureId = 0;
+
 	for (i = 0; i < pList->NumFaces; i++)
 	{
 		if (!matf[i])
@@ -794,8 +823,8 @@ bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int 
 			curnum_verts = Face_GetNumPoints(pList->Faces[i]);
 			for (j = 0; j < curnum_verts - 2; j++)
 			{
-				int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
-				App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + j].ID = DibId2;
+				TextureId = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+				App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[curnum_faces + j].TextID = TextureId;
 
 			}
 
@@ -809,9 +838,8 @@ bool SB_Mesh_Mgr::WE_FaceList_Create(const Brush* b, const FaceList* pList, int 
 					matf[j] = 1;
 					for (k = 0; k < curnum_verts - 2; k++)
 					{
-						int DibId2 = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
-						App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->TextID_Data[curnum_faces + k].ID = DibId2;
-
+						TextureId = Get_Adjusted_Index(Face_GetTextureDibId(pList->Faces[i]));
+						App->CLSB_Model->B_Brush[App->CLSB_Model->BrushCount]->Face_Data[curnum_faces + k].TextID = TextureId;
 					}
 				}
 

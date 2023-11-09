@@ -547,18 +547,12 @@ LRESULT CALLBACK SB_Equity::Render_Buttons_Proc(HWND hDlg, UINT message, WPARAM 
 
 				if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
 				{
-					if (App->CLSB_Ogre->RenderListener->ShowFaces == 1)
-						App->CLSB_Ogre->RenderListener->ShowFaces = 0;
-
-					//App->CLSB_TopBar->Toggle_Faces_Flag = 0;
-
+					App->CLSB_Ogre->RenderListener->ShowFaces = 0;
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 				}
 				else
 				{
 					App->CLSB_Ogre->RenderListener->ShowFaces = 1;
-					//App->CLSB_TopBar->Toggle_Faces_Flag = 1;
-
 					SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOn_Bmp);
 				}
 			}

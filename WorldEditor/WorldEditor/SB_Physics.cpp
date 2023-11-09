@@ -44,6 +44,7 @@ void SB_Physics::Set_Physics(int Index)
 	float x = App->CLSB_Scene->V_Object[Index]->Physics_Quat.x;
 	float y = App->CLSB_Scene->V_Object[Index]->Physics_Quat.y;
 	float z = App->CLSB_Scene->V_Object[Index]->Physics_Quat.z;
+
 	App->CLSB_Scene->V_Object[Index]->Phys_Body->getWorldTransform().setRotation(btQuaternion(x, y, z, w));
 
 	App->CLSB_Scene->V_Object[Index]->Object_Node->setScale(App->CLSB_Scene->V_Object[Index]->Mesh_Scale);

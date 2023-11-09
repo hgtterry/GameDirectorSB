@@ -864,6 +864,7 @@
 #define IDC_BT_BRUSH                    1554
 #define IDC_BT_GROUP2                   1555
 #define IDC_BT_GROUP                    1555
+#define IDC_BT_MESH                     1556
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1079,7 +1080,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        351
 #define _APS_NEXT_COMMAND_VALUE         33092
-#define _APS_NEXT_CONTROL_VALUE         1555
+#define _APS_NEXT_CONTROL_VALUE         1557
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

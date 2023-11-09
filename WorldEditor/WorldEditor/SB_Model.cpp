@@ -56,7 +56,7 @@ SB_Model::SB_Model(void)
 	}
 
 	Count = 0;
-	while (Count < 111999)
+	while (Count < 11999)
 	{
 		B_XBrush[Count] = nullptr;
 		Count++;
@@ -68,11 +68,11 @@ SB_Model::SB_Model(void)
 		B_Brush[Count] = nullptr;
 		Count++;
 	}
-
 }
 
 SB_Model::~SB_Model(void)
 {
+
 }
 
 // *************************************************************************

@@ -91,7 +91,7 @@ public:
 
 	Base_Group* Group[5000];
 	Base_Brush* B_Brush[12000];
-	Base_XBrush* B_XBrush[112000];
+	Base_XBrush* B_XBrush[12000];
 
 	void Create_Mesh_Group(int Index);
 	void Create_XBrush(int Index);
