@@ -54,5 +54,9 @@ private:
 
 	int	mBrushCount;
 	int	mSubBrushCount;
+
+	bool Brush_Flag;
+	bool Group_Flag;
+
 };
 

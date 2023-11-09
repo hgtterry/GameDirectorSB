@@ -115,6 +115,9 @@ SB_Mesh_Mgr::SB_Mesh_Mgr(void)
 
 	mBrushCount = 0;
 	mSubBrushCount = 0;
+
+	Brush_Flag = 1;
+	Group_Flag = 0;
 }
 
 SB_Mesh_Mgr::~SB_Mesh_Mgr(void)
@@ -150,6 +153,9 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_BT_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_GROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
@@ -210,6 +216,20 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 			return CDRF_DODEFAULT;
 		}
 
+		if (some_item->idFrom == IDC_BT_BRUSH && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_Mesh_Mgr->Brush_Flag);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_GROUP && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Toggle(item, App->CLSB_Mesh_Mgr->Group_Flag);
+			return CDRF_DODEFAULT;
+		}
+
 		return CDRF_DODEFAULT;
 	}
 
@@ -217,13 +237,41 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BT_BRUSH)
 		{
-			App->CLSB_Ogre->RenderListener->Render_Brush_Group_Flag = 0;
+			if (App->CLSB_Ogre->RenderListener->Render_Brush_Group_Flag == 1)
+			{
+				App->CLSB_Ogre->RenderListener->Render_Brush_Group_Flag = 0;
+				App->CLSB_Mesh_Mgr->Brush_Flag = 1;
+				App->CLSB_Mesh_Mgr->Group_Flag = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->RenderListener->Render_Brush_Group_Flag = 1;
+				App->CLSB_Mesh_Mgr->Group_Flag = 1;
+				App->CLSB_Mesh_Mgr->Brush_Flag = 0;
+			}
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_GROUP)
 		{
-			App->CLSB_Ogre->RenderListener->Render_Brush_Group_Flag = 1;
+			if (App->CLSB_Ogre->RenderListener->Render_Brush_Group_Flag == 1)
+			{
+				App->CLSB_Ogre->RenderListener->Render_Brush_Group_Flag = 0;
+				App->CLSB_Mesh_Mgr->Brush_Flag = 1;
+				App->CLSB_Mesh_Mgr->Group_Flag = 0;
+			}
+			else
+			{
+				App->CLSB_Ogre->RenderListener->Render_Brush_Group_Flag = 1;
+				App->CLSB_Mesh_Mgr->Group_Flag = 1;
+				App->CLSB_Mesh_Mgr->Brush_Flag = 0;
+			}
+
+			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
+
 			return TRUE;
 		}
 		

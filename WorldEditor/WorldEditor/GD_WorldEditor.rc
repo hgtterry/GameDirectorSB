@@ -1467,7 +1467,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.27 - [04-11-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.27 - [09-11-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2433,16 +2433,17 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_VISIB
 CAPTION "Brush Viewer"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,140,291,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,200,291,50,14
+    DEFPUSHBUTTON   "OK",IDOK,140,292,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,200,292,50,14
     LISTBOX         IDC_LISTBRUSHES,7,7,72,236,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LISTBOX         IDC_LISTDATA,87,7,295,236,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     CTEXT           "Static",IDC_STBRUSHINDEX,7,243,72,13,SS_CENTERIMAGE
-    PUSHBUTTON      "Just Brush",IDC_BTJUSTBRUSH,7,260,64,19
+    PUSHBUTTON      "Just Brush",IDC_BTJUSTBRUSH,7,259,64,19
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,284,375,1
-    PUSHBUTTON      "Look At",IDC_BT_LOOKAT,76,260,64,19
-    PUSHBUTTON      "Brushes",IDC_BT_BRUSH,202,259,64,19
-    PUSHBUTTON      "Groups",IDC_BT_GROUP,271,259,64,19
+    PUSHBUTTON      "Look At",IDC_BT_LOOKAT,76,259,64,19
+    PUSHBUTTON      "Brush",IDC_BT_BRUSH,202,259,64,19
+    PUSHBUTTON      "Group",IDC_BT_GROUP,271,259,64,19
+    PUSHBUTTON      "Button1",IDC_BUTTON1,145,259,33,19
 END
 
 
@@ -2747,7 +2748,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 382
         TOPMARGIN, 7
-        BOTTOMMARGIN, 305
+        BOTTOMMARGIN, 306
     END
 END
 #endif    // APSTUDIO_INVOKED
