@@ -173,6 +173,13 @@ SB_Export_World::~SB_Export_World(void)
 // *************************************************************************
 void SB_Export_World::Export_World_To_Object()
 {
+	int Test = App->CL_Brush->Get_Brush_Count();
+	if (Test == 0)
+	{
+		App->Say("No Brushes to Export");
+		return;
+	}
+
 	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 

@@ -1142,8 +1142,8 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "Export..."
         BEGIN
-            MENUITEM "GameDirector .G3ds",          ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS
-            MENUITEM "Old Export",                  ID_FILE_EXPORT_OLDEXPORT
+            MENUITEM "GameDirector .G3ds",          ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS, GRAYED
+            MENUITEM "Old Export",                  ID_FILE_EXPORT_OLDEXPORT, GRAYED
             MENUITEM SEPARATOR
             MENUITEM "Wavefront obj...",            ID_EXPORT_WAVEFRONTOBJECT
         END
