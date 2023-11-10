@@ -547,8 +547,7 @@ bool SB_Render::WE_Render_By_Texture()
 		{
 			if (App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID == TextureID)
 			{
-				//glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID]);
-					
+				
 				A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
 				B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;
 				C = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].c;

@@ -403,7 +403,9 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 
 	while (Count < App->CLSB_Model->B_Brush[Index]->Face_Count)
 	{
-		sprintf(buf, "Text_ID %i", App->CLSB_Model->B_Brush[Index]->Face_Data[Count].TextID);
+		int TextureID = App->CLSB_Model->B_Brush[Index]->Face_Data[Count].TextID;
+
+		sprintf(buf, "Text_ID %i %s", TextureID, TextureName2[TextureID]);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 		Count++;
 	}
@@ -560,6 +562,8 @@ bool SB_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, B
 			char matname[MAX_PATH];
 			int j, k;
 			strncpy(matname, pLevel->WadFile->mBitmaps[i].Name, MAX_PATH - 1);
+
+			strcpy(TextureName2[AdjustedIndex], matname);
 
 			mAdjusedIndex_Store[AdjustedIndex] = i;
 
