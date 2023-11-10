@@ -248,7 +248,7 @@ void SB_Render::Render_Loop()
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Actor)
 		{
-			RenderByTexture();
+			//RenderByTexture();
 		}
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
@@ -258,7 +258,7 @@ void SB_Render::Render_Loop()
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 		{
-			WE_Render_By_Texture();
+			//WE_Render_By_Texture();
 
 			if (Render_Brush_Group_Flag == 1)
 			{
@@ -1042,7 +1042,9 @@ bool SB_Render::Assimp_Textured_Parts(int Count)
 		glEnable(GL_TEXTURE_2D);
 		glColor3f(1, 1, 1);
 
-		glBindTexture(GL_TEXTURE_2D, g_Texture[App->CLSB_Model->Group[Count]->MaterialIndex]);
+		//glBindTexture(GL_TEXTURE_2D, g_Texture[App->CLSB_Model->Group[Count]->MaterialIndex]);
+		glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->Group[Count]->MaterialIndex]);
+		
 	}
 	else
 	{

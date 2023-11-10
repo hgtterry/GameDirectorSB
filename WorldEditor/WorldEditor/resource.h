@@ -868,6 +868,7 @@
 #define IDC_BT_TEXTUREIDPLUSE           1557
 #define IDC_BT_TEXTUREIDMINUS           1558
 #define IDC_ST_TEXTURE                  1559
+#define IDC_BT_CONVERT                  1560
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1083,7 +1084,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        351
 #define _APS_NEXT_COMMAND_VALUE         33092
-#define _APS_NEXT_CONTROL_VALUE         1560
+#define _APS_NEXT_CONTROL_VALUE         1561
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

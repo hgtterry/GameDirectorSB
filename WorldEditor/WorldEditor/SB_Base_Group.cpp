@@ -37,6 +37,7 @@ Base_Group::Base_Group()
 	Dont_Use = 0;
 
 	GroupVertCount = 0;
+	GroupFaceCount = 0;
 
 	IndicesCount = 0; // Ogre
 	BoneAssignMentCount = 0; // Ogre

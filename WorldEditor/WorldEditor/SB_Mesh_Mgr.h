@@ -32,6 +32,8 @@ public:
 	void Start_Brush_Viewer();
 
 	void Delete_Brush_List();
+	void Delete_Group_Brushes();
+
 	void WE_Build_Brush_List(int ExpSelected);
 
 	void Set_BBox_Selected_Brush(int Index);
@@ -39,6 +41,7 @@ public:
 
 	bool WE_Convert_All_Texture_Groups();
 	bool WE_Convert_To_Texture_Group(int TextureID);
+	int WE_Get_Vertice_Count(int TextureID);
 
 	int	mTextureCount;
 	char TextureName2[20][MAX_PATH];

@@ -159,7 +159,8 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BT_GROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_ST_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
-
+		SendDlgItemMessage(hDlg, IDC_BT_CONVERT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 		HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
@@ -256,6 +257,12 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BT_CONVERT)
+		{
+			App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_TEXTUREIDPLUSE)
 		{
 			App->CLSB_Ogre->RenderListener->TextureID++;
@@ -1047,10 +1054,56 @@ void SB_Mesh_Mgr::Set_BBox_All_Selected_Brushes()
 }
 
 // *************************************************************************
+// * 		Delete_Group_Brushes:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Mesh_Mgr::Delete_Group_Brushes()
+{
+	SB_Model* pModel = App->CLSB_Model;
+
+	int Count = 0;
+	while (Count < 4999)
+	{
+		if (pModel->Group[Count] != nullptr)
+		{
+			delete pModel->Group[Count];
+		}
+
+		pModel->Group[Count] = nullptr;
+
+		Count++;
+	}
+
+	App->CLSB_Model->GroupCount = 0;
+
+}
+
+// *************************************************************************
 // *	WE_Convert_All_Texture_Groups:- Terry and Hazel Flanigan 2023	   *
 // *************************************************************************
 bool SB_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 {
+	Delete_Group_Brushes();
+
+	App->CLSB_Model->Set_Groupt_Count(mTextureCount);
+
+	int Count = 0;
+	while (Count < mTextureCount)
+	{
+		App->CLSB_Model->Create_Mesh_Group(Count);
+		int FaceCount = WE_Get_Vertice_Count(Count);
+
+		App->CLSB_Model->Group[Count]->MaterialIndex = Count;
+		App->CLSB_Model->Group[Count]->vertex_Data.resize(FaceCount * 3);
+		App->CLSB_Model->Group[Count]->Normal_Data.resize(FaceCount * 3);
+		App->CLSB_Model->Group[Count]->MapCord_Data.resize(FaceCount * 3);
+		App->CLSB_Model->Group[Count]->Face_Data.resize(FaceCount);
+
+		WE_Convert_To_Texture_Group(Count);
+		Count++;
+	}
+
+	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
+
 	return true;
 }
 
@@ -1061,19 +1114,26 @@ bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 {
 	int Count = 0;
 	int FaceCount = 0;
+	int vertexIndex = 0;
+	int FaceIndex = 0;
+	int FacePos = 0;
 
 	int A = 0;
 	int B = 0;
 	int C = 0;
 
-	int OldId = 0;
+	float X = 0;
+	float Y = 0;
+	float Z = 0;
 
+	float U = 0;
+	float V = 0;
+	
 	int BrushCount = App->CLSB_Model->BrushCount;
 	Count = 0;
 
 	while (Count < BrushCount)
 	{
-
 		FaceCount = 0;
 		while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
 		{
@@ -1084,23 +1144,61 @@ bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;
 				C = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].c;
 
-				//-----------------------------------------------
-				glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].v);
-				glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[A].x);
-				glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[A].x);
+				X = App->CLSB_Model->B_Brush[Count]->vertex_Data[A].x;
+				Y = App->CLSB_Model->B_Brush[Count]->vertex_Data[A].y;
+				Z = App->CLSB_Model->B_Brush[Count]->vertex_Data[A].z;
 
-				//-----------------------------------------------
-				glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].v);
-				glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[B].x);
-				glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[B].x);
+				App->CLSB_Model->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+				App->CLSB_Model->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+				App->CLSB_Model->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
 
-				//-----------------------------------------------
-				glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].v);
-				glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[C].x);
-				glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[C].x);
-				//-----------------------------------------------
+				U = App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].u, 
+				V = App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].v;
 
-				glEnd();
+				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+
+				vertexIndex++;
+
+				X = App->CLSB_Model->B_Brush[Count]->vertex_Data[B].x;
+				Y = App->CLSB_Model->B_Brush[Count]->vertex_Data[B].y;
+				Z = App->CLSB_Model->B_Brush[Count]->vertex_Data[B].z;
+
+				App->CLSB_Model->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+				App->CLSB_Model->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+				App->CLSB_Model->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+
+				U = App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].u,
+				V = App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].v;
+
+				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+
+				vertexIndex++;
+
+				X = App->CLSB_Model->B_Brush[Count]->vertex_Data[C].x;
+				Y = App->CLSB_Model->B_Brush[Count]->vertex_Data[C].y;
+				Z = App->CLSB_Model->B_Brush[Count]->vertex_Data[C].z;
+
+				App->CLSB_Model->Group[TextureID]->vertex_Data[vertexIndex].x = X;
+				App->CLSB_Model->Group[TextureID]->vertex_Data[vertexIndex].y = Y;
+				App->CLSB_Model->Group[TextureID]->vertex_Data[vertexIndex].z = Z;
+
+				U = App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].u,
+				V = App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].v;
+
+				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
+				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+
+				vertexIndex++;
+
+				App->CLSB_Model->Group[TextureID]->Face_Data[FacePos].a = FaceIndex;
+				FaceIndex++;
+				App->CLSB_Model->Group[TextureID]->Face_Data[FacePos].b = FaceIndex;
+				FaceIndex++;
+				App->CLSB_Model->Group[TextureID]->Face_Data[FacePos].c = FaceIndex;
+				FaceIndex++;
+				FacePos++;
 			}
 
 			FaceCount++;
@@ -1109,5 +1207,39 @@ bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 		Count++;
 	}
 
+	App->CLSB_Model->Group[TextureID]->GroupVertCount = vertexIndex;
+	App->CLSB_Model->Group[TextureID]->GroupFaceCount = vertexIndex/3;
+
 	return 1;
+}
+
+// *************************************************************************
+// *		WE_Get_Vertice_Count:- Terry and Hazel Flanigan 2023	 	   *
+// *************************************************************************
+int SB_Mesh_Mgr::WE_Get_Vertice_Count(int TextureID)
+{
+	int Count = 0;
+	int FaceCount = 0;
+	int TotalFaceCount = 0;
+	
+	int BrushCount = App->CLSB_Model->BrushCount;
+	Count = 0;
+
+	while (Count < BrushCount)
+	{
+		FaceCount = 0;
+		while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
+		{
+			if (App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID == TextureID)
+			{
+				TotalFaceCount++;
+			}
+
+			FaceCount++;
+		}
+
+		Count++;
+	}
+
+	return TotalFaceCount;
 }
