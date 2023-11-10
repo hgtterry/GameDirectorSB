@@ -1217,6 +1217,14 @@ bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
 				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
 
+				X = App->CLSB_Model->B_Brush[Count]->Normal_Data[A].x;
+				Y = App->CLSB_Model->B_Brush[Count]->Normal_Data[A].y;
+				Z = App->CLSB_Model->B_Brush[Count]->Normal_Data[A].z;
+
+				App->CLSB_Model->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+				App->CLSB_Model->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+				App->CLSB_Model->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+
 				vertexIndex++;
 
 				X = App->CLSB_Model->B_Brush[Count]->vertex_Data[B].x;
@@ -1233,6 +1241,14 @@ bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
 				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
 
+				X = App->CLSB_Model->B_Brush[Count]->Normal_Data[B].x;
+				Y = App->CLSB_Model->B_Brush[Count]->Normal_Data[B].y;
+				Z = App->CLSB_Model->B_Brush[Count]->Normal_Data[B].z;
+
+				App->CLSB_Model->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+				App->CLSB_Model->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+				App->CLSB_Model->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
+
 				vertexIndex++;
 
 				X = App->CLSB_Model->B_Brush[Count]->vertex_Data[C].x;
@@ -1248,6 +1264,14 @@ bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 
 				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].u = U;
 				App->CLSB_Model->Group[TextureID]->MapCord_Data[vertexIndex].v = V;
+
+				X = App->CLSB_Model->B_Brush[Count]->Normal_Data[C].x;
+				Y = App->CLSB_Model->B_Brush[Count]->Normal_Data[C].y;
+				Z = App->CLSB_Model->B_Brush[Count]->Normal_Data[C].z;
+
+				App->CLSB_Model->Group[TextureID]->Normal_Data[vertexIndex].x = X;
+				App->CLSB_Model->Group[TextureID]->Normal_Data[vertexIndex].y = Y;
+				App->CLSB_Model->Group[TextureID]->Normal_Data[vertexIndex].z = Z;
 
 				vertexIndex++;
 
