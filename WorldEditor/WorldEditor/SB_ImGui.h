@@ -57,6 +57,8 @@ public:
 	bool Show_Camera_Pos_F;
 	bool Show_BB_Data_F;
 
+	bool Show_Textures_F;
+
 	float PosX;
 	float PosY;
 

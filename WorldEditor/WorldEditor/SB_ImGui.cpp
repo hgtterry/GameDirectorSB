@@ -73,6 +73,7 @@ SB_ImGui::SB_ImGui()
 	m_Dialog_Float_Copy = 0;
 	m_Dialog_Float = 10.222;
 
+	Show_Textures_F = 0;
 
 	m_pDoc = nullptr;
 	pCameraEntity = nullptr;
@@ -304,13 +305,28 @@ void SB_ImGui::Model_Data_GUI(void)
 		ImGui::Text("XBrushes:- %i", App->CLSB_Model->XBrushCount);
 		ImGui::Text("Brushes XX:- %i", App->CLSB_Model->BrushCount);
 
-		ImGui::Text("Texture Count:- %i", App->CLSB_Scene->AdjustedIndex_Count);
+		ImGui::Text("Texture Count:- %i", App->CLSB_Mesh_Mgr->mTextureCount);
 
-		int Count = 0;
-		while (Count < App->CLSB_Scene->AdjustedIndex_Count)
+		if (ImGui::Button("Textures"))
 		{
-			ImGui::Text("Texture ID:- %i", App->CLSB_Scene->AdjusedIndex_Store[Count]);
-			Count++;
+			if (Show_Textures_F == 1)
+			{
+				Show_Textures_F = 0;
+			}
+			else
+			{
+				Show_Textures_F = 1;
+			}
+		}
+
+		if (Show_Textures_F == 1)
+		{
+			int Count = 0;
+			while (Count < App->CLSB_Mesh_Mgr->mTextureCount)
+			{
+				ImGui::Text("Texture ID:-%i %s", Count, App->CLSB_Mesh_Mgr->TextureName2[Count]);
+				Count++;
+			}
 		}
 
 		ImGui::Text("  ");

@@ -37,6 +37,12 @@ public:
 	void Set_BBox_Selected_Brush(int Index);
 	void Set_BBox_All_Selected_Brushes();
 
+	bool WE_Convert_All_Texture_Groups();
+	bool WE_Convert_To_Texture_Group(int TextureID);
+
+	int	mTextureCount;
+	char TextureName2[20][MAX_PATH];
+
 private:
 
 	static LRESULT CALLBACK Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -52,13 +58,9 @@ private:
 	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
 	int Get_Adjusted_Index(int RealIndex);
 
-	char TextureName2[20][MAX_PATH];
-
 	int mAdjusedIndex_Store[500];
 	int mBrush_Index;
 	char mBrush_Name[200];
-
-	int	mTextureCount;
 
 	int	mBrushCount;
 	int	mSubBrushCount;

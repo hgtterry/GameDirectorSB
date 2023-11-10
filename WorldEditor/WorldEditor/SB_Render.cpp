@@ -260,14 +260,14 @@ void SB_Render::Render_Loop()
 		{
 			WE_Render_By_Texture();
 
-			/*if (Render_Brush_Group_Flag == 1)
+			if (Render_Brush_Group_Flag == 1)
 			{
 				Brush_Render_Group_Texture();
 			}
 			else
 			{
 				Brush_Render_Brush_Texture();
-			}*/
+			}
  
  
 			//XBrush_Render_Textures();

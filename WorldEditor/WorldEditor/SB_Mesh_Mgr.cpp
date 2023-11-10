@@ -1045,3 +1045,69 @@ void SB_Mesh_Mgr::Set_BBox_All_Selected_Brushes()
 	pModel->Centre.y = (pModel->BB_Min.y + pModel->BB_Max.y) / 2.0f;
 	pModel->Centre.z = (pModel->BB_Min.z + pModel->BB_Max.z) / 2.0f;
 }
+
+// *************************************************************************
+// *	WE_Convert_All_Texture_Groups:- Terry and Hazel Flanigan 2023	   *
+// *************************************************************************
+bool SB_Mesh_Mgr::WE_Convert_All_Texture_Groups()
+{
+	return true;
+}
+
+// *************************************************************************
+// *	WE_Convert_To_Texture_Group:- Terry and Hazel Flanigan 2023	 	   *
+// *************************************************************************
+bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
+{
+	int Count = 0;
+	int FaceCount = 0;
+
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	int OldId = 0;
+
+	int BrushCount = App->CLSB_Model->BrushCount;
+	Count = 0;
+
+	while (Count < BrushCount)
+	{
+
+		FaceCount = 0;
+		while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
+		{
+			if (App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID == TextureID)
+			{
+
+				A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
+				B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;
+				C = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].c;
+
+				//-----------------------------------------------
+				glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].v);
+				glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[A].x);
+				glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[A].x);
+
+				//-----------------------------------------------
+				glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].v);
+				glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[B].x);
+				glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[B].x);
+
+				//-----------------------------------------------
+				glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].v);
+				glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[C].x);
+				glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[C].x);
+				//-----------------------------------------------
+
+				glEnd();
+			}
+
+			FaceCount++;
+		}
+
+		Count++;
+	}
+
+	return 1;
+}
