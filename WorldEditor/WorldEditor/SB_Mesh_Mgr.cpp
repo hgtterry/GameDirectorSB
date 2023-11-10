@@ -158,6 +158,8 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		SendDlgItemMessage(hDlg, IDC_BT_BRUSH, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_GROUP, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_ST_TEXTURE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 		SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
 
 		HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
@@ -188,6 +190,13 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_ST_TEXTURE) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
 		return FALSE;
 	}
 
@@ -250,12 +259,22 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 		if (LOWORD(wParam) == IDC_BT_TEXTUREIDPLUSE)
 		{
 			App->CLSB_Ogre->RenderListener->TextureID++;
+			
+			char buf[MAX_PATH];
+			sprintf(buf, "%i %s", App->CLSB_Ogre->RenderListener->TextureID, App->CLSB_Mesh_Mgr->TextureName2[App->CLSB_Ogre->RenderListener->TextureID]);
+			SetDlgItemText(hDlg, IDC_ST_TEXTURE, (LPCTSTR)buf);
+
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_TEXTUREIDMINUS)
 		{
 			App->CLSB_Ogre->RenderListener->TextureID--;
+
+			char buf[MAX_PATH];
+			sprintf(buf, "%i %s", App->CLSB_Ogre->RenderListener->TextureID, App->CLSB_Mesh_Mgr->TextureName2[App->CLSB_Ogre->RenderListener->TextureID]);
+			SetDlgItemText(hDlg, IDC_ST_TEXTURE, (LPCTSTR)buf);
+
 			return TRUE;
 		}
 		
