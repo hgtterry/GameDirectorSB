@@ -31,12 +31,13 @@ public:
 
 	bool Create_ObjectFile(void);
 
+	bool Export_Textures(void);
+
 protected:
 
 	void Write_ObjectFile(void);
 	void Write_ObjectFile_Commit(void);
 	bool WriteMTLFile(void);
-	bool Export_Textures(void);
 
 	char OutputFolder[1024];
 

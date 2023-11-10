@@ -42,6 +42,7 @@ public:
 	SB_Export_World(void);
 	~SB_Export_World(void);
 
+	void Export_World_To_Object();
 	void Export_World_GD3D(bool Silent);
 
 	bool Level_Build_G3ds(Level3 *pLevel, const char *Filename, BrushList *BList,int ExpSelected, geBoolean ExpLights, int GroupID);

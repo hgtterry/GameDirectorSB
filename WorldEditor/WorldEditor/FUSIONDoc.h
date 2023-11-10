@@ -369,6 +369,7 @@ protected:
 	afx_msg void OnFileExport();
 
 	afx_msg void OnFileExportGDSB(); // hgtterry [100123]
+	afx_msg void OnFileExportObject();
 	afx_msg void OnUpdateFileExportGDSB(CCmdUI* pCmdUI); // hgtterry [100123]
 
 	afx_msg void OnUpdateFileExport(CCmdUI* pCmdUI);

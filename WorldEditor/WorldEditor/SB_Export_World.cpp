@@ -168,6 +168,21 @@ SB_Export_World::~SB_Export_World(void)
 
 #define MASTER_SCALE		0x0100
 
+// *************************************************************************
+// * 		Export_World_To_Object:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Export_World::Export_World_To_Object()
+{
+	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
+
+	bool test = App->CLSB_Export_Object->Create_ObjectFile();
+
+	if (test == 1)
+	{
+		App->Say("Wavefront Object file Created successfully");
+	}
+}
 
 // *************************************************************************
 // * 		Export_World_GD3D:- Terry and Hazel Flanigan 2023			   *

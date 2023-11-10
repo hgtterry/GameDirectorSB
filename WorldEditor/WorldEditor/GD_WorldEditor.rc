@@ -1144,6 +1144,8 @@ BEGIN
         BEGIN
             MENUITEM "GameDirector .G3ds",          ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS
             MENUITEM "Old Export",                  ID_FILE_EXPORT_OLDEXPORT
+            MENUITEM SEPARATOR
+            MENUITEM "Wavefront obj...",            ID_EXPORT_WAVEFRONTOBJECT
         END
         MENUITEM SEPARATOR
         MENUITEM "&Properties...",              IDM_LEVELOPTIONS

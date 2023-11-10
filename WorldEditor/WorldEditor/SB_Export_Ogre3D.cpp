@@ -660,6 +660,9 @@ bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
 // *************************************************************************
 bool SB_Export_Ogre3D::DecompileTextures(void)
 {
+	//App->CLSB_Export_Object->Export_Textures();
+
+	//return 1;
 	int MatCount = App->CLSB_Model->GroupCount;
 
 	char FileName[255];
