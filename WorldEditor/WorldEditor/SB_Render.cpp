@@ -986,8 +986,6 @@ bool SB_Render::Assimp_Render_Textures(void)
 	glEnable(GL_TEXTURE_2D);
 	glColor3f(1, 1, 1);
 
-	//glLineWidth(10);
-
 	int GroupCount = App->CLSB_Model->Get_Groupt_Count();
 
 	if (ShowOnlySubMesh == 1) // Show Only Selected SubMesh

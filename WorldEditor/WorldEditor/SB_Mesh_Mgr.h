@@ -46,6 +46,8 @@ public:
 	int	mTextureCount;
 	char TextureName2[20][MAX_PATH];
 
+	HWND Mesh_Viewer_HWND;
+
 private:
 
 	static LRESULT CALLBACK Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -53,6 +55,7 @@ private:
 	static signed int Brush_CSG_Callback(const Brush* pBrush, void* lParam);
 
 	void UpdateBrushData(HWND hDlg, int Index);
+	void Update_Brush_List(HWND hDlg);
 
 	bool WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
 	bool WE_BrushList_Decode(BrushList* BList, geBoolean SubBrush);

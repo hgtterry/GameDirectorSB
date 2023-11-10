@@ -3634,6 +3634,7 @@ void CFusionDoc::OnCloseDocument() // hgtterry Exit Aplication
     delete App->CLSB_Doc;
 
     App->CLSB_Mesh_Mgr->Delete_Brush_List();
+    App->CLSB_Mesh_Mgr->Delete_Group_Brushes();
 
     //App->Say("Last Close");
     CDocument::OnCloseDocument();

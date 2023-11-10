@@ -119,6 +119,8 @@ SB_Mesh_Mgr::SB_Mesh_Mgr(void)
 
 	Brush_Flag = 1;
 	Group_Flag = 0;
+
+	Mesh_Viewer_HWND = nullptr;
 }
 
 SB_Mesh_Mgr::~SB_Mesh_Mgr(void)
@@ -132,7 +134,7 @@ void SB_Mesh_Mgr::Start_Brush_Viewer()
 {
 	App->Get_Current_Document();
 
-	CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSH_VIEWER, App->Equity_Dlg_hWnd, (DLGPROC)Brush_Viewer_Proc);
+	Mesh_Viewer_HWND = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_BRUSH_VIEWER, App->Equity_Dlg_hWnd, (DLGPROC)Brush_Viewer_Proc);
 	
 }
 
@@ -173,15 +175,7 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 			SendMessage(Temp, BM_SETIMAGE, (WPARAM)IMAGE_BITMAP, (LPARAM)(HANDLE)App->Hnd_MeshOff_Bmp);
 		}
 
-		char buf[MAX_PATH];
-		int Count = 0;
-		while (Count < App->CLSB_Model->BrushCount)
-		{
-			sprintf(buf, "%i %s",Count, App->CLSB_Model->B_Brush[Count]->Brush_Name);
-			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-			Count++;
-		}
-
+		App->CLSB_Mesh_Mgr->Update_Brush_List(hDlg);
 		App->CLSB_Mesh_Mgr->UpdateBrushData(hDlg, 0);
 
 		App->CLSB_Ogre->RenderListener->Render_Just_Brush = 0;
@@ -352,13 +346,28 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 		if (LOWORD(wParam) == IDC_BTJUSTBRUSH)
 		{
-			if (App->CLSB_Ogre->RenderListener->Render_Just_Brush == 1)
+			if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 			{
-				App->CLSB_Ogre->RenderListener->Render_Just_Brush = 0;
+				if (App->CLSB_Ogre->RenderListener->Render_Just_Brush == 1)
+				{
+					App->CLSB_Ogre->RenderListener->Render_Just_Brush = 0;
+				}
+				else
+				{
+					App->CLSB_Ogre->RenderListener->Render_Just_Brush = 1;
+				}
 			}
-			else
+
+			if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
 			{
-				App->CLSB_Ogre->RenderListener->Render_Just_Brush = 1;
+				if (App->CLSB_Ogre->RenderListener->ShowOnlySubMesh == 1)
+				{
+					App->CLSB_Ogre->RenderListener->ShowOnlySubMesh = 0;
+				}
+				else
+				{
+					App->CLSB_Ogre->RenderListener->ShowOnlySubMesh = 1;
+				}
 			}
 
 			App->CLSB_Ogre->RenderFrame();
@@ -377,8 +386,16 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 				return 1;
 			}
 
-			App->CLSB_Ogre->RenderListener->Selected_Brush_Index = Index;
-			App->CLSB_Ogre->RenderListener->Selected_Group_Index = App->CLSB_Model->B_Brush[Index]->Group_Index;
+			if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
+			{
+				App->CLSB_Ogre->RenderListener->Selected_Brush_Index = Index;
+				App->CLSB_Ogre->RenderListener->Selected_Group_Index = App->CLSB_Model->B_Brush[Index]->Group_Index;
+			}
+
+			if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
+			{
+				App->CLSB_Ogre->RenderListener->Selected_Group = Index;
+			}
 
 			SetDlgItemText(hDlg, IDC_STBRUSHINDEX, (LPCTSTR)itoa(Index, buff, 10));
 
@@ -405,6 +422,37 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *		Update_Brush_List:- Terry and Hazel Flanigan 2023		 	   *
+// *************************************************************************
+void SB_Mesh_Mgr::Update_Brush_List(HWND hDlg)
+{
+	SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_RESETCONTENT, (WPARAM)0, (LPARAM)0);
+
+	char buf[MAX_PATH];
+	int Count = 0;
+
+	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
+	{
+		while (Count < App->CLSB_Model->BrushCount)
+		{
+			sprintf(buf, "%i %s", Count, App->CLSB_Model->B_Brush[Count]->Brush_Name);
+			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Count++;
+		}
+	}
+
+	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
+	{
+		while (Count < App->CLSB_Model->GroupCount)
+		{
+			sprintf(buf, "%i %s", Count, App->CLSB_Model->Group[Count]->GroupName);
+			SendDlgItemMessage(hDlg, IDC_LISTBRUSHES, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Count++;
+		}
+	}
 }
 
 // *************************************************************************
@@ -1074,7 +1122,7 @@ void SB_Mesh_Mgr::Delete_Group_Brushes()
 	}
 
 	App->CLSB_Model->GroupCount = 0;
-
+	App->CLSB_Model->VerticeCount = 0;
 }
 
 // *************************************************************************
@@ -1082,6 +1130,8 @@ void SB_Mesh_Mgr::Delete_Group_Brushes()
 // *************************************************************************
 bool SB_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 {
+	int mTotalVertices = 0;
+
 	Delete_Group_Brushes();
 
 	App->CLSB_Model->Set_Groupt_Count(mTextureCount);
@@ -1092,6 +1142,8 @@ bool SB_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 		App->CLSB_Model->Create_Mesh_Group(Count);
 		int FaceCount = WE_Get_Vertice_Count(Count);
 
+		strcpy(App->CLSB_Model->Group[Count]->GroupName, TextureName2[Count]);
+
 		App->CLSB_Model->Group[Count]->MaterialIndex = Count;
 		App->CLSB_Model->Group[Count]->vertex_Data.resize(FaceCount * 3);
 		App->CLSB_Model->Group[Count]->Normal_Data.resize(FaceCount * 3);
@@ -1099,10 +1151,17 @@ bool SB_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 		App->CLSB_Model->Group[Count]->Face_Data.resize(FaceCount);
 
 		WE_Convert_To_Texture_Group(Count);
+
+		mTotalVertices = mTotalVertices + FaceCount;
+
 		Count++;
 	}
 
+	App->CLSB_Model->VerticeCount = mTotalVertices * 3;
+	App->CLSB_Model->FaceCount = mTotalVertices;
+
 	App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
+	Update_Brush_List(Mesh_Viewer_HWND);
 
 	return true;
 }
