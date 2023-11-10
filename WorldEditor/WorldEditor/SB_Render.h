@@ -66,7 +66,7 @@ public:
 	int Selected_Brush_Index;
 	int Selected_Group_Index;
 
-
+	int TextureID;
 	int JustTexture_ID;
 
 	int Selected_Group;
@@ -102,6 +102,7 @@ protected:
 	void Assimp_Render_Normals(void);
 	void Render_As_Normals_Parts(int Count);
 
+	bool WE_Render_By_Texture();
 	bool Brush_Render_Brush_Texture(void);
 	bool Brush_Textured_Parts_XX(int Count);
 	bool Brushes_Render_Faces_XX(void);

@@ -54,6 +54,7 @@ SB_Render::SB_Render()
 	Show_Crosshair = 0;
 
 	JustTexture_ID = 0;
+	TextureID = 0;
 
 	// Brushes
 	Render_Just_Brush = 0;
@@ -257,15 +258,16 @@ void SB_Render::Render_Loop()
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 		{
-			
-			if (Render_Brush_Group_Flag == 1)
+			WE_Render_By_Texture();
+
+			/*if (Render_Brush_Group_Flag == 1)
 			{
 				Brush_Render_Group_Texture();
 			}
 			else
 			{
 				Brush_Render_Brush_Texture();
-			}
+			}*/
  
  
 			//XBrush_Render_Textures();
@@ -507,6 +509,78 @@ bool SB_Render::Brush_Textured_Parts_XX(int Count)
 		glEnd();
 
 	}
+
+	return 1;
+}
+
+
+// *************************************************************************
+// *		WE_Render_By_Texture:- Terry and Hazel Flanigan 2023	 	   *
+// *************************************************************************
+bool SB_Render::WE_Render_By_Texture()
+{
+	int Count = 0;
+	int FaceCount = 0;
+
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	int OldId = 0;
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
+	glColor3f(1, 1, 1);
+
+	int BrushCount = App->CLSB_Model->BrushCount;
+	Count = 0;
+
+	glBindTexture(GL_TEXTURE_2D, g_BrushTexture[TextureID]);
+
+	while (Count < BrushCount)
+	{
+
+		FaceCount = 0;
+		while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
+		{
+			if (App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID == TextureID)
+			{
+				//glBindTexture(GL_TEXTURE_2D, g_BrushTexture[App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID]);
+					
+				A = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].a;
+				B = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].b;
+				C = App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].c;
+
+				glBegin(GL_POLYGON);
+
+				//-----------------------------------------------
+				glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[A].v);
+				glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[A].x);
+				glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[A].x);
+
+				//-----------------------------------------------
+				glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[B].v);
+				glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[B].x);
+				glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[B].x);
+
+				//-----------------------------------------------
+				glTexCoord2f(App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].u, App->CLSB_Model->B_Brush[Count]->MapCord_Data[C].v);
+				glNormal3fv(&App->CLSB_Model->B_Brush[Count]->Normal_Data[C].x);
+				glVertex3fv(&App->CLSB_Model->B_Brush[Count]->vertex_Data[C].x);
+				//-----------------------------------------------
+
+				glEnd();
+			}
+
+			FaceCount++;
+		}
+
+		Count++;
+	}
+
+	glDisable(GL_TEXTURE_2D);
 
 	return 1;
 }

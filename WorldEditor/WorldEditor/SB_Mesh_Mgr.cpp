@@ -115,6 +115,7 @@ SB_Mesh_Mgr::SB_Mesh_Mgr(void)
 
 	mBrushCount = 0;
 	mSubBrushCount = 0;
+	mTextureCount = 0;
 
 	Brush_Flag = 1;
 	Group_Flag = 0;
@@ -246,6 +247,18 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 
 	case WM_COMMAND:
 
+		if (LOWORD(wParam) == IDC_BT_TEXTUREIDPLUSE)
+		{
+			App->CLSB_Ogre->RenderListener->TextureID++;
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_BT_TEXTUREIDMINUS)
+		{
+			App->CLSB_Ogre->RenderListener->TextureID--;
+			return TRUE;
+		}
+		
 		if (LOWORD(wParam) == IDC_BT_MESH)
 		{
 			HWND Temp = GetDlgItem(hDlg, IDC_BT_MESH);
@@ -553,9 +566,11 @@ bool SB_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, B
 			AddTexture_GL(NULL, matname, AdjustedIndex);
 
 			AdjustedIndex++;
-
 		}
 	}
+
+	mTextureCount = AdjustedIndex;
+	
 
 	WE_BrushList_Decode(BList, GE_FALSE);
 

@@ -56,6 +56,8 @@ private:
 	int mBrush_Index;
 	char mBrush_Name[200];
 
+	int	mTextureCount;
+
 	int	mBrushCount;
 	int	mSubBrushCount;
 

@@ -1467,7 +1467,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.27 - [09-11-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.27 - [10-11-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2438,12 +2438,14 @@ BEGIN
     LISTBOX         IDC_LISTBRUSHES,7,7,95,236,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LISTBOX         IDC_LISTDATA,106,7,276,236,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     CTEXT           "Static",IDC_STBRUSHINDEX,7,243,72,13,SS_CENTERIMAGE
-    PUSHBUTTON      "Just Brush",IDC_BTJUSTBRUSH,7,257,64,22
+    PUSHBUTTON      "Just Brush",IDC_BTJUSTBRUSH,7,257,51,22
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,284,375,1
-    PUSHBUTTON      "Look At",IDC_BT_LOOKAT,76,257,64,22
-    PUSHBUTTON      "Brush",IDC_BT_BRUSH,202,257,64,22
-    PUSHBUTTON      "Group",IDC_BT_GROUP,271,257,64,22
-    PUSHBUTTON      "",IDC_BT_MESH,145,257,25,22,BS_BITMAP
+    PUSHBUTTON      "Look At",IDC_BT_LOOKAT,61,257,51,22
+    PUSHBUTTON      "Brush",IDC_BT_BRUSH,147,257,51,22
+    PUSHBUTTON      "Group",IDC_BT_GROUP,204,258,51,22
+    PUSHBUTTON      "",IDC_BT_MESH,115,257,25,22,BS_BITMAP
+    PUSHBUTTON      "+",IDC_BT_TEXTUREIDPLUSE,293,258,26,19
+    PUSHBUTTON      "-",IDC_BT_TEXTUREIDMINUS,323,258,26,19
 END
 
 
