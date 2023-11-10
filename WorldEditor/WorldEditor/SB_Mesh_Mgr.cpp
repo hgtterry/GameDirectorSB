@@ -464,27 +464,44 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 
 	char buf[MAX_PATH];
 
-	sprintf(buf, "Group Index %i %s", App->CLSB_Model->B_Brush[Index]->Group_Index, App->CLSB_Model->B_Brush[Index]->Brush_Name);
-	SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "Faces %i", App->CLSB_Model->B_Brush[Index]->Face_Count);
-	SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	sprintf(buf, "Vertices %i", App->CLSB_Model->B_Brush[Index]->Vertice_Count);
-	SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-
-	int Count = 0;
-
-	while (Count < App->CLSB_Model->B_Brush[Index]->Face_Count)
+	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 	{
-		int TextureID = App->CLSB_Model->B_Brush[Index]->Face_Data[Count].TextID;
-
-		sprintf(buf, "Text_ID %i %s", TextureID, TextureName2[TextureID]);
+		sprintf(buf, "Group Index %i %s", App->CLSB_Model->B_Brush[Index]->Group_Index, App->CLSB_Model->B_Brush[Index]->Brush_Name);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
-		Count++;
+
+		sprintf(buf, "Faces %i", App->CLSB_Model->B_Brush[Index]->Face_Count);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Vertices %i", App->CLSB_Model->B_Brush[Index]->Vertice_Count);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		int Count = 0;
+
+		while (Count < App->CLSB_Model->B_Brush[Index]->Face_Count)
+		{
+			int TextureID = App->CLSB_Model->B_Brush[Index]->Face_Data[Count].TextID;
+
+			sprintf(buf, "Text_ID %i %s", TextureID, TextureName2[TextureID]);
+			SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+			Count++;
+		}
+
+		App->CLSB_Mesh_Mgr->Set_BBox_Selected_Brush(Index);
 	}
 
-	App->CLSB_Mesh_Mgr->Set_BBox_Selected_Brush(Index);
+	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
+	{
+		sprintf(buf, "Group Name %s", App->CLSB_Model->Group[Index]->GroupName);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Faces %i", App->CLSB_Model->Group[Index]->GroupFaceCount);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Vertices %i", App->CLSB_Model->Group[Index]->GroupVertCount);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+	}
+
+	
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -1134,6 +1151,8 @@ bool SB_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 
 	Delete_Group_Brushes();
 
+	strcpy(App->CLSB_Model->JustName, "Test");
+
 	App->CLSB_Model->Set_Groupt_Count(mTextureCount);
 
 	int Count = 0;
@@ -1143,6 +1162,12 @@ bool SB_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 		int FaceCount = WE_Get_Vertice_Count(Count);
 
 		strcpy(App->CLSB_Model->Group[Count]->GroupName, TextureName2[Count]);
+		strcpy(App->CLSB_Model->Group[Count]->MaterialName, TextureName2[Count]);
+
+		char buff[MAX_PATH];
+		strcpy(buff, TextureName2[Count]);
+		strcat(buff, ".bmp");
+		strcpy(App->CLSB_Model->Group[Count]->Text_FileName, buff);
 
 		App->CLSB_Model->Group[Count]->MaterialIndex = Count;
 		App->CLSB_Model->Group[Count]->vertex_Data.resize(FaceCount * 3);

@@ -2843,7 +2843,7 @@ BEGIN
             BEGIN
                 MENUITEM "Mesh",                        ID_OGRE3D_MESH
             END
-            MENUITEM "Wavefront obj...",            ID_EXPORT_WAVEFRONTOBJ, GRAYED
+            MENUITEM "Wavefront obj...",            ID_EXPORT_WAVEFRONTOBJ
         END
         MENUITEM SEPARATOR
         MENUITEM "Save Scene",                  ID_FILE_SAVESCENE
