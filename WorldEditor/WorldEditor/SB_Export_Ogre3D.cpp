@@ -157,7 +157,6 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 
 	//App->CL_PB->Stop_Progress_Bar("Export to Ogre Format Completed");
 
-	App->Say("Done");
 	return 1;
 }
 
