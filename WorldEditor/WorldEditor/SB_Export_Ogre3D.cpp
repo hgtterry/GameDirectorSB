@@ -79,6 +79,8 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	mOgreSkellTagName[0] = 0;
 	Directory_Name[0] = 0;
 
+	strcpy(App->CLSB_Model->JustName, "TestX");
+
 	strcpy(Directory_Name, App->CLSB_Model->JustName);
 	strcat(Directory_Name, "_Ogre");
 
@@ -97,7 +99,7 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	Test = CreateDirectoryMesh();
 	if (Test == 0) { return 1; }
 
-	strcpy(App->CLSB_Model->JustName, "");
+	
 
 	strcpy(mOgreMeshFileName, App->CLSB_Model->JustName);
 	strcpy(mOgreScriptFileName, App->CLSB_Model->JustName);

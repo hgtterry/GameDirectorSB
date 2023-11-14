@@ -40,11 +40,11 @@ SB_Exporter::~SB_Exporter(void)
 // *************************************************************************
 void SB_Exporter::Ogre3D_Model(void)
 {
-	if (App->CLSB_Model->Model_Loaded == 0)
+	/*if (App->CLSB_Model->Model_Loaded == 0)
 	{
 		App->Say("No Model Loaded to Export");
 		return;
-	}
+	}*/
 
 	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Actor)
 	{

@@ -346,18 +346,6 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 			return TRUE;
 		}
 		
-		if (LOWORD(wParam) == ID_OGRE3D_MESH)
-		{
-			App->CLSB_Exporter->Ogre3D_Model();
-			return TRUE;
-		}
-
-		if (LOWORD(wParam) == ID_EXPORT_WAVEFRONTOBJ)
-		{
-			App->CLSB_Exporter->Object_Model();
-			return TRUE;
-		}
-
 		// File Clear Model
 		if (LOWORD(wParam) == ID_FILE_CLEARMODEL)
 		{

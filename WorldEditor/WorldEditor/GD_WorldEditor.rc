@@ -1145,6 +1145,10 @@ BEGIN
             MENUITEM "GameDirector .G3ds",          ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS, GRAYED
             MENUITEM "Old Export",                  ID_FILE_EXPORT_OLDEXPORT, GRAYED
             MENUITEM SEPARATOR
+            POPUP "Ogre3D..."
+            BEGIN
+                MENUITEM "Mesh",                        ID_OGRE3D_MESH
+            END
             MENUITEM "Wavefront obj...",            ID_EXPORT_WAVEFRONTOBJECT
         END
         MENUITEM SEPARATOR
@@ -2833,21 +2837,12 @@ IDR_MENUSB MENU
 BEGIN
     POPUP "File"
     BEGIN
-        POPUP "Import"
+        POPUP "Import", GRAYED
         BEGIN
             MENUITEM "World Editor Project .Wepf...", ID_IMPORT_WORLDEDITORPROJECT, GRAYED
             MENUITEM "Wavefront    obj...",         ID_IMPORT_WAVEFRONTOBJ, GRAYED
             MENUITEM "Genesis3D    act...",         ID_IMPORT_GENESIS3DACT, GRAYED
         END
-        POPUP "Export"
-        BEGIN
-            POPUP "Ogre3D"
-            BEGIN
-                MENUITEM "Mesh",                        ID_OGRE3D_MESH
-            END
-            MENUITEM "Wavefront obj...",            ID_EXPORT_WAVEFRONTOBJ
-        END
-        MENUITEM SEPARATOR
         MENUITEM "Save Scene",                  ID_FILE_SAVESCENE
         MENUITEM SEPARATOR
         MENUITEM "Clear Model",                 ID_FILE_CLEARMODEL

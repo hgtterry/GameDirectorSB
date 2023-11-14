@@ -192,6 +192,31 @@ void SB_Export_World::Export_World_To_Object()
 }
 
 // *************************************************************************
+// * 	Export_World_To_Ogre3D_Mesh:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_Export_World::Export_World_To_Ogre3D_Mesh()
+{
+	int Test = App->CL_Brush->Get_Brush_Count();
+	if (Test == 0)
+	{
+		App->Say("No Brushes to Export");
+		return;
+	}
+
+	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
+
+	App->CLSB_Exporter->Ogre3D_Model();
+
+	//bool test = App->CLSB_Export_Object->Create_ObjectFile();
+
+	//if (test == 1)
+	{
+		App->Say("Ogre3D Mesh file Created successfully");
+	}
+}
+
+// *************************************************************************
 // * 		Export_World_GD3D:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_Export_World::Export_World_GD3D(bool Silent)

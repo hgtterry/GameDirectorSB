@@ -1077,6 +1077,8 @@
 #define ID_FILE_SAVESCENE               33091
 #define ID_EXPORT_WAVEFRONTOBJ33092     33092
 #define ID_EXPORT_WAVEFRONTOBJECT       33093
+#define ID_EXPORT_OGRE3D33094           33094
+#define ID_OGRE3D_MESH33095             33095
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -1085,7 +1087,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        351
-#define _APS_NEXT_COMMAND_VALUE         33094
+#define _APS_NEXT_COMMAND_VALUE         33096
 #define _APS_NEXT_CONTROL_VALUE         1561
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

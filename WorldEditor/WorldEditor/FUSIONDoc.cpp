@@ -164,8 +164,9 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
     ON_UPDATE_COMMAND_UI(ID_FILE_EXPORT_OLDEXPORT, OnUpdateFileExport) // Old Exporter
 
     ON_COMMAND(ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS, OnFileExportGDSB) //  hgtterry [100123]
-    ON_COMMAND(ID_EXPORT_WAVEFRONTOBJECT, OnFileExportObject) //  hgtterry [100123]
-
+    ON_COMMAND(ID_EXPORT_WAVEFRONTOBJECT, OnFileExportObject) //  WaveFront Object
+    ON_COMMAND(ID_OGRE3D_MESH, OnFileExport_Ogre3D_Mesh) //  Ogre3D Mesh
+    
     ON_UPDATE_COMMAND_UI(ID_FILE_EXPORTGDSB_GAMEDIRECTORG3DS, OnUpdateFileExportGDSB) //  hgtterry [100123]
 
     ON_COMMAND( ID_VIEW_3DWIREFRAME, OnViewTypeWireFrame)
@@ -6650,6 +6651,14 @@ void CFusionDoc::OnFileExportGDSB()
 void CFusionDoc::OnFileExportObject()
 {
     App->CLSB_Export_World->Export_World_To_Object();
+}
+
+// *************************************************************************
+// * 				OnFileExport_Ogre3D_Mesh:- hgtterry					   *
+// *************************************************************************
+void CFusionDoc::OnFileExport_Ogre3D_Mesh()
+{
+    App->CLSB_Export_World->Export_World_To_Ogre3D_Mesh();
 }
 
 const char* CFusionDoc::GetObjectName3D(CPoint point, ViewVars *v)
