@@ -1469,7 +1469,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.27 - [11-11-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.27 - [14-11-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2841,7 +2841,7 @@ BEGIN
         END
         POPUP "Export"
         BEGIN
-            POPUP "Ogre3D", GRAYED
+            POPUP "Ogre3D"
             BEGIN
                 MENUITEM "Mesh",                        ID_OGRE3D_MESH
             END

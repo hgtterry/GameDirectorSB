@@ -91,7 +91,10 @@ public:
 private:
 
 	bool CreateDirectoryMesh(void);
+
 	bool DecompileTextures(void);
+	bool DecompileTextures_TXL(void);
+
 	void CreateMaterialFile(char* MatFileName);
 
 	bool Write_XML_File();

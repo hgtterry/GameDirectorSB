@@ -97,6 +97,8 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	Test = CreateDirectoryMesh();
 	if (Test == 0) { return 1; }
 
+	strcpy(App->CLSB_Model->JustName, "");
+
 	strcpy(mOgreMeshFileName, App->CLSB_Model->JustName);
 	strcpy(mOgreScriptFileName, App->CLSB_Model->JustName);
 	strcpy(mOgreSkellFileName, App->CLSB_Model->JustName);
@@ -108,7 +110,8 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 
 	//App->CL_PB->Nudge("DecompileTextures");
 
-	DecompileTextures();
+	//DecompileTextures();
+	DecompileTextures_TXL();
 
 	//App->CL_PB->Nudge("CreateMaterialFile");
 	CreateMaterialFile(mOgreScriptFileName);
@@ -609,12 +612,6 @@ XmlOptions SB_Export_Ogre3D::parseArgs()
 // *************************************************************************
 bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
 {
-	/*if (App->CL_Export_Ogre3D->Export_As_RF)
-	{
-		strcpy(App->CL_Equity_SB->Pref_Ogre_Path, App->CL_FileIO->szSelectedDir);
-		App->CL_Equity_SB->Write_Project_File()
-	}*/
-
 	if (Add_Sub_Folder == 0)
 	{
 		strcpy(NewDirectory, "");
@@ -651,6 +648,36 @@ bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
 	}
 
 	_getcwd(mCurrentFolder, MAX_PATH);
+
+	return 1;
+}
+
+// *************************************************************************
+// *		DecompileTextures_TXL:- Terry and Hazel Flanigan 2023  	   	   *
+// *************************************************************************
+bool SB_Export_Ogre3D::DecompileTextures_TXL(void)
+{
+	//App->CLSB_Export_Object->Export_Textures();
+
+	char OutputFolder[1024];
+	strcpy(OutputFolder, mCurrentFolder);
+	strcat(OutputFolder, "\\");
+
+	char buf[MAX_PATH];
+
+	int GroupCount = 0;
+	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
+
+	while (GroupCount < GroupCountTotal)
+	{
+		strcpy(buf, App->CLSB_Model->Group[GroupCount]->Text_FileName);
+		int Len = strlen(buf);
+		buf[Len - 4] = 0;
+
+		App->CLSB_Textures->Extract_TXL_Texture(buf, OutputFolder);
+
+		GroupCount++;
+	}
 
 	return 1;
 }
