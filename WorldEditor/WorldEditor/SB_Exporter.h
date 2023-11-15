@@ -35,6 +35,9 @@ public:
 
 	bool Is_Canceled;
 
+	char mJustName[MAX_PATH];
+	char mDirectory_Name[MAX_PATH];
+
 private:
 
 	static LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

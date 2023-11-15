@@ -29,6 +29,9 @@ distribution.
 SB_Exporter::SB_Exporter(void)
 {
 	Is_Canceled = 0;
+
+	mJustName[0] = 0;
+	mDirectory_Name[0] = 0;
 }
 
 SB_Exporter::~SB_Exporter(void)
@@ -70,8 +73,18 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		
 
 		SetDlgItemText(hDlg, IDC_ST_FOLDER, App->CLSB_FileIO->szSelectedDir);
-		SetDlgItemText(hDlg, IDC_ST_NAME, App->CLSB_Model->JustName);
-		SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Export_Ogre3D->Directory_Name);
+
+		char buf[MAX_PATH];
+		strcpy(buf, App->CL_World->mCurrent_3DT_File);
+		int Len = strlen(buf);
+		buf[Len - 4] = 0;
+		strcpy(App->CLSB_Exporter->mJustName, buf);
+		SetDlgItemText(hDlg, IDC_ST_NAME, buf);
+
+		strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
+		strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre");
+
+		SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
 
 		HWND Temp = GetDlgItem(hDlg, IDC_CK_SUBFOLDER);
 		SendMessage(Temp, BM_SETCHECK, BST_CHECKED, 0);

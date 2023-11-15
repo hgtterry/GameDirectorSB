@@ -81,11 +81,10 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	mOgreSkellTagName[0] = 0;
 	Directory_Name[0] = 0;
 
-	strcpy(App->CLSB_Model->JustName, "TestX");
+	strcpy(App->CLSB_Model->JustName, App->CLSB_Exporter->mJustName);
 
-	strcpy(Directory_Name, App->CLSB_Model->JustName);
-	strcat(Directory_Name, "_Ogre");
-
+	strcpy(Directory_Name, App->CLSB_Exporter->mDirectory_Name);
+	
 	strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Ogre Files a sub folder will be created");
 	int Test = App->CLSB_FileIO->StartBrowser(App->CLSB_Model->Model_FolderPath);
 	if (Test == 0) { return 1; }
@@ -94,18 +93,21 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	if (App->CLSB_Exporter->Is_Canceled == 1) { return 1; }
 
 
+
+	strcpy(App->CLSB_Model->JustName, App->CLSB_Exporter->mJustName);
+	strcpy(Directory_Name, App->CLSB_Exporter->mDirectory_Name);
 	strcpy(mSelected_Directory, App->CLSB_FileIO->szSelectedDir);
-	//App->Say(mSelected_Directory);
+	
 
 	Test = CreateDirectoryMesh();
 	if (Test == 0) { return 1; }
 
 	
 
-	strcpy(mOgreMeshFileName, App->CLSB_Model->JustName);
-	strcpy(mOgreScriptFileName, App->CLSB_Model->JustName);
-	strcpy(mOgreSkellFileName, App->CLSB_Model->JustName);
-	strcpy(mOgreSkellTagName, App->CLSB_Model->JustName);
+	strcpy(mOgreMeshFileName, App->CLSB_Exporter->mJustName);
+	strcpy(mOgreScriptFileName, App->CLSB_Exporter->mJustName);
+	strcpy(mOgreSkellFileName, App->CLSB_Exporter->mJustName);
+	strcpy(mOgreSkellTagName, App->CLSB_Exporter->mJustName);
 
 	strcat(mOgreMeshFileName, ".mesh");
 	strcat(mOgreScriptFileName, ".material");
@@ -144,6 +146,52 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	Convert_To_Mesh();
 
 	remove(OldFile);
+
+	return 1;
+}
+
+// *************************************************************************
+// *		CreateDirectoryMesh:- Terry and Hazel Flanigan 2023	 	 	   *
+// *************************************************************************
+bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
+{
+	if (Add_Sub_Folder == 0)
+	{
+		strcpy(NewDirectory, "");
+		_chdir(mSelected_Directory);
+	}
+	else
+	{
+		strcpy(NewDirectory, "\\");
+		strcat(NewDirectory, Directory_Name);
+		
+		strcat(mSelected_Directory, NewDirectory);
+		
+
+		if (_mkdir(mSelected_Directory) == 0)
+		{
+			strcpy(mDecompileFolder, mSelected_Directory);
+			_chdir(mSelected_Directory);
+		}
+		else
+		{
+			App->CLSB_Dialogs->YesNo("File Exsits", "Do you want to update File");
+
+			bool Doit = App->CLSB_Dialogs->Canceled;
+			if (Doit == 0)
+			{
+				strcpy(mDecompileFolder, mSelected_Directory);
+				_chdir(mSelected_Directory);
+			}
+			else
+			{
+				return 0;
+			}
+		}
+
+	}
+
+	_getcwd(mCurrentFolder, MAX_PATH);
 
 	return 1;
 }
@@ -597,51 +645,6 @@ XmlOptions SB_Export_Ogre3D::parseArgs()
 }
 
 // *************************************************************************
-// *		CreateDirectoryMesh:- Terry and Hazel Flanigan 2023	 	 	   *
-// *************************************************************************
-bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
-{
-	if (Add_Sub_Folder == 0)
-	{
-		strcpy(NewDirectory, "");
-		_chdir(mSelected_Directory);
-	}
-	else
-	{
-		strcpy(NewDirectory, "\\");
-		strcat(NewDirectory, Directory_Name);
-
-		strcat(mSelected_Directory, NewDirectory);
-
-		if (_mkdir(mSelected_Directory) == 0)
-		{
-			strcpy(mDecompileFolder, mSelected_Directory);
-			_chdir(mSelected_Directory);
-		}
-		else
-		{
-			App->CLSB_Dialogs->YesNo("File Exsits", "Do you want to update File");
-
-			bool Doit = App->CLSB_Dialogs->Canceled;
-			if (Doit == 0)
-			{
-				strcpy(mDecompileFolder, mSelected_Directory);
-				_chdir(mSelected_Directory);
-			}
-			else
-			{
-				return 0;
-			}
-		}
-
-	}
-
-	_getcwd(mCurrentFolder, MAX_PATH);
-
-	return 1;
-}
-
-// *************************************************************************
 // *		DecompileTextures_TXL:- Terry and Hazel Flanigan 2023  	   	   *
 // *************************************************************************
 bool SB_Export_Ogre3D::DecompileTextures_TXL(void)
@@ -798,7 +801,7 @@ bool SB_Export_Ogre3D::Write_XML_File()
 	char XmlFileName[256];
 	char XFIle[256];
 
-	strcpy(XmlFileName, App->CLSB_Model->JustName);
+	strcpy(XmlFileName, App->CLSB_Exporter->mJustName);
 
 	strcpy(XmlMeshFileName, XmlFileName);
 	strcpy(XmlScriptFileName, XmlFileName);
@@ -1045,7 +1048,7 @@ bool SB_Export_Ogre3D::Write_WE_XML_File()
 	char XmlFileName[256];
 	char XFIle[256];
 
-	strcpy(XmlFileName, App->CLSB_Model->JustName);
+	strcpy(XmlFileName, App->CLSB_Exporter->mJustName);
 
 	strcpy(XmlMeshFileName, XmlFileName);
 	strcpy(XmlScriptFileName, XmlFileName);
