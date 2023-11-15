@@ -30,6 +30,8 @@ SB_Exporter::SB_Exporter(void)
 {
 	Is_Canceled = 0;
 
+	Selected_Index = 0;
+
 	mJustName[0] = 0;
 	mDirectory_Name[0] = 0;
 }
@@ -71,6 +73,9 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		SendDlgItemMessage(hDlg, IDC_LST_FILEFORMATS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
 
 		SetDlgItemText(hDlg, IDC_ST_FOLDER, App->CLSB_FileIO->szSelectedDir);
 
@@ -273,8 +278,35 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_LST_FILEFORMATS)
+		{
+			char buff[256];
+			int Index = 0;
+			Index = SendDlgItemMessage(hDlg, IDC_LST_FILEFORMATS, LB_GETCURSEL, (WPARAM)0, (LPARAM)0);
+
+			if (Index == -1)
+			{
+				return 1;
+			}
+
+			App->CLSB_Exporter->Selected_Index = Index;
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDOK)
 		{
+			
+			if (App->CLSB_Exporter->Selected_Index == 0)
+			{
+				App->CLSB_Exporter->Ogre3D_Model();
+			}
+
+			if (App->CLSB_Exporter->Selected_Index == 1)
+			{
+				App->CLSB_Exporter->Object_Model();
+			}
+
 			App->CLSB_Exporter->Is_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -319,19 +351,13 @@ void SB_Exporter::List_FIle_Formats(HWND m_hDlg)
 // *************************************************************************
 void SB_Exporter::Ogre3D_Model(void)
 {
-	/*if (App->CLSB_Model->Model_Loaded == 0)
-	{
-		App->Say("No Model Loaded to Export");
-		return;
-	}*/
 
-	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Actor)
-	{
-		App->Say("Not available for the Actor format just yet.");
-		return;
-	}
+	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 
 	App->CLSB_Export_Ogre3D->Export_AssimpToOgre();
+
+	App->Say("Ogre3D Mesh file Created successfully");
 }
 
 // *************************************************************************
@@ -339,11 +365,8 @@ void SB_Exporter::Ogre3D_Model(void)
 // *************************************************************************
 void SB_Exporter::Object_Model(void)
 {
-	if (App->CLSB_Model->Model_Loaded == 0)
-	{
-		App->Say("No Model Loaded to Export");
-		return;
-	}
+	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 
 	bool test = App->CLSB_Export_Object->Create_ObjectFile();
 

@@ -257,6 +257,16 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 			App->CLSB_Scene->Update_Scene();
 			return TRUE;
 		}
+
+		if (LOWORD(wParam) == IDC_BT_EXPORT)
+		{
+			strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Object Files a sub folder will be created");
+			int Test = App->CLSB_FileIO->StartBrowser("");
+
+			App->CLSB_Exporter->Start_Export_Dlg();
+
+			return TRUE;
+		}
 		
 		if (LOWORD(wParam) == IDOK)
 		{
