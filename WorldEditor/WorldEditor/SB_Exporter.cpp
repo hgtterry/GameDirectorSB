@@ -36,26 +36,6 @@ SB_Exporter::~SB_Exporter(void)
 }
 
 // *************************************************************************
-// *			Ogre3D_Model:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-void SB_Exporter::Ogre3D_Model(void)
-{
-	/*if (App->CLSB_Model->Model_Loaded == 0)
-	{
-		App->Say("No Model Loaded to Export");
-		return;
-	}*/
-
-	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Actor)
-	{
-		App->Say("Not available for the Actor format just yet.");
-		return;
-	}
-
-	App->CLSB_Export_Ogre3D->Export_AssimpToOgre();
-}
-
-// *************************************************************************
 // *	  		Start_Export_Dlg:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_Exporter::Start_Export_Dlg()
@@ -86,6 +66,9 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_ST_FLD, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_ST_FN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
+		SendDlgItemMessage(hDlg, IDC_LST_FILEFORMATS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
+
 		SetDlgItemText(hDlg, IDC_ST_FOLDER, App->CLSB_FileIO->szSelectedDir);
 		SetDlgItemText(hDlg, IDC_ST_NAME, App->CLSB_Model->JustName);
 		SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Export_Ogre3D->Directory_Name);
@@ -94,8 +77,11 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendMessage(Temp, BM_SETCHECK, BST_CHECKED, 0);
 		App->CLSB_Export_Ogre3D->Add_Sub_Folder = 1;
 
+		App->CLSB_Exporter->List_FIle_Formats(hDlg);
+
 		return TRUE;
 	}
+
 	case WM_CTLCOLORSTATIC:
 	{
 		if (GetDlgItem(hDlg, IDC_ST_FOLDER) == (HWND)lParam)
@@ -292,9 +278,47 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		break;
 	}
 
-	} // Switch End
+	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *			List_FIle_Formats:- Terry and Hazel Flanigan 2023 		   *
+// *************************************************************************
+void SB_Exporter::List_FIle_Formats(HWND m_hDlg)
+{
+	char buf[100];
+
+	sprintf(buf,"%s", "Ogre3D .mesh");
+	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s", "Wavefront Object .obj");
+	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+}
+
+// ---------------------------------------------------------------------
+// ---------------------------------------------------------------------
+ 
+ 
+// *************************************************************************
+// *			Ogre3D_Model:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Exporter::Ogre3D_Model(void)
+{
+	/*if (App->CLSB_Model->Model_Loaded == 0)
+	{
+		App->Say("No Model Loaded to Export");
+		return;
+	}*/
+
+	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Actor)
+	{
+		App->Say("Not available for the Actor format just yet.");
+		return;
+	}
+
+	App->CLSB_Export_Ogre3D->Export_AssimpToOgre();
 }
 
 // *************************************************************************

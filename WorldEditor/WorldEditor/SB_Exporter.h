@@ -38,5 +38,7 @@ public:
 private:
 
 	static LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	void List_FIle_Formats(HWND m_hDlg);
 };
 
