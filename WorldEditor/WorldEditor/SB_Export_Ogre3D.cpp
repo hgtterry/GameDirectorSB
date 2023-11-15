@@ -51,6 +51,8 @@ SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 	Directory_Name[0] = 0;
 	mCurrentFolder[0] = 0;
 
+	mSelected_Directory[0] = 0;
+
 	nx = 0;
 	ny = 0;
 	nz = 0;
@@ -91,10 +93,9 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	App->CLSB_Exporter->Start_Export_Dlg();
 	if (App->CLSB_Exporter->Is_Canceled == 1) { return 1; }
 
-	//App->CL_PB->StartNewProgressBar();
-	//App->CL_PB->Set_Progress("Building Scene/Game", 15);
 
-	//App->CL_PB->Nudge("CreateDirectoryMesh");
+	strcpy(mSelected_Directory, App->CLSB_FileIO->szSelectedDir);
+	//App->Say(mSelected_Directory);
 
 	Test = CreateDirectoryMesh();
 	if (Test == 0) { return 1; }
@@ -110,22 +111,18 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	strcat(mOgreScriptFileName, ".material");
 	strcat(mOgreSkellFileName, ".skeleton");
 
-	//App->CL_PB->Nudge("DecompileTextures");
-
 	//DecompileTextures();
 	DecompileTextures_TXL();
 
-	//App->CL_PB->Nudge("CreateMaterialFile");
+	
 	CreateMaterialFile(mOgreScriptFileName);
 
-	//App->CL_PB->Nudge("Write_XML_File");
 	Write_XML_File();
 
 	//// ---------------------------------------------------- 
 	char SourceFile[1024];
 	char OldFile[1024];
 
-	//App->CL_PB->Nudge("Transfer");
 	strcpy(OldFile, XmlMeshFileName);
 
 	strcpy(SourceFile, mCurrentFolder);
@@ -144,18 +141,9 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 
 	strcpy(Dest_Path_FileName, DestFile);
 
-	//App->CL_PB->Nudge("Convert_To_Mesh");
 	Convert_To_Mesh();
 
-	//App->CL_PB->Nudge("Remove Temp Files");
 	remove(OldFile);
-
-	//App->CL_PB->Nudge("Convert_To_Mesh");
-	//App->CL_PB->Nudge("Convert_To_Mesh");
-	//App->CL_PB->Nudge("Convert_To_Mesh");
-	//App->CL_PB->Nudge("Convert_To_Mesh");
-
-	//App->CL_PB->Stop_Progress_Bar("Export to Ogre Format Completed");
 
 	return 1;
 }
@@ -616,19 +604,19 @@ bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
 	if (Add_Sub_Folder == 0)
 	{
 		strcpy(NewDirectory, "");
-		_chdir(App->CLSB_FileIO->szSelectedDir);
+		_chdir(mSelected_Directory);
 	}
 	else
 	{
 		strcpy(NewDirectory, "\\");
 		strcat(NewDirectory, Directory_Name);
 
-		strcat(App->CLSB_FileIO->szSelectedDir, NewDirectory);
+		strcat(mSelected_Directory, NewDirectory);
 
-		if (_mkdir(App->CLSB_FileIO->szSelectedDir) == 0)
+		if (_mkdir(mSelected_Directory) == 0)
 		{
-			strcpy(mDecompileFolder, App->CLSB_FileIO->szSelectedDir);
-			_chdir(App->CLSB_FileIO->szSelectedDir);
+			strcpy(mDecompileFolder, mSelected_Directory);
+			_chdir(mSelected_Directory);
 		}
 		else
 		{
@@ -637,8 +625,8 @@ bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
 			bool Doit = App->CLSB_Dialogs->Canceled;
 			if (Doit == 0)
 			{
-				strcpy(mDecompileFolder, App->CLSB_FileIO->szSelectedDir);
-				_chdir(App->CLSB_FileIO->szSelectedDir);
+				strcpy(mDecompileFolder, mSelected_Directory);
+				_chdir(mSelected_Directory);
 			}
 			else
 			{
@@ -658,7 +646,6 @@ bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
 // *************************************************************************
 bool SB_Export_Ogre3D::DecompileTextures_TXL(void)
 {
-	//App->CLSB_Export_Object->Export_Textures();
 
 	char OutputFolder[1024];
 	strcpy(OutputFolder, mCurrentFolder);

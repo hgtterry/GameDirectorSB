@@ -125,6 +125,8 @@ private:
 
 	char mCurrentFolder[MAX_PATH];
 
+	char mSelected_Directory[MAX_PATH];
+
 	float nx;
 	float ny;
 	float nz;
