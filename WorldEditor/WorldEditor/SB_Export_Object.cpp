@@ -40,22 +40,12 @@ SB_Export_Object::~SB_Export_Object()
 // *************************************************************************
 bool SB_Export_Object::Create_ObjectFile(void)
 {
-
-	strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Object Files a sub folder will be created");
-	int Test = App->CLSB_FileIO->StartBrowser("");
-
-	if (Test == 0)
-	{
-		return 0;
-	}
-
 	strcpy(OutputFolder, "");
 
 	char buff[1024];
-	strcpy(buff, App->CLSB_FileIO->szSelectedDir);
+	strcpy(buff, App->CLSB_Exporter->mFolder_Path);
 	strcat(buff, "\\");
-	strcat(buff, App->CLSB_Model->JustName);
-	strcat(buff, "_Object");
+	strcat(buff, App->CLSB_Exporter->mDirectory_Name);
 	strcat(buff, "\\");
 
 	strcpy(OutputFolder, buff);
@@ -65,14 +55,14 @@ bool SB_Export_Object::Create_ObjectFile(void)
 	Export_Textures();
 
 	strcpy(Object_FileName, OutputFolder);
-	strcat(Object_FileName, App->CLSB_Model->JustName);
+	strcat(Object_FileName, App->CLSB_Exporter->mJustName);
 	strcat(Object_FileName, ".obj");
 
 	strcpy(mtl_FileName, OutputFolder);
-	strcat(mtl_FileName, App->CLSB_Model->JustName);
+	strcat(mtl_FileName, App->CLSB_Exporter->mJustName);
 	strcat(mtl_FileName, ".mtl");
 
-	strcpy(Just_mtl_FileName, App->CLSB_Model->JustName);
+	strcpy(Just_mtl_FileName, App->CLSB_Exporter->mJustName);
 	strcat(Just_mtl_FileName, ".mtl");
 
 	Write_ObjectFile();

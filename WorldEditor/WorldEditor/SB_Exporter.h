@@ -37,13 +37,15 @@ public:
 
 	char mJustName[MAX_PATH];
 	char mDirectory_Name[MAX_PATH];
+	char mFolder_Path[MAX_PATH];
 
 private:
 
 	static LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Set_Dialog_Data(HWND m_hDlg);
 	void List_FIle_Formats(HWND m_hDlg);
-
+	
 	int Selected_Index;
 };
 

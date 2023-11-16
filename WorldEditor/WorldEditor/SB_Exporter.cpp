@@ -34,6 +34,7 @@ SB_Exporter::SB_Exporter(void)
 
 	mJustName[0] = 0;
 	mDirectory_Name[0] = 0;
+	mFolder_Path[0] = 0;
 }
 
 SB_Exporter::~SB_Exporter(void)
@@ -76,21 +77,8 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-
-		SetDlgItemText(hDlg, IDC_ST_FOLDER, App->CLSB_FileIO->szSelectedDir);
-
-		char buf[MAX_PATH];
-		strcpy(buf, App->CL_World->mCurrent_3DT_File);
-		int Len = strlen(buf);
-		buf[Len - 4] = 0;
-		strcpy(App->CLSB_Exporter->mJustName, buf);
-		SetDlgItemText(hDlg, IDC_ST_NAME, buf);
-
-		strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
-		strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre");
-
-		SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
-
+		App->CLSB_Exporter->Set_Dialog_Data(hDlg);
+		
 		HWND Temp = GetDlgItem(hDlg, IDC_CK_SUBFOLDER);
 		SendMessage(Temp, BM_SETCHECK, BST_CHECKED, 0);
 		App->CLSB_Export_Ogre3D->Add_Sub_Folder = 1;
@@ -289,7 +277,24 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 				return 1;
 			}
 
+			if (Index == 0)
+			{
+				strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
+				strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre");
+
+				SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
+			}
+
+			if (Index == 1)
+			{
+				strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
+				strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront");
+
+				SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
+			}
+
 			App->CLSB_Exporter->Selected_Index = Index;
+
 
 			return TRUE;
 		}
@@ -326,6 +331,30 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Set_Dialog_Data:- Terry and Hazel Flanigan 2023 		   *
+// *************************************************************************
+void SB_Exporter::Set_Dialog_Data(HWND m_hDlg)
+{
+	// Just Name
+	char buf[MAX_PATH];
+	strcpy(buf, App->CL_World->mCurrent_3DT_File);
+	int Len = strlen(buf);
+	buf[Len - 4] = 0;
+	strcpy(App->CLSB_Exporter->mJustName, buf);
+	SetDlgItemText(m_hDlg, IDC_ST_NAME, buf);
+
+	// Folder Path
+	strcpy(App->CLSB_Exporter->mFolder_Path, App->CLSB_FileIO->szSelectedDir);
+	SetDlgItemText(m_hDlg, IDC_ST_FOLDER, App->CLSB_FileIO->szSelectedDir);
+
+	// Directory Name
+	strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
+	strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre");
+	SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
+
 }
 
 // *************************************************************************
