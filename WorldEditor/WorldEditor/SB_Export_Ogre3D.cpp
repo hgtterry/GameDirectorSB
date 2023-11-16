@@ -85,24 +85,13 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 
 	strcpy(Directory_Name, App->CLSB_Exporter->mDirectory_Name);
 	
-	/*strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Ogre Files a sub folder will be created");
-	int Test = App->CLSB_FileIO->StartBrowser(App->CLSB_Model->Model_FolderPath);
-	if (Test == 0) { return 1; }*/
-
-	/*App->CLSB_Exporter->Start_Export_Dlg();
-	if (App->CLSB_Exporter->Is_Canceled == 1) { return 1; }*/
-
-
-
 	strcpy(App->CLSB_Model->JustName, App->CLSB_Exporter->mJustName);
 	strcpy(Directory_Name, App->CLSB_Exporter->mDirectory_Name);
-	strcpy(mSelected_Directory, App->CLSB_FileIO->szSelectedDir);
+	strcpy(mSelected_Directory, App->CLSB_Exporter->mFolder_Path);
 	
 
 	int Test = CreateDirectoryMesh();
 	if (Test == 0) { return 1; }
-
-	
 
 	strcpy(mOgreMeshFileName, App->CLSB_Exporter->mJustName);
 	strcpy(mOgreScriptFileName, App->CLSB_Exporter->mJustName);
@@ -116,7 +105,6 @@ bool SB_Export_Ogre3D::Export_AssimpToOgre(void)
 	//DecompileTextures();
 	DecompileTextures_TXL();
 
-	
 	CreateMaterialFile(mOgreScriptFileName);
 
 	Write_XML_File();

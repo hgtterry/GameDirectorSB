@@ -44,7 +44,9 @@ private:
 	static LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void Set_Dialog_Data(HWND m_hDlg);
-	void List_FIle_Formats(HWND m_hDlg);
+	void Update_Dialog_Data(HWND m_hDlg);
+
+	void List_File_Formats(HWND m_hDlg);
 	
 	int Selected_Index;
 	bool Export_Selected;

@@ -6568,6 +6568,13 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
 
 void CFusionDoc::OnFileExport()
 {
+    int NumBrushes = App->CL_World->Get_Brush_Count();
+    if (NumBrushes == 0)
+    {
+        App->Say("Nothing to Export");
+        return;
+    }
+
     App->CLSB_Exporter->Start_Export_Dlg();
 
 //// changed QD 12/03

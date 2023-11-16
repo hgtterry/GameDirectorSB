@@ -28,6 +28,7 @@ public:
 	SB_Dialogs(void);
 	~SB_Dialogs(void);
 
+	bool Dialog_Text();
 	void YesNo(char* Text, char* Text2);
 	void YesNoCancel(char* Text, char* Text2);
 
@@ -46,6 +47,8 @@ public:
 	char MessageString2[100];
 
 	char btext[100];
+	char Chr_Text[MAX_PATH];
+
 	char Chr_DropText[MAX_PATH];
 	int DropList_Data;
 
@@ -56,6 +59,7 @@ private:
 	static LRESULT CALLBACK Speed_Camera_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_DropGen_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK Dialog_TrueFlase_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void List_SceneData(HWND hDlg);
 	void List_BoundingBox(HWND hDlg);

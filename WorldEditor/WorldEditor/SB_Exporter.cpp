@@ -98,7 +98,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendMessage(Temp, BM_SETCHECK, BST_CHECKED, 0);
 		App->CLSB_Export_Ogre3D->Add_Sub_Folder = 1;
 
-		App->CLSB_Exporter->List_FIle_Formats(hDlg);
+		App->CLSB_Exporter->List_File_Formats(hDlg);
 
 		Temp = GetDlgItem(hDlg, IDC_CK_EXPORTALL);
 		SendMessage(Temp, BM_SETCHECK, 1, 0);
@@ -199,7 +199,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}
+		}*/
 
 		if (some_item->idFrom == IDC_BT_CHANGE_NAME && some_item->code == NM_CUSTOMDRAW)
 		{
@@ -227,7 +227,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			App->Custom_Button_Normal(item);
 			return CDRF_DODEFAULT;
-		}*/
+		}
 
 		return CDRF_DODEFAULT;
 	}
@@ -284,17 +284,19 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_CHANGE_NAME)
 		{
-			/*strcpy(App->CLSB_Dialogs->btext, "Change File Name");
-			strcpy(App->CLSB_Dialogs->Chr_Text, App->CL_Model->JustName);
+			strcpy(App->CLSB_Dialogs->btext, "Change File Name");
+			strcpy(App->CLSB_Dialogs->Chr_Text, App->CLSB_Exporter->mJustName);
 
 			App->CLSB_Dialogs->Dialog_Text();
 
-			if (App->CLSB_Dialogs->Is_Canceled == 0)
+			if (App->CLSB_Dialogs->Canceled == 0)
 			{
-				strcpy(App->CLSB_Model->JustName, App->CLSB_Dialogs->Chr_Text);
+				strcpy(App->CLSB_Exporter->mJustName, App->CLSB_Dialogs->Chr_Text);
 			}
 
-			SetDlgItemText(hDlg, IDC_ST_NAME, App->CLSB_Model->JustName);*/
+			SetDlgItemText(hDlg, IDC_ST_NAME, App->CLSB_Exporter->mJustName);
+
+			App->CLSB_Exporter->Update_Dialog_Data(hDlg);
 
 			return TRUE;
 		}
@@ -324,6 +326,8 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			SetDlgItemText(hDlg, IDC_ST_FOLDER, App->CLSB_FileIO->szSelectedDir);
 
+			strcpy(App->CLSB_Exporter->mFolder_Path, App->CLSB_FileIO->szSelectedDir);
+
 			return TRUE;
 		}
 
@@ -341,7 +345,15 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 			if (Index == 0)
 			{
 				strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
-				strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre");
+
+				if (App->CLSB_Exporter->Export_Selected == 0)
+				{
+					strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_All");
+				}
+				else
+				{
+					strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_Sel");
+				}
 
 				SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
 			}
@@ -349,13 +361,20 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 			if (Index == 1)
 			{
 				strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
-				strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront");
+
+				if (App->CLSB_Exporter->Export_Selected == 0)
+				{
+					strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_All");
+				}
+				else
+				{
+					strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_Sel");
+				}
 
 				SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
 			}
 
 			App->CLSB_Exporter->Selected_Index = Index;
-
 
 			return TRUE;
 		}
@@ -395,6 +414,46 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 }
 
 // *************************************************************************
+// *			Update_Dialog_Data:- Terry and Hazel Flanigan 2023 		   *
+// *************************************************************************
+void SB_Exporter::Update_Dialog_Data(HWND m_hDlg)
+{
+
+	if (Selected_Index == 0)
+	{
+		strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
+
+		if (App->CLSB_Exporter->Export_Selected == 0)
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_All");
+		}
+		else
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_Sel");
+		}
+
+		SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
+	}
+
+	if (Selected_Index == 1)
+	{
+		strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
+
+		if (App->CLSB_Exporter->Export_Selected == 0)
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_All");
+		}
+		else
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_Sel");
+		}
+
+		SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
+	}
+
+}
+
+// *************************************************************************
 // *			Set_Dialog_Data:- Terry and Hazel Flanigan 2023 		   *
 // *************************************************************************
 void SB_Exporter::Set_Dialog_Data(HWND m_hDlg)
@@ -413,23 +472,25 @@ void SB_Exporter::Set_Dialog_Data(HWND m_hDlg)
 
 	// Directory Name
 	strcpy(mDirectory_Name, App->CLSB_Exporter->mJustName);
-	strcat(mDirectory_Name, "_Ogre");
+	strcat(mDirectory_Name, "_Ogre_All");
 	SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
 
 }
 
 // *************************************************************************
-// *			List_FIle_Formats:- Terry and Hazel Flanigan 2023 		   *
+// *			List_File_Formats:- Terry and Hazel Flanigan 2023 		   *
 // *************************************************************************
-void SB_Exporter::List_FIle_Formats(HWND m_hDlg)
+void SB_Exporter::List_File_Formats(HWND m_hDlg)
 {
 	char buf[100];
 
-	sprintf(buf,"%s", "Ogre3D .mesh");
+	sprintf(buf,"%s", "Ogre3D  ( .mesh )");
 	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
-	sprintf(buf, "%s", "Wavefront Object .obj");
+	sprintf(buf, "%s", "Wavefront Object...  ( .obj )");
 	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 }
 
 // ---------------------------------------------------------------------

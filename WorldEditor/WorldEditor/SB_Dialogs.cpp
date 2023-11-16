@@ -46,12 +46,124 @@ SB_Dialogs::SB_Dialogs(void)
 	mWhatList = 0;
 
 	btext[0] = 0;
+	Chr_Text[0] = 0;
+
 	Chr_DropText[0] = 0;
 	DropList_Data = 0;
 }
 
 SB_Dialogs::~SB_Dialogs(void)
 {
+}
+
+// *************************************************************************
+// *	  			Dialog_Text:- Terry and Hazel Flanigan 2022			   *
+// *************************************************************************
+bool SB_Dialogs::Dialog_Text()
+{
+	Canceled = 0;
+
+	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_SB_TEXT_DIALOG, App->MainHwnd, (DLGPROC)Dialog_Text_Proc);
+	}
+	else
+	{
+		DialogBox(App->hInst, (LPCTSTR)IDD_SB_TEXT_DIALOG, App->Equity_Dlg_hWnd, (DLGPROC)Dialog_Text_Proc);
+	}
+
+	return 1;
+}
+
+// **************************************************************************
+// *				Dialog_Text_Proc:- Terry and Hazel Flanigan 2022		*
+// **************************************************************************
+LRESULT CALLBACK SB_Dialogs::Dialog_Text_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch (message)
+	{
+	case WM_INITDIALOG:
+	{
+
+		//App->SetTitleBar(hDlg);
+
+		HFONT Font;
+		Font = CreateFont(-20, 0, 0, 0, FW_BOLD, 0, 0, 0, 0, OUT_TT_ONLY_PRECIS, 0, 0, 0, "Courier Black");
+		SendDlgItemMessage(hDlg, IDC_TITLENAME, WM_SETFONT, (WPARAM)Font, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_EDITTEXT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SetDlgItemText(hDlg, IDC_TITLENAME, (LPCTSTR)App->CLSB_Dialogs->btext);
+
+		SetDlgItemText(hDlg, IDC_EDITTEXT, (LPCTSTR)App->CLSB_Dialogs->Chr_Text);
+
+
+		return TRUE;
+	}
+	case WM_CTLCOLORSTATIC:
+	{
+		if (GetDlgItem(hDlg, IDC_TITLENAME) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 255, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 255));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+		return FALSE;
+	}
+
+	case WM_CTLCOLORDLG:
+	{
+		return (LONG)App->AppBackground;
+	}
+
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDCANCEL && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
+	case WM_COMMAND:
+	{
+		if (LOWORD(wParam) == IDOK)
+		{
+			char buff[255];
+			GetDlgItemText(hDlg, IDC_EDITTEXT, (LPTSTR)buff, 255);
+
+			strcpy(App->CLSB_Dialogs->Chr_Text, buff);
+
+			App->CLSB_Dialogs->Canceled = 0;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			App->CLSB_Dialogs->Canceled = 1;
+			EndDialog(hDlg, LOWORD(wParam));
+			return TRUE;
+		}
+	}
+
+	break;
+
+	}
+	return FALSE;
 }
 
 // *************************************************************************
