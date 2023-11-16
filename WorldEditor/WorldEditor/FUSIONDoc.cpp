@@ -160,6 +160,7 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
     ON_COMMAND(ID_CAMERA_UP, OnCameraUp)
     ON_COMMAND(ID_CAMERA_DOWN, OnCameraDown)
 
+    ON_COMMAND(ID_FILE_EXPORT2, OnFileExport) // Old Exporter
     ON_COMMAND(ID_FILE_EXPORT_OLDEXPORT, OnFileExport) // Old Exporter
     ON_UPDATE_COMMAND_UI(ID_FILE_EXPORT_OLDEXPORT, OnUpdateFileExport) // Old Exporter
 
@@ -6565,53 +6566,55 @@ void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean E
     }
 }
 
-void CFusionDoc::OnFileExport() // Old Exporter
+void CFusionDoc::OnFileExport()
 {
-// changed QD 12/03
-    static const char FDTitle[] = "Export";
-//	CFileDialog dlg(FALSE, "3dt", NULL, (OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN),
-                                //	"World Files (*.3dt)|*.3dt|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|Equity Room (*.ebr)|*.ebr|All Files (*.*)|*.*||");
+    App->CLSB_Exporter->Start_Export_Dlg();
 
-    CFileDialog dlg(FALSE, "3dt", NULL, (OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN),
-                                    "Equity Room (*.G3ds)|*.G3ds|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|World Files (*.3dt)|*.3dt|All Files (*.*)|*.*||");
-
-    dlg.m_ofn.lpstrTitle = FDTitle;	
-    if (dlg.DoModal () == IDOK)
-    {
-        switch(dlg.m_ofn.nFilterIndex)
-        {
-        case 1 :
-            {
-                CExport3dsDialog ExpDlg;
-                if (ExpDlg.DoModal () == IDOK)
-                {
-                    ExportTo_RFW(dlg.GetPathName(), 1, 0, 0);
-                }
-            }
-            break;
-        case 2 :
-            ExportMapFile(dlg.GetPathName());
-            break;
-        case 3 :
-            ExportTo3dtv1_32(dlg.GetPathName());
-            break;
-// changed QD 12/03
-        case 4 :
-            {
-                CExport3dsDialog ExpDlg;
-                if (ExpDlg.DoModal () == IDOK)
-                {
-                    ExportTo3ds(dlg.GetPathName(), ExpDlg.m_ExportAll, ExpDlg.m_ExportLights, ExpDlg.m_GroupFile);
-                    break;
-                }
-            }
-        case 5 :
-            {
-                ExportWorldFile(dlg.GetPathName());
-            }
-// end change
-        }
-    }
+//// changed QD 12/03
+//    static const char FDTitle[] = "Export";
+////	CFileDialog dlg(FALSE, "3dt", NULL, (OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN),
+//                                //	"World Files (*.3dt)|*.3dt|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|Equity Room (*.ebr)|*.ebr|All Files (*.*)|*.*||");
+//
+//    CFileDialog dlg(FALSE, "3dt", NULL, (OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_NOREADONLYRETURN | OFN_PATHMUSTEXIST | OFN_NOREADONLYRETURN),
+//                                    "Equity Room (*.G3ds)|*.G3ds|Map Files (*.map)|*.map|World Files v1.32 (*.3dt)|*.3dt|Autodesk (*.3ds)|*.3ds|World Files (*.3dt)|*.3dt|All Files (*.*)|*.*||");
+//
+//    dlg.m_ofn.lpstrTitle = FDTitle;	
+//    if (dlg.DoModal () == IDOK)
+//    {
+//        switch(dlg.m_ofn.nFilterIndex)
+//        {
+//        case 1 :
+//            {
+//                CExport3dsDialog ExpDlg;
+//                if (ExpDlg.DoModal () == IDOK)
+//                {
+//                    ExportTo_RFW(dlg.GetPathName(), 1, 0, 0);
+//                }
+//            }
+//            break;
+//        case 2 :
+//            ExportMapFile(dlg.GetPathName());
+//            break;
+//        case 3 :
+//            ExportTo3dtv1_32(dlg.GetPathName());
+//            break;
+//// changed QD 12/03
+//        case 4 :
+//            {
+//                CExport3dsDialog ExpDlg;
+//                if (ExpDlg.DoModal () == IDOK)
+//                {
+//                    ExportTo3ds(dlg.GetPathName(), ExpDlg.m_ExportAll, ExpDlg.m_ExportLights, ExpDlg.m_GroupFile);
+//                    break;
+//                }
+//            }
+//        case 5 :
+//            {
+//                ExportWorldFile(dlg.GetPathName());
+//            }
+//// end change
+//        }
+//    }
 }
 
 void CFusionDoc::OnUpdateFileExport(CCmdUI* pCmdUI) 

@@ -1138,7 +1138,7 @@ BEGIN
         BEGIN
             MENUITEM "Genesis3d Actor",             ID_IMPORT_GENESIS3DACTOR
         END
-        MENUITEM "Export...",                   ID_FILE_EXPORT
+        MENUITEM "Export...",                   ID_FILE_EXPORT2
         MENUITEM SEPARATOR
         POPUP "Export..."
         BEGIN

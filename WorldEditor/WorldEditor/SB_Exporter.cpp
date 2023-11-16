@@ -49,6 +49,14 @@ SB_Exporter::~SB_Exporter(void)
 // *************************************************************************
 void SB_Exporter::Start_Export_Dlg()
 {
+	strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Object Files a sub folder will be created");
+	int Test = App->CLSB_FileIO->StartBrowser("");
+
+	if (Test == 0)
+	{
+		return;
+	}
+
 	App->CLSB_Exporter->Is_Canceled = 0;
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_EXPORTOPTIONS, App->MainHwnd, (DLGPROC)Export_Dlg_Proc);
 }

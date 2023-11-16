@@ -872,7 +872,6 @@
 #define IDC_LST_FILEFORMATS             1561
 #define IDC_BT_EXPORT                   1562
 #define IDC_CK_EXPORTALL                1563
-#define IDC_CHECK2                      1564
 #define IDC_CK_EXPORTSELECTED           1564
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
@@ -1084,6 +1083,7 @@
 #define ID_EXPORT_WAVEFRONTOBJECT       33093
 #define ID_EXPORT_OGRE3D33094           33094
 #define ID_OGRE3D_MESH33095             33095
+#define ID_FILE_EXPORT2                 33096
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -1092,7 +1092,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        351
-#define _APS_NEXT_COMMAND_VALUE         33096
+#define _APS_NEXT_COMMAND_VALUE         33097
 #define _APS_NEXT_CONTROL_VALUE         1565
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

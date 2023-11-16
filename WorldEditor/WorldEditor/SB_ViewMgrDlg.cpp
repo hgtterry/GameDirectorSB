@@ -61,6 +61,7 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 		
 		SendDlgItemMessage(hDlg, IDC_BT_PREVIEW, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_BT_VIEWUPDATE, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_BT_EXPORT, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
 		if (Prefs_GetLinkViewports(((CFusionApp*)AfxGetApp())->GetPreferencesNormal()))
 		{
@@ -135,6 +136,7 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 			{
 				App->Custom_Button_Normal(item);
 			}
+
 			return CDRF_DODEFAULT;
 		}
 
@@ -158,6 +160,22 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 		{
 			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
 			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_VIEWUPDATE));
+			if (test == 0)
+			{
+				App->Custom_Button_Greyed(item);
+			}
+			else
+			{
+				App->Custom_Button_Normal(item);
+			}
+
+			return CDRF_DODEFAULT;
+		}
+
+		if (some_item->idFrom == IDC_BT_EXPORT && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			bool test = IsWindowEnabled(GetDlgItem(hDlg, IDC_BT_EXPORT));
 			if (test == 0)
 			{
 				App->Custom_Button_Greyed(item);
@@ -260,11 +278,7 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDC_BT_EXPORT)
 		{
-			strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Object Files a sub folder will be created");
-			int Test = App->CLSB_FileIO->StartBrowser("");
-
 			App->CLSB_Exporter->Start_Export_Dlg();
-
 			return TRUE;
 		}
 		
