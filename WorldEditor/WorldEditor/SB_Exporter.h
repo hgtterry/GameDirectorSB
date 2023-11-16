@@ -47,5 +47,6 @@ private:
 	void List_FIle_Formats(HWND m_hDlg);
 	
 	int Selected_Index;
+	bool Export_Selected;
 };
 

@@ -29,12 +29,15 @@ distribution.
 SB_Exporter::SB_Exporter(void)
 {
 	Is_Canceled = 0;
+	Export_Selected = 0;
 
 	Selected_Index = 0;
 
 	mJustName[0] = 0;
 	mDirectory_Name[0] = 0;
 	mFolder_Path[0] = 0;
+
+
 }
 
 SB_Exporter::~SB_Exporter(void)
@@ -73,6 +76,10 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_ST_FN, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		SendDlgItemMessage(hDlg, IDC_LST_FILEFORMATS, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+
+		SendDlgItemMessage(hDlg, IDC_CK_EXPORTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDC_CK_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
+		
 		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -84,6 +91,10 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		App->CLSB_Export_Ogre3D->Add_Sub_Folder = 1;
 
 		App->CLSB_Exporter->List_FIle_Formats(hDlg);
+
+		Temp = GetDlgItem(hDlg, IDC_CK_EXPORTALL);
+		SendMessage(Temp, BM_SETCHECK, 1, 0);
+		App->CLSB_Exporter->Export_Selected = 0;
 
 		return TRUE;
 	}
@@ -146,6 +157,22 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 			return (UINT)App->AppBackground;
 		}
 
+		if (GetDlgItem(hDlg, IDC_CK_EXPORTALL) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
+		if (GetDlgItem(hDlg, IDC_CK_EXPORTSELECTED) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(0, 0, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		return FALSE;
 	}
 
@@ -199,6 +226,32 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == IDC_CK_EXPORTALL)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_EXPORTALL);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+
+			temp = GetDlgItem(hDlg, IDC_CK_EXPORTSELECTED);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+
+			App->CLSB_Exporter->Export_Selected = 0;
+
+			return TRUE;
+		}
+
+		if (LOWORD(wParam) == IDC_CK_EXPORTSELECTED)
+		{
+			HWND temp = GetDlgItem(hDlg, IDC_CK_EXPORTSELECTED);
+			SendMessage(temp, BM_SETCHECK, 1, 0);
+
+			temp = GetDlgItem(hDlg, IDC_CK_EXPORTALL);
+			SendMessage(temp, BM_SETCHECK, 0, 0);
+
+			App->CLSB_Exporter->Export_Selected = 1;
+
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == IDC_CK_SUBFOLDER)
 		{
 			HWND temp = GetDlgItem(hDlg, IDC_CK_SUBFOLDER);
@@ -223,17 +276,17 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_BT_CHANGE_NAME)
 		{
-			/*strcpy(App->CL_Dialogs->btext, "Change File Name");
-			strcpy(App->CL_Dialogs->Chr_Text, App->CL_Model->JustName);
+			/*strcpy(App->CLSB_Dialogs->btext, "Change File Name");
+			strcpy(App->CLSB_Dialogs->Chr_Text, App->CL_Model->JustName);
 
-			App->CL_Dialogs->Dialog_Text();
+			App->CLSB_Dialogs->Dialog_Text();
 
-			if (App->CL_Dialogs->Is_Canceled == 0)
+			if (App->CLSB_Dialogs->Is_Canceled == 0)
 			{
-				strcpy(App->CLSB_Model->JustName, App->CL_Dialogs->Chr_Text);
+				strcpy(App->CLSB_Model->JustName, App->CLSB_Dialogs->Chr_Text);
 			}
 
-			SetDlgItemText(hDlg, IDC_ST_NAME, App->CL_Model->JustName);*/
+			SetDlgItemText(hDlg, IDC_ST_NAME, App->CLSB_Model->JustName);*/
 
 			return TRUE;
 		}
@@ -343,16 +396,16 @@ void SB_Exporter::Set_Dialog_Data(HWND m_hDlg)
 	strcpy(buf, App->CL_World->mCurrent_3DT_File);
 	int Len = strlen(buf);
 	buf[Len - 4] = 0;
-	strcpy(App->CLSB_Exporter->mJustName, buf);
+	strcpy(mJustName, buf);
 	SetDlgItemText(m_hDlg, IDC_ST_NAME, buf);
 
 	// Folder Path
-	strcpy(App->CLSB_Exporter->mFolder_Path, App->CLSB_FileIO->szSelectedDir);
+	strcpy(mFolder_Path, App->CLSB_FileIO->szSelectedDir);
 	SetDlgItemText(m_hDlg, IDC_ST_FOLDER, App->CLSB_FileIO->szSelectedDir);
 
 	// Directory Name
-	strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
-	strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre");
+	strcpy(mDirectory_Name, App->CLSB_Exporter->mJustName);
+	strcat(mDirectory_Name, "_Ogre");
 	SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
 
 }
@@ -380,8 +433,7 @@ void SB_Exporter::List_FIle_Formats(HWND m_hDlg)
 // *************************************************************************
 void SB_Exporter::Ogre3D_Model(void)
 {
-
-	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(Export_Selected);
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 
 	App->CLSB_Export_Ogre3D->Export_AssimpToOgre();
@@ -390,11 +442,11 @@ void SB_Exporter::Ogre3D_Model(void)
 }
 
 // *************************************************************************
-// *					Object_Model Terry Bernie						   *
+// *			Object_Model:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_Exporter::Object_Model(void)
 {
-	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
+	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(Export_Selected);
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 
 	bool test = App->CLSB_Export_Object->Create_ObjectFile();

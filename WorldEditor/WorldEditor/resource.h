@@ -871,6 +871,9 @@
 #define IDC_BT_CONVERT                  1560
 #define IDC_LST_FILEFORMATS             1561
 #define IDC_BT_EXPORT                   1562
+#define IDC_CK_EXPORTALL                1563
+#define IDC_CHECK2                      1564
+#define IDC_CK_EXPORTSELECTED           1564
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1090,7 +1093,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        351
 #define _APS_NEXT_COMMAND_VALUE         33096
-#define _APS_NEXT_CONTROL_VALUE         1563
+#define _APS_NEXT_CONTROL_VALUE         1565
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif
