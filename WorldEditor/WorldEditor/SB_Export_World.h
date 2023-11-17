@@ -42,6 +42,8 @@ public:
 	SB_Export_World(void);
 	~SB_Export_World(void);
 
+	void ExportWorldFile_Selected(const char* FileName);
+
 	void Export_World_To_Ogre3D_Mesh();
 	void Export_World_To_Object();
 	void Export_World_GD3D(bool Silent);

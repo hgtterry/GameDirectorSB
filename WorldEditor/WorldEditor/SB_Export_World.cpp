@@ -1158,3 +1158,115 @@ bool SB_Export_World::AddTexture_GL(geVFile* BaseFile, const char* TextureName, 
 
 	return TRUE;
 }
+
+typedef struct
+{
+	Level* NewLevel;
+	Level* OldLevel;
+} AddPremadeEnumData;
+
+static void fdocAddReferencedModel(AddPremadeEnumData* pData, int ModelId)
+{
+	if ((ModelId != 0) && (Level_GetModel(pData->NewLevel, ModelId) == NULL))
+	{
+		Model* OldModel, * NewModel;
+
+		OldModel = Level_GetModel(pData->OldLevel, ModelId);
+		NewModel = Model_Clone(OldModel);
+		Level_AddModel(pData->NewLevel, NewModel);
+	}
+}
+
+static void fdocAddReferencedGroup(AddPremadeEnumData* pData, int GroupId)
+{
+
+	if (Level_GetGroup(pData->NewLevel, GroupId) == NULL)
+	{
+		// group doesn't exist in the new level, so add it
+		Group* OldGroup, * NewGroup;
+
+		OldGroup = Level_GetGroup(pData->OldLevel, GroupId);
+		NewGroup = Group_Clone(OldGroup);
+		Level_AddGroup(pData->NewLevel, NewGroup);
+	}
+}
+
+static geBoolean fdocAddSelectedEntities(CEntity& Ent, void* lParam)
+{
+	AddPremadeEnumData* pData;
+
+	pData = (AddPremadeEnumData*)lParam;
+
+	if (Ent.IsSelected())
+	{
+		Level_AddEntity(pData->NewLevel, Ent);
+		::fdocAddReferencedGroup(pData, Ent.GetGroupId());
+	}
+	return GE_TRUE;
+}
+
+// *************************************************************************
+// *	  ExportWorldFile_Selected:- Terry and Hazel Flanigan 2023	  	   *
+// *************************************************************************
+void SB_Export_World::ExportWorldFile_Selected(const char* FileName)
+{
+
+	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_WAIT));
+
+	Level* NewLevel;
+	int i;
+	AddPremadeEnumData EnumData;
+
+	// changed QD Actors
+	NewLevel = Level_Create(Level_GetWadPath(App->CLSB_Doc->pLevel), Level_GetHeadersDirectory(App->CLSB_Doc->pLevel),
+		Level_GetActorsDirectory(App->CLSB_Doc->pLevel), Level_GetPawnIniPath(App->CLSB_Doc->pLevel));
+	// end change
+	if (NewLevel == NULL)
+	{
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+		AfxMessageBox("Error: Unable to export objects.", MB_OK + MB_ICONERROR);
+		return;
+	}
+
+	EnumData.NewLevel = NewLevel;
+	EnumData.OldLevel = App->CLSB_Doc->pLevel;
+
+	int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
+
+	// add all selected brushes and entities to the new level
+	for (i = 0; i < NumSelBrushes; ++i)
+	{
+		Brush* NewBrush;
+		Brush* OldBrush;
+
+		OldBrush = SelBrushList_GetBrush(App->CLSB_Doc->pSelBrushes, i);
+		// changed QD Actors
+		if (strstr(App->CL_Brush->Brush_GetName(OldBrush), ".act") != NULL)
+			continue;
+		// end change
+		NewBrush = Brush_Clone(OldBrush);
+		Level_AppendBrush(NewLevel, NewBrush);
+
+		// add any group or model that's referenced
+		::fdocAddReferencedModel(&EnumData, Brush_GetModelId(NewBrush));
+		::fdocAddReferencedGroup(&EnumData, Brush_GetGroupId(NewBrush));
+	}
+
+	Level_EnumEntities(App->CLSB_Doc->pLevel, &EnumData, ::fdocAddSelectedEntities);
+
+	// ok, everything's added.  Write it to the file.
+	if (!Level_WriteToFile(NewLevel, FileName))
+	{
+		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+		AfxMessageBox("Error: Unable to export objects to file.", MB_OK + MB_ICONERROR);
+	}
+	else
+	{
+		// possibly add level name to objects list...
+		//mpMainFrame->m_wndTabControls->m_pBrushEntityDialog->SetupObjectListCombo ();
+	}
+
+	Level_Destroy(&NewLevel);
+
+	SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
+}

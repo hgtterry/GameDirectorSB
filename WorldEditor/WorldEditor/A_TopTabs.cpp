@@ -711,10 +711,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		if (LOWORD(wParam) == IDC_WETEST)
 		{
-			strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Object Files a sub folder will be created");
-			int Test = App->CLSB_FileIO->StartBrowser("");
-
-			App->CLSB_Exporter->Start_Export_Dlg();
+			App->CLSB_Export_World->ExportWorldFile_Selected("Test.ttt");
 			return TRUE;
 		}
 		

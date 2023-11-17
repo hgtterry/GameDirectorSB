@@ -244,6 +244,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			App->CLSB_Exporter->Export_Selected = 0;
 
+			App->CLSB_Exporter->Update_Dialog_Data(hDlg);
 			return TRUE;
 		}
 
@@ -257,6 +258,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			App->CLSB_Exporter->Export_Selected = 1;
 
+			App->CLSB_Exporter->Update_Dialog_Data(hDlg);
 			return TRUE;
 		}
 
@@ -418,11 +420,10 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 // *************************************************************************
 void SB_Exporter::Update_Dialog_Data(HWND m_hDlg)
 {
+	strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
 
 	if (Selected_Index == 0)
 	{
-		strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
-
 		if (App->CLSB_Exporter->Export_Selected == 0)
 		{
 			strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_All");
@@ -431,14 +432,10 @@ void SB_Exporter::Update_Dialog_Data(HWND m_hDlg)
 		{
 			strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_Sel");
 		}
-
-		SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
 	}
 
 	if (Selected_Index == 1)
 	{
-		strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
-
 		if (App->CLSB_Exporter->Export_Selected == 0)
 		{
 			strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_All");
@@ -447,10 +444,9 @@ void SB_Exporter::Update_Dialog_Data(HWND m_hDlg)
 		{
 			strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_Sel");
 		}
-
-		SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
 	}
 
+	SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
 }
 
 // *************************************************************************
