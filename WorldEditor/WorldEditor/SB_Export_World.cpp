@@ -225,15 +225,15 @@ void SB_Export_World::Export_World_GD3D(bool Silent)
 	
 	if (Silent == 0)
 	{
-		bool Test = App->CLSB_FileIO->SaveSelectedFile("Equity   *.G3ds\0**.G3ds\0", App->CL_World->mCurrent_3DT_Path);
+		bool Test = App->CLSB_FileIO->SaveSelectedFile("Equity   *.3ds\0**.3ds\0", App->CL_World->mCurrent_3DT_Path);
 
 		if (Test == 1)
 		{
 			bool Check = App->CLSB_FileIO->CheckExtention(App->CLSB_FileIO->PathFileName);
 			if (Check==0)
 			{
-				strcat(App->CLSB_FileIO->PathFileName, ".G3ds");
-				strcat(App->CLSB_FileIO->FileName, ".G3ds");
+				strcat(App->CLSB_FileIO->PathFileName, ".3ds");
+				strcat(App->CLSB_FileIO->FileName, ".3ds");
 			}
 
 			ExportTo_RFW(App->CLSB_FileIO->PathFileName, 1, 0, 0);
@@ -244,7 +244,7 @@ void SB_Export_World::Export_World_GD3D(bool Silent)
 
 		char Path[MAX_PATH];
 		strcpy(Path,App->WorldEditor_Directory);
-		strcat(Path,"Data\\Temp.G3ds");
+		strcat(Path,"Data\\Temp.3ds");
 		ExportTo_RFW(Path, 1, 0, 0);
 	}
 }
@@ -620,7 +620,7 @@ WriteDone:
 // end change
 
 	
-	Write_Project_File("GDSB.Wepf",Filename);
+	//Write_Project_File("GDSB.Wepf",Filename);
 
 	return WriteRslt;
 }
@@ -632,7 +632,7 @@ bool SB_Export_World::Write_Project_File(char* Path_And_File,const char* Filenam
 {
 	char NewFile[MAX_PATH];
 
-	if (stricmp(Filename + strlen(Filename) - 5, ".G3ds") == 0)
+	if (stricmp(Filename + strlen(Filename) - 4, ".3ds") == 0)
 	{
 		strcpy(NewFile, Filename);
 		int Len = strlen(NewFile);
@@ -1224,7 +1224,7 @@ void SB_Export_World::ExportWorldFile_Selected(const char* FileName)
 	if (NewLevel == NULL)
 	{
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
-		AfxMessageBox("Error: Unable to export objects.", MB_OK + MB_ICONERROR);
+		App->Say("Error: Unable to export objects.");
 		return;
 	}
 
@@ -1258,7 +1258,7 @@ void SB_Export_World::ExportWorldFile_Selected(const char* FileName)
 	if (!Level_WriteToFile(NewLevel, FileName))
 	{
 		SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
-		AfxMessageBox("Error: Unable to export objects to file.", MB_OK + MB_ICONERROR);
+		App->Say("Error: Unable to export objects to file.");
 	}
 	else
 	{

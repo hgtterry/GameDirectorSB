@@ -166,9 +166,9 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 				{
 					App->CLSB_Doc->AddBrushToWorld();
 
-					App->CLSB_Level->Check_For_Centre_Texture();
-					App->CLSB_Level->Check_For_Centre_Brush();
-					App->CLSB_Level->Change_Centre_Brush_Texture();
+					//App->CLSB_Level->Check_For_Centre_Texture();
+					//App->CLSB_Level->Check_For_Centre_Brush();
+					//App->CLSB_Level->Change_Centre_Brush_Texture();
 
 					App->m_pDoc->SetModifiedFlag();
 				}

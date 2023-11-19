@@ -199,7 +199,7 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 
 		App->CLSB_TopTabs->Update_Dlg_Controls();
 
-		App->CLSB_Level->Check_For_Centre_Brush(); // Centre Brush XYZ
+		//App->CLSB_Level->Check_For_Centre_Brush(); // Centre Brush XYZ
 
 		App->CLSB_Doc->Lock_AllTextures();
 	
@@ -245,12 +245,12 @@ bool SB_File_WE::Open_3dt_File()
 
 	}
 
-	App->CLSB_Level->Check_For_Centre_Brush(); // Centre Brush XYZ
-	App->CLSB_Level->Check_For_Centre_Texture(); // Centre Texture Dummy
+	//App->CLSB_Level->Check_For_Centre_Brush(); // Centre Brush XYZ
+	//App->CLSB_Level->Check_For_Centre_Texture(); // Centre Texture Dummy
 
 	App->CL_TabsGroups_Dlg->Fill_ListBox();
 
-	App->CLSB_Level->Change_Centre_Brush_Texture();
+	//App->CLSB_Level->Change_Centre_Brush_Texture();
 
 	App->CL_World->Set_Paths();
 	App->CL_World->Reset_Editor();

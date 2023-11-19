@@ -240,7 +240,6 @@ public:
 	void	RebuildTrees(void);
 	void	InvalidateDrawTreeOriginalFaces(void);
 
-	void ExportWorldFile(const char *FileName);
 	void ExportMapFile(const char *FileName);
 // changed QD 11/03
 	void ExportTo3dtv1_32(const char *FileName);
