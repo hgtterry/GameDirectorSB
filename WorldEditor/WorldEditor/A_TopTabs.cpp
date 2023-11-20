@@ -711,8 +711,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 	{
 		if (LOWORD(wParam) == IDC_WETEST)
 		{
-			//App->CLSB_Export_World->Export_World_GD3D(0);
-			App->CLSB_Export_3DS->Export_World_GD3D(0);
+			//App->CLSB_Export_3DS->Export_World_GD3D(0);
 
 			return TRUE;
 		}

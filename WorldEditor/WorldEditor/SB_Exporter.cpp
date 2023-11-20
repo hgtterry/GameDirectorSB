@@ -394,6 +394,11 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 				App->CLSB_Exporter->Object_Model();
 			}
 
+			if (App->CLSB_Exporter->Selected_Index == 2)
+			{
+				App->CLSB_Exporter->Autodesk_Model();
+			}
+
 			App->CLSB_Exporter->Is_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -480,11 +485,15 @@ void SB_Exporter::List_File_Formats(HWND m_hDlg)
 {
 	char buf[100];
 
-	sprintf(buf,"%s", "Ogre3D  ( .mesh )");
+	sprintf(buf,"%s", "Ogre3D...  ( .mesh )");
 	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	sprintf(buf, "%s", "Wavefront Object...  ( .obj )");
 	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+	sprintf(buf, "%s", "Autodesk...  ( .3ds )");
+	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
 
 	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 }
@@ -519,5 +528,18 @@ void SB_Exporter::Object_Model(void)
 	if (test == 1)
 	{
 		App->Say("Wavefront Object file Created successfully");
+	}
+}
+
+// *************************************************************************
+// *			3DS_Model:- Terry and Hazel Flanigan 2023				   *
+// *************************************************************************
+void SB_Exporter::Autodesk_Model(void)
+{
+	App->CLSB_Export_3DS->Export_World_GD3D();
+
+	//if (test == 1)
+	{
+		App->Say("Autodesk Object file Created successfully");
 	}
 }

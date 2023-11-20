@@ -135,36 +135,40 @@ SB_Export_3DS::~SB_Export_3DS()
 // *************************************************************************
 // * 		Export_World_GD3D:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
-void SB_Export_3DS::Export_World_GD3D(bool Silent)
+void SB_Export_3DS::Export_World_GD3D()
 {
 	App->Get_Current_Document();
 
-	if (Silent == 0)
-	{
-		bool Test = App->CLSB_FileIO->SaveSelectedFile("Equity   *.3ds\0**.3ds\0", App->CL_World->mCurrent_3DT_Path);
+	char buff[1024];
+	strcpy(buff, App->CLSB_Exporter->mFolder_Path);
+	strcat(buff, "\\");
+	strcat(buff, App->CLSB_Exporter->mDirectory_Name);
+	strcat(buff, "\\");
 
-		if (Test == 1)
+	CreateDirectory(buff, NULL);
+
+	strcat(buff, App->CLSB_Exporter->mJustName);
+	strcat(buff, ".3ds");
+
+	strcpy(App->CLSB_FileIO->PathFileName, buff);
+
+	//App->Say(App->CLSB_FileIO->PathFileName);
+	ExportTo_RFW(App->CLSB_FileIO->PathFileName, 0, 0, 0);
+
+	//bool Test = App->CLSB_FileIO->SaveSelectedFile("Equity   *.3ds\0**.3ds\0", App->CL_World->mCurrent_3DT_Path);
+
+	/*if (Test == 1)
+	{
+		bool Check = App->CLSB_FileIO->CheckExtention(App->CLSB_FileIO->PathFileName);
+		if (Check == 0)
 		{
-			bool Check = App->CLSB_FileIO->CheckExtention(App->CLSB_FileIO->PathFileName);
-			if (Check == 0)
-			{
-				strcat(App->CLSB_FileIO->PathFileName, ".3ds");
-				strcat(App->CLSB_FileIO->FileName, ".3ds");
-			}
-
-			ExportTo_RFW(App->CLSB_FileIO->PathFileName, 0, 0, 0);
+			strcat(App->CLSB_FileIO->PathFileName, ".3ds");
+			strcat(App->CLSB_FileIO->FileName, ".3ds");
 		}
-	}
-	else
-	{
 
-		char Path[MAX_PATH];
-		strcpy(Path, App->WorldEditor_Directory);
-		strcat(Path, "Data\\Temp.3ds");
-		ExportTo_RFW(Path, 1, 0, 0);
-	}
-
-	Debug
+		ExportTo_RFW(App->CLSB_FileIO->PathFileName, 0, 0, 0);
+	}*/
+	
 }
 
 static geBoolean fdocBrushCSGCallback2(const Brush* pBrush, void* lParam)

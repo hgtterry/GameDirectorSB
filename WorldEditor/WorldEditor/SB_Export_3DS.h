@@ -29,7 +29,7 @@ public:
 	SB_Export_3DS();
 	~SB_Export_3DS();
 
-	void Export_World_GD3D(bool Silent);
+	void Export_World_GD3D();
 
 private:
 
