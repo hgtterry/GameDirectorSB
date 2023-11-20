@@ -28,5 +28,14 @@ class SB_Export_3DS
 public:
 	SB_Export_3DS();
 	~SB_Export_3DS();
+
+	void Export_World_GD3D(bool Silent);
+
+private:
+
+	void ExportTo_RFW(const char* FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles);
+	bool Level_Build_3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
+
+
 };
 

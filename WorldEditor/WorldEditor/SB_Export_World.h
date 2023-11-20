@@ -46,11 +46,8 @@ public:
 
 	void Export_World_To_Ogre3D_Mesh();
 	void Export_World_To_Object();
-	void Export_World_GD3D(bool Silent);
+	
 
-	bool Level_Build_G3ds(Level3 *pLevel, const char *Filename, BrushList *BList,int ExpSelected, geBoolean ExpLights, int GroupID);
-	void ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles);
-	bool Write_Project_File(char* Path_And_File,const char* Filename);
 
 
 	void Export_World_Text(int ExpSelected);

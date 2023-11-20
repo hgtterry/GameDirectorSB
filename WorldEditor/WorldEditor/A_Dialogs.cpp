@@ -339,34 +339,34 @@ LRESULT CALLBACK A_Dialogs::FrontPanel_Proc(HWND hDlg, UINT message, WPARAM wPar
 			if (LOWORD(wParam) == IDC_BTBUILDVIEW)
 			{
 
-				bool test = App->IsProcessRunning("World_Viewer.exe");
-				if (test == 1)
-				{
-					//App->Say("Running");
-				}
-				else
-				{
-					//App->Say("Not Running");
+				//bool test = App->IsProcessRunning("World_Viewer.exe");
+				//if (test == 1)
+				//{
+				//	//App->Say("Running");
+				//}
+				//else
+				//{
+				//	//App->Say("Not Running");
 
 
-					CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
+				//	CFusionDoc* pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
 
-					App->CLSB_Doc->SelectAll();
-					App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+				//	App->CLSB_Doc->SelectAll();
+				//	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 
 
 
-					char Path[MAX_PATH];
-					strcpy(Path,App->WorldEditor_Directory);
-					strcat(Path,"World_Viewer.exe");
+				//	char Path[MAX_PATH];
+				//	strcpy(Path,App->WorldEditor_Directory);
+				//	strcat(Path,"World_Viewer.exe");
 
-					App->CLSB_Export_World->Export_World_GD3D(1);
-					ShellExecute(App->MainHwnd, "open", Path, "WorldEditor",App->WorldEditor_Directory, SW_SHOW);
+				//	App->CLSB_Export_World->Export_World_GD3D(1);
+				//	ShellExecute(App->MainHwnd, "open", Path, "WorldEditor",App->WorldEditor_Directory, SW_SHOW);
 
-					App->CLSB_Doc->ResetAllSelections();
-					App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
+				//	App->CLSB_Doc->ResetAllSelections();
+				//	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL );
 
-				}
+				//}
 
 				
 				return TRUE;
