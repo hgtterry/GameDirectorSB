@@ -312,6 +312,9 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CLSB_Mesh_Mgr->Brush_Flag = 0;
 			}
 
+			App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
+			App->CLSB_Mesh_Mgr->Update_Brush_List(hDlg);
+
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 
 			return TRUE;
@@ -331,6 +334,9 @@ LRESULT CALLBACK SB_Mesh_Mgr::Brush_Viewer_Proc(HWND hDlg, UINT message, WPARAM 
 				App->CLSB_Mesh_Mgr->Group_Flag = 1;
 				App->CLSB_Mesh_Mgr->Brush_Flag = 0;
 			}
+
+			App->CLSB_Model->Model_Type = Enums::LoadedFile_Assimp;
+			App->CLSB_Mesh_Mgr->Update_Brush_List(hDlg);
 
 			RedrawWindow(hDlg, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 

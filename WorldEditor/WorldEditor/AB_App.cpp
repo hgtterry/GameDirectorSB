@@ -67,6 +67,7 @@ SB_App::SB_App()
 	CLSB_Model =				nullptr;
 	CLSB_Loader =				nullptr;
 	CLSB_Ini =					nullptr;
+	CLSB_Export_3DS =			nullptr;
 	CLSB_Export_Ogre3D =		nullptr;
 	CLSB_Export_Object =		nullptr;
 	CLSB_Exporter =				nullptr;
@@ -272,6 +273,7 @@ bool SB_App::InitApp(void)
 	CLSB_Model =					new SB_Model();
 	CLSB_Loader =					new SB_Loader();
 	CLSB_Ini =						new SB_Ini();
+	CLSB_Export_3DS =				new SB_Export_3DS();
 	CLSB_Export_Ogre3D =			new SB_Export_Ogre3D();
 	CLSB_Export_Object =			new SB_Export_Object();
 	CLSB_Exporter =					new SB_Exporter();

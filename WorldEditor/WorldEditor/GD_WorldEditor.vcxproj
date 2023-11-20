@@ -189,6 +189,7 @@
     <ClCompile Include="SB_Environment.cpp" />
     <ClCompile Include="SB_Equity.cpp" />
     <ClCompile Include="SB_Exporter.cpp" />
+    <ClCompile Include="SB_Export_3DS.cpp" />
     <ClCompile Include="SB_Export_Object.cpp" />
     <ClCompile Include="SB_Export_Ogre3D.cpp" />
     <ClCompile Include="SB_Export_World.cpp" />
@@ -290,6 +291,7 @@
     <ClInclude Include="SB_Environment.h" />
     <ClInclude Include="SB_Equity.h" />
     <ClInclude Include="SB_Exporter.h" />
+    <ClInclude Include="SB_Export_3DS.h" />
     <ClInclude Include="SB_Export_Object.h" />
     <ClInclude Include="SB_Export_Ogre3D.h" />
     <ClInclude Include="SB_Export_World.h" />
