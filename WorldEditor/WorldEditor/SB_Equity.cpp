@@ -1256,6 +1256,9 @@ void SB_Equity::Do_Preview_All()
 
 		App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
 		App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
+
+		App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
+		Debug
 		//App->CLSB_Model->Set_BondingBox_Brushes();
 
 		if (Saved_Camera_Mode == 0)
@@ -1279,7 +1282,7 @@ void SB_Equity::Do_Preview_All()
 		App->CLSB_Model->Model_Loaded = 1;
 		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
 		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
-		App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
+		//App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
 
 		ShowWindow(App->ListPanel, true);
 		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);
