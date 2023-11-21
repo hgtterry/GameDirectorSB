@@ -263,6 +263,18 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDC_CK_EXPORTSELECTED)
 		{
+			int NumSelBrushes = SelBrushList_GetSize(App->CLSB_Doc->pSelBrushes);
+
+			if (NumSelBrushes == 0)
+			{
+				HWND temp = GetDlgItem(hDlg, IDC_CK_EXPORTSELECTED);
+				SendMessage(temp, BM_SETCHECK, 0, 0);
+				App->CLSB_Exporter->Export_Selected = 0;
+
+				App->Say("No Brushes Selected");
+				return TRUE;
+			}
+
 			HWND temp = GetDlgItem(hDlg, IDC_CK_EXPORTSELECTED);
 			SendMessage(temp, BM_SETCHECK, 1, 0);
 

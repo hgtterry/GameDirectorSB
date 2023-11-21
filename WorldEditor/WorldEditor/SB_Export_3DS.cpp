@@ -155,23 +155,8 @@ void SB_Export_3DS::Export_World_GD3D()
 
 	strcpy(App->CLSB_FileIO->PathFileName, buff);
 
-	//App->Say(App->CLSB_FileIO->PathFileName);
-	ExportTo_RFW(App->CLSB_FileIO->PathFileName, 0, 0, 0);
+	ExportTo_RFW(App->CLSB_FileIO->PathFileName, App->CLSB_Exporter->Export_Selected, 0, 0);
 
-	//bool Test = App->CLSB_FileIO->SaveSelectedFile("Equity   *.3ds\0**.3ds\0", App->CL_World->mCurrent_3DT_Path);
-
-	/*if (Test == 1)
-	{
-		bool Check = App->CLSB_FileIO->CheckExtention(App->CLSB_FileIO->PathFileName);
-		if (Check == 0)
-		{
-			strcat(App->CLSB_FileIO->PathFileName, ".3ds");
-			strcat(App->CLSB_FileIO->FileName, ".3ds");
-		}
-
-		ExportTo_RFW(App->CLSB_FileIO->PathFileName, 0, 0, 0);
-	}*/
-	
 }
 
 static geBoolean fdocBrushCSGCallback2(const Brush* pBrush, void* lParam)
@@ -225,8 +210,6 @@ void SB_Export_3DS::ExportTo_RFW(const char* FileName, int ExpSelected, geBoolea
 		}
 	}
 
-
-	// changed QD 12/03 77
 	BrushList* BList;
 	geBoolean fResult;
 
@@ -320,7 +303,10 @@ void SB_Export_3DS::ExportTo_RFW(const char* FileName, int ExpSelected, geBoolea
 
 			fResult = Level_Build_3ds(reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
 			if (!fResult)
+			{
 				App->Say("Error exporting group");
+			}
+
 			BrushList_Destroy(&SBList);
 		}
 

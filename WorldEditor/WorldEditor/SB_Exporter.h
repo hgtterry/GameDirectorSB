@@ -35,6 +35,7 @@ public:
 	void Start_Export_Dlg();
 
 	bool Is_Canceled;
+	bool Export_Selected;
 
 	char mJustName[MAX_PATH];
 	char mDirectory_Name[MAX_PATH];
@@ -51,6 +52,6 @@ private:
 	void List_File_Formats(HWND m_hDlg);
 	
 	int Selected_Index;
-	bool Export_Selected;
+
 };
 
