@@ -70,10 +70,13 @@ distribution.
 #include "SB_Model.h"
 #include "SB_Loader.h"
 #include "SB_Ini.h"
+
 #include "SB_Export_Ogre3D.h"
 #include "SB_Export_Object.h"
 #include "SB_Export_3DS.h"
+#include "SB_Export_Milkshape.h"
 #include "SB_Exporter.h"
+
 #include "SB_Textures.h"
 #include "SB_Dialogs.h"
 #include "SB_ImGui.h"
@@ -151,10 +154,13 @@ public:
 	SB_Model*					CLSB_Model;
 	SB_Loader*					CLSB_Loader;
 	SB_Ini*						CLSB_Ini;
+
 	SB_Export_3DS*				CLSB_Export_3DS;
 	SB_Export_Ogre3D*			CLSB_Export_Ogre3D;
 	SB_Export_Object*			CLSB_Export_Object;
+	SB_Export_Milkshape*		CLSB_Export_Milkshape;
 	SB_Exporter*				CLSB_Exporter;
+
 	SB_Textures*				CLSB_Textures;
 	SB_Dialogs*					CLSB_Dialogs;
 	SB_ImGui*					CLSB_ImGui;
