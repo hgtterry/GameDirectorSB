@@ -95,6 +95,9 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
 		App->CLSB_Exporter->Set_Dialog_Data(hDlg);
+
+		App->CLSB_Exporter->Selected_Index = 0;
+		App->CLSB_Exporter->Set_Dialog_Data_FromIndex(hDlg);
 		
 		HWND Temp = GetDlgItem(hDlg, IDC_CK_SUBFOLDER);
 		SendMessage(Temp, BM_SETCHECK, BST_CHECKED, 0);
@@ -114,7 +117,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (GetDlgItem(hDlg, IDC_ST_SELECTEDFORMAT) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
-			SetTextColor((HDC)wParam, RGB(255, 102, 0));
+			SetTextColor((HDC)wParam, RGB(200, 102, 0));
 			SetBkMode((HDC)wParam, TRANSPARENT);
 			return (UINT)App->AppBackground;
 		}
@@ -398,40 +401,6 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 	}
 
 	return FALSE;
-}
-
-// *************************************************************************
-// *			Update_Dialog_Data:- Terry and Hazel Flanigan 2023 		   *
-// *************************************************************************
-void SB_Exporter::Update_Dialog_Data(HWND m_hDlg)
-{
-	strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
-
-	if (Selected_Index == 0)
-	{
-		if (App->CLSB_Exporter->Export_Selected == 0)
-		{
-			strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_All");
-		}
-		else
-		{
-			strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_Sel");
-		}
-	}
-
-	if (Selected_Index == 1)
-	{
-		if (App->CLSB_Exporter->Export_Selected == 0)
-		{
-			strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_All");
-		}
-		else
-		{
-			strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_Sel");
-		}
-	}
-
-	SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
 }
 
 // *************************************************************************

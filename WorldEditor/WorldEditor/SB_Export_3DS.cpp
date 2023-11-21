@@ -126,6 +126,7 @@ struct tag_Level3
 
 SB_Export_3DS::SB_Export_3DS()
 {
+	mCurrentFolder[0] = 0;
 }
 
 SB_Export_3DS::~SB_Export_3DS()
@@ -144,6 +145,8 @@ void SB_Export_3DS::Export_World_GD3D()
 	strcat(buff, "\\");
 	strcat(buff, App->CLSB_Exporter->mDirectory_Name);
 	strcat(buff, "\\");
+
+	strcpy(mCurrentFolder, buff);
 
 	CreateDirectory(buff, NULL);
 
@@ -322,17 +325,14 @@ void SB_Export_3DS::ExportTo_RFW(const char* FileName, int ExpSelected, geBoolea
 		}
 
 	}
-	// end change 12/03
-
+	
 	if (fResult == GE_FALSE)
 	{
-		// Ok, the save was successful.  Gun any ".old" files we
-		// ..have laying around for this file.
 		App->Say("Error exporting file");
 	}
 	else
 	{
-		//App->Say("Exported 2");
+		DecompileTextures_TXL();
 	}
 }
 
@@ -533,14 +533,51 @@ WriteDone:
 
 	free(WrittenTex);
 
-	if (fclose(f) != 0) return GE_FALSE;
+	if (fclose(f) != 0)
+	{
+		return GE_FALSE;
+	}
 
-	// changed QD 12/03
 	if ((size - size_kf) <= 42)
+	{
 		_unlink(Filename);
-	// end change
-
-		//Write_Project_File("GDSB.Wepf",Filename);
+	}
 
 	return WriteRslt;
+}
+
+// *************************************************************************
+// *		DecompileTextures_TXL:- Terry and Hazel Flanigan 2023  	   	   *
+// *************************************************************************
+bool SB_Export_3DS::DecompileTextures_TXL(void)
+{
+	char OutputFolder[1024];
+	strcpy(OutputFolder, mCurrentFolder);
+	
+	int  i;
+	geBoolean* WrittenTex;
+
+	Level3* pLevel = reinterpret_cast<tag_Level3*> (App->CLSB_Doc->pLevel);
+
+	WrittenTex = (geBoolean*)calloc(sizeof(geBoolean), pLevel->WadFile->mBitmapCount);
+
+	BrushList* BList;
+	BList = Level_GetBrushes(App->CLSB_Doc->pLevel);
+
+	BrushList_GetUsedTextures(BList, WrittenTex, pLevel->WadFile);
+
+	// Add Textures GL
+	int AdjustedIndex = 0;
+	for (i = 0; i < pLevel->WadFile->mBitmapCount; i++)
+	{
+		if (WrittenTex[i])
+		{
+			char matname[MAX_PATH];
+			int j, k;
+			strcpy(matname, pLevel->WadFile->mBitmaps[i].Name);
+			App->CLSB_Textures->Extract_TXL_Texture(matname, OutputFolder);
+		}
+	}
+
+	return 1;
 }

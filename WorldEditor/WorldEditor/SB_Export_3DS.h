@@ -31,11 +31,12 @@ public:
 
 	void Export_World_GD3D();
 
+	char mCurrentFolder[MAX_PATH];
+
 private:
 
 	void ExportTo_RFW(const char* FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles);
 	bool Level_Build_3ds(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID);
-
-
+	bool DecompileTextures_TXL(void);
 };
 
