@@ -88,6 +88,8 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		SendDlgItemMessage(hDlg, IDC_CK_EXPORTALL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_CK_EXPORTSELECTED, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		
+		SendDlgItemMessage(hDlg, IDC_ST_SELECTEDFORMAT, WM_SETFONT, (WPARAM)App->Font_Arial20, MAKELPARAM(TRUE, 0));
+		
 		
 		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDCANCEL, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
@@ -109,6 +111,14 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 	case WM_CTLCOLORSTATIC:
 	{
+		if (GetDlgItem(hDlg, IDC_ST_SELECTEDFORMAT) == (HWND)lParam)
+		{
+			SetBkColor((HDC)wParam, RGB(0, 0, 0));
+			SetTextColor((HDC)wParam, RGB(255, 102, 0));
+			SetBkMode((HDC)wParam, TRANSPARENT);
+			return (UINT)App->AppBackground;
+		}
+
 		if (GetDlgItem(hDlg, IDC_ST_FOLDER) == (HWND)lParam)
 		{
 			SetBkColor((HDC)wParam, RGB(0, 0, 0));
@@ -244,7 +254,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			App->CLSB_Exporter->Export_Selected = 0;
 
-			App->CLSB_Exporter->Update_Dialog_Data(hDlg);
+			App->CLSB_Exporter->Set_Dialog_Data_FromIndex(hDlg);
 			return TRUE;
 		}
 
@@ -258,7 +268,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			App->CLSB_Exporter->Export_Selected = 1;
 
-			App->CLSB_Exporter->Update_Dialog_Data(hDlg);
+			App->CLSB_Exporter->Set_Dialog_Data_FromIndex(hDlg);
 			return TRUE;
 		}
 
@@ -298,7 +308,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			SetDlgItemText(hDlg, IDC_ST_NAME, App->CLSB_Exporter->mJustName);
 
-			App->CLSB_Exporter->Update_Dialog_Data(hDlg);
+			App->CLSB_Exporter->Set_Dialog_Data_FromIndex(hDlg);
 
 			return TRUE;
 		}
@@ -344,39 +354,9 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 				return 1;
 			}
 
-			if (Index == 0)
-			{
-				strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
-
-				if (App->CLSB_Exporter->Export_Selected == 0)
-				{
-					strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_All");
-				}
-				else
-				{
-					strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_Sel");
-				}
-
-				SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
-			}
-
-			if (Index == 1)
-			{
-				strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
-
-				if (App->CLSB_Exporter->Export_Selected == 0)
-				{
-					strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_All");
-				}
-				else
-				{
-					strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_Sel");
-				}
-
-				SetDlgItemText(hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
-			}
-
 			App->CLSB_Exporter->Selected_Index = Index;
+			App->CLSB_Exporter->Set_Dialog_Data_FromIndex(hDlg);
+			
 
 			return TRUE;
 		}
@@ -455,6 +435,62 @@ void SB_Exporter::Update_Dialog_Data(HWND m_hDlg)
 }
 
 // *************************************************************************
+// *		Set_Dialog_Data_FromIndex:- Terry and Hazel Flanigan 2023 	   *
+// *************************************************************************
+void SB_Exporter::Set_Dialog_Data_FromIndex(HWND m_hDlg)
+{
+	if (Selected_Index == 0)
+	{
+		strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
+
+		if (App->CLSB_Exporter->Export_Selected == 0)
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_All");
+		}
+		else
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Ogre_Sel");
+		}
+
+		SetDlgItemText(m_hDlg, IDC_ST_SELECTEDFORMAT, "Ogre3D...  ( .mesh )");
+	}
+
+	if (Selected_Index == 1)
+	{
+		strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
+
+		if (App->CLSB_Exporter->Export_Selected == 0)
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_All");
+		}
+		else
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Wavefront_Sel");
+		}
+
+		SetDlgItemText(m_hDlg, IDC_ST_SELECTEDFORMAT, "Wavefront Object...  ( .obj )");
+	}
+
+	if (Selected_Index == 2)
+	{
+		strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
+
+		if (App->CLSB_Exporter->Export_Selected == 0)
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Autodesk_All");
+		}
+		else
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Autodesk_Sel");
+		}
+
+		SetDlgItemText(m_hDlg, IDC_ST_SELECTEDFORMAT, "Autodesk...  ( .3ds )");
+	}
+
+	SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
+}
+
+// *************************************************************************
 // *			Set_Dialog_Data:- Terry and Hazel Flanigan 2023 		   *
 // *************************************************************************
 void SB_Exporter::Set_Dialog_Data(HWND m_hDlg)
@@ -476,6 +512,7 @@ void SB_Exporter::Set_Dialog_Data(HWND m_hDlg)
 	strcat(mDirectory_Name, "_Ogre_All");
 	SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
 
+	SetDlgItemText(m_hDlg, IDC_ST_SELECTEDFORMAT, "Ogre3D...  ( .mesh )");
 }
 
 // *************************************************************************

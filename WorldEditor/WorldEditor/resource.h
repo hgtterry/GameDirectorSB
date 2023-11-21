@@ -875,6 +875,7 @@
 #define IDC_CK_EXPORTALL                1563
 #define IDC_CK_EXPORTSELECTED           1564
 #define IDC_EDITTEXT                    1565
+#define IDC_ST_SELECTEDFORMAT           1566
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1095,7 +1096,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        353
 #define _APS_NEXT_COMMAND_VALUE         33097
-#define _APS_NEXT_CONTROL_VALUE         1566
+#define _APS_NEXT_CONTROL_VALUE         1567
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

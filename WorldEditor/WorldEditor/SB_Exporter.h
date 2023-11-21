@@ -44,6 +44,8 @@ private:
 
 	static LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+	void Set_Dialog_Data_FromIndex(HWND m_hDlg);
+
 	void Set_Dialog_Data(HWND m_hDlg);
 	void Update_Dialog_Data(HWND m_hDlg);
 
