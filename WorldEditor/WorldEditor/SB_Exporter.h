@@ -31,6 +31,7 @@ public:
 	void Ogre3D_Model(void);
 	void Object_Model(void);
 	void Autodesk_Model(void);
+	void Milkshape_Model(void);
 
 	void Start_Export_Dlg();
 

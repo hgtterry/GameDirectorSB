@@ -105,6 +105,8 @@ bool SB_Export_Milkshape::Write_MILK_File(void)
 
 	Convert_To_GlobalMesh();
 
+	
+
 	Write_MILK_Mesh();
 	Write_MILK_Groups();
 	Write_MILK_Texures();
@@ -144,12 +146,12 @@ void SB_Export_Milkshape::Convert_To_GlobalMesh(void)
 
 	int Offset = 0;
 
-	App->CLSB_Model->vertex_Data.resize(App->CLSB_Model->VerticeCount);
-	App->CLSB_Model->Face_Data.resize(App->CLSB_Model->FaceCount);
+	vertex_Data.resize(App->CLSB_Model->VerticeCount);
+	Face_Data.resize(1000);// App->CLSB_Model->FaceCount);
 
-	App->CLSB_Model->Normal_Data.resize(App->CLSB_Model->VerticeCount);
-	App->CLSB_Model->MapCord_Data.resize(App->CLSB_Model->VerticeCount);
-	App->CLSB_Model->MatIndex_Data.resize(App->CLSB_Model->VerticeCount);
+	Normal_Data.resize(App->CLSB_Model->VerticeCount);
+	MapCord_Data.resize(App->CLSB_Model->VerticeCount);
+	MatIndex_Data.resize(App->CLSB_Model->VerticeCount);
 
 	while (Count < App->CLSB_Model->GroupCount)
 	{
@@ -157,16 +159,16 @@ void SB_Export_Milkshape::Convert_To_GlobalMesh(void)
 
 		while (GroupVertCount < App->CLSB_Model->Group[Count]->GroupVertCount)
 		{
-			App->CLSB_Model->vertex_Data[VC].x = App->CLSB_Model->Group[Count]->vertex_Data[GroupVertCount].x;
-			App->CLSB_Model->vertex_Data[VC].y = App->CLSB_Model->Group[Count]->vertex_Data[GroupVertCount].y;
-			App->CLSB_Model->vertex_Data[VC].z = App->CLSB_Model->Group[Count]->vertex_Data[GroupVertCount].z;
+			vertex_Data[VC].x = App->CLSB_Model->Group[Count]->vertex_Data[GroupVertCount].x;
+			vertex_Data[VC].y = App->CLSB_Model->Group[Count]->vertex_Data[GroupVertCount].y;
+			vertex_Data[VC].z = App->CLSB_Model->Group[Count]->vertex_Data[GroupVertCount].z;
 
-			App->CLSB_Model->MapCord_Data[VC].u = App->CLSB_Model->Group[Count]->MapCord_Data[GroupVertCount].u;
-			App->CLSB_Model->MapCord_Data[VC].v = App->CLSB_Model->Group[Count]->MapCord_Data[GroupVertCount].v;
+			MapCord_Data[VC].u = App->CLSB_Model->Group[Count]->MapCord_Data[GroupVertCount].u;
+			MapCord_Data[VC].v = App->CLSB_Model->Group[Count]->MapCord_Data[GroupVertCount].v;
 
-			App->CLSB_Model->Normal_Data[VC].x = App->CLSB_Model->Group[Count]->Normal_Data[GroupVertCount].x;
-			App->CLSB_Model->Normal_Data[VC].y = App->CLSB_Model->Group[Count]->Normal_Data[GroupVertCount].y;
-			App->CLSB_Model->Normal_Data[VC].z = App->CLSB_Model->Group[Count]->Normal_Data[GroupVertCount].z;
+			Normal_Data[VC].x = App->CLSB_Model->Group[Count]->Normal_Data[GroupVertCount].x;
+			Normal_Data[VC].y = App->CLSB_Model->Group[Count]->Normal_Data[GroupVertCount].y;
+			Normal_Data[VC].z = App->CLSB_Model->Group[Count]->Normal_Data[GroupVertCount].z;
 
 			VC++;
 
@@ -185,12 +187,11 @@ void SB_Export_Milkshape::Convert_To_GlobalMesh(void)
 		while (mFaceCount < App->CLSB_Model->Group[Count]->GroupFaceCount)
 		{
 
-			App->CLSB_Model->Face_Data[VC].Group = Count;
+			Face_Data[VC].Group = Count;
 
-			App->CLSB_Model->Face_Data[VC].a = App->CLSB_Model->Group[Count]->Face_Data[mFaceCount].a + Offset;
-			App->CLSB_Model->Face_Data[VC].b = App->CLSB_Model->Group[Count]->Face_Data[mFaceCount].b + Offset;
-			App->CLSB_Model->Face_Data[VC].c = App->CLSB_Model->Group[Count]->Face_Data[mFaceCount].c + Offset;
-
+			Face_Data[VC].a = App->CLSB_Model->Group[Count]->Face_Data[mFaceCount].a + Offset;
+			Face_Data[VC].b = App->CLSB_Model->Group[Count]->Face_Data[mFaceCount].b + Offset;
+			Face_Data[VC].c = App->CLSB_Model->Group[Count]->Face_Data[mFaceCount].c + Offset;
 
 			VC++;
 			mFaceCount++;
@@ -209,7 +210,7 @@ void SB_Export_Milkshape::Convert_To_GlobalMesh(void)
 
 		while (GroupFaceCount < App->CLSB_Model->Group[Count]->GroupFaceCount)
 		{
-			App->CLSB_Model->MatIndex_Data[VC] = App->CLSB_Model->Group[Count]->MaterialIndex;
+			MatIndex_Data[VC] = App->CLSB_Model->Group[Count]->MaterialIndex;
 
 			VC++;
 			GroupFaceCount++;
@@ -235,9 +236,9 @@ bool SB_Export_Milkshape::Write_MILK_Mesh(void)
 	int Count = 0;
 	while (Count < App->CLSB_Model->VerticeCount)
 	{
-		Mesh.Vector3[0] = App->CLSB_Model->vertex_Data[Count].x;
-		Mesh.Vector3[1] = App->CLSB_Model->vertex_Data[Count].y;
-		Mesh.Vector3[2] = App->CLSB_Model->vertex_Data[Count].z;;
+		Mesh.Vector3[0] = vertex_Data[Count].x;
+		Mesh.Vector3[1] = vertex_Data[Count].y;
+		Mesh.Vector3[2] = vertex_Data[Count].z;;
 
 		Mesh.flags = 0;
 
@@ -261,41 +262,41 @@ bool SB_Export_Milkshape::Write_MILK_Mesh(void)
 
 	while (Count < App->CLSB_Model->FaceCount)
 	{
-		int A = App->CLSB_Model->Face_Data[Count].a;
-		int B = App->CLSB_Model->Face_Data[Count].b;
-		int C = App->CLSB_Model->Face_Data[Count].c;
+		int A = Face_Data[Count].a;
+		int B = Face_Data[Count].b;
+		int C = Face_Data[Count].c;
 
-		Face.Vector3Indices[0] = App->CLSB_Model->Face_Data[Count].a;
-		Face.Vector3Indices[1] = App->CLSB_Model->Face_Data[Count].b;
-		Face.Vector3Indices[2] = App->CLSB_Model->Face_Data[Count].c;
+		Face.Vector3Indices[0] = Face_Data[Count].a;
+		Face.Vector3Indices[1] = Face_Data[Count].b;
+		Face.Vector3Indices[2] = Face_Data[Count].c;
 
 		Face.flags = 0;
 
 		// 3 Face UVs for Face
-		Face.s[0] = App->CLSB_Model->MapCord_Data[A].u;
-		Face.t[0] = 1 - App->CLSB_Model->MapCord_Data[A].v;
+		Face.s[0] = MapCord_Data[A].u;
+		Face.t[0] = 1 - MapCord_Data[A].v;
 
-		Face.s[1] = App->CLSB_Model->MapCord_Data[B].u;
-		Face.t[1] = 1 - App->CLSB_Model->MapCord_Data[B].v;
+		Face.s[1] = MapCord_Data[B].u;
+		Face.t[1] = 1 - MapCord_Data[B].v;
 
-		Face.s[2] = App->CLSB_Model->MapCord_Data[C].u;
-		Face.t[2] = 1 - App->CLSB_Model->MapCord_Data[C].v;
+		Face.s[2] = MapCord_Data[C].u;
+		Face.t[2] = 1 - MapCord_Data[C].v;
 
 
 		// 3 Face Normals for Face
-		Face.Vector3Normals[0][0] = App->CLSB_Model->Normal_Data[A].x;
-		Face.Vector3Normals[0][1] = App->CLSB_Model->Normal_Data[A].y;
-		Face.Vector3Normals[0][2] = App->CLSB_Model->Normal_Data[A].z;
+		Face.Vector3Normals[0][0] = Normal_Data[A].x;
+		Face.Vector3Normals[0][1] = Normal_Data[A].y;
+		Face.Vector3Normals[0][2] = Normal_Data[A].z;
 
-		Face.Vector3Normals[1][0] = App->CLSB_Model->Normal_Data[B].x;
-		Face.Vector3Normals[1][1] = App->CLSB_Model->Normal_Data[B].y;
-		Face.Vector3Normals[1][2] = App->CLSB_Model->Normal_Data[B].z;
+		Face.Vector3Normals[1][0] = Normal_Data[B].x;
+		Face.Vector3Normals[1][1] = Normal_Data[B].y;
+		Face.Vector3Normals[1][2] = Normal_Data[B].z;
 
-		Face.Vector3Normals[2][0] = App->CLSB_Model->Normal_Data[C].x;
-		Face.Vector3Normals[2][1] = App->CLSB_Model->Normal_Data[C].y;
-		Face.Vector3Normals[2][2] = App->CLSB_Model->Normal_Data[C].z;
+		Face.Vector3Normals[2][0] = Normal_Data[C].x;
+		Face.Vector3Normals[2][1] = Normal_Data[C].y;
+		Face.Vector3Normals[2][2] = Normal_Data[C].z;
 
-		Face.groupIndex = App->CLSB_Model->Face_Data[Count].Group;
+		Face.groupIndex = Face_Data[Count].Group;
 
 		fwrite(&Face, sizeof(Cms3d_triangle_t), 1, WriteMILK);
 
@@ -306,13 +307,13 @@ bool SB_Export_Milkshape::Write_MILK_Mesh(void)
 }
 
 // *************************************************************************
-// *		WriteMILKGroups_Assimp:- Terry and Hazel Flanigan 2023		   *
+// *			WriteMILKGroups:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 bool SB_Export_Milkshape::Write_MILK_Groups(void)
 {
 
 	Sort_Groups();
-
+	Debug
 	word numGroups = App->CLSB_Model->Get_Groupt_Count();
 
 	fwrite(&numGroups, 2, 1, WriteMILK);
@@ -352,7 +353,7 @@ bool SB_Export_Milkshape::Sort_Groups(void)
 	{
 		TGroup[Count] = new Cms3d_group_t;
 		TGroup[Count]->flags = 0;
-		TGroup[Count]->materialIndex = App->CLSB_Model->Group[Count]->MaterialIndex;// -1;Count;//-1;
+		TGroup[Count]->materialIndex = -1;// App->CLSB_Model->Group[Count]->MaterialIndex;// -1;Count;//-1;
 		strcpy(TGroup[Count]->name, App->CLSB_Model->Group[Count]->GroupName);
 
 		VertCount = 0;

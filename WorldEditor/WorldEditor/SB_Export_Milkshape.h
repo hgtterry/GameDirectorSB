@@ -104,6 +104,12 @@ private:
 
 	Cms3d_group_t* TGroup[200];
 
+	std::vector<vertex_type> vertex_Data;
+	std::vector<polygon_type> Face_Data;
+	std::vector<normal_type> Normal_Data;
+	std::vector<mapcoord_type> MapCord_Data;
+	std::vector<int> MatIndex_Data;
+
 	FILE* WriteMILK;
 };
 

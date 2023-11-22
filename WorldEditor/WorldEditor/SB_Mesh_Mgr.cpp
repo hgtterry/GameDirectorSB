@@ -505,6 +505,16 @@ void SB_Mesh_Mgr::UpdateBrushData(HWND hDlg, int Index)
 
 		sprintf(buf, "Vertices %i", App->CLSB_Model->Group[Index]->GroupVertCount);
 		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Mat Index %i", App->CLSB_Model->Group[Index]->MaterialIndex);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
+		sprintf(buf, "Mat Name %s", App->CLSB_Model->Group[Index]->MaterialName);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+		
+		sprintf(buf, "Mat File Name %s", App->CLSB_Model->Group[Index]->Text_FileName);
+		SendDlgItemMessage(hDlg, IDC_LISTDATA, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
+
 	}
 
 	
@@ -1180,6 +1190,7 @@ bool SB_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 		App->CLSB_Model->Group[Count]->Normal_Data.resize(FaceCount * 3);
 		App->CLSB_Model->Group[Count]->MapCord_Data.resize(FaceCount * 3);
 		App->CLSB_Model->Group[Count]->Face_Data.resize(FaceCount);
+		App->CLSB_Model->Group[Count]->FaceIndex_Data.resize(FaceCount*3);
 
 		WE_Convert_To_Texture_Group(Count);
 
@@ -1225,8 +1236,12 @@ bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 	while (Count < BrushCount)
 	{
 		FaceCount = 0;
+		
 		while (FaceCount < App->CLSB_Model->B_Brush[Count]->Face_Count)
 		{
+			int ActualFaceCount = 0;
+			int FaceIndexNum = 0;
+
 			if (App->CLSB_Model->B_Brush[Count]->Face_Data[FaceCount].TextID == TextureID)
 			{
 
@@ -1311,6 +1326,12 @@ bool SB_Mesh_Mgr::WE_Convert_To_Texture_Group(int TextureID)
 				App->CLSB_Model->Group[TextureID]->Face_Data[FacePos].b = FaceIndex;
 				FaceIndex++;
 				App->CLSB_Model->Group[TextureID]->Face_Data[FacePos].c = FaceIndex;
+				
+
+				App->CLSB_Model->Group[TextureID]->FaceIndex_Data[FacePos].Index = FacePos;
+				FaceIndexNum++;
+				ActualFaceCount++;
+
 				FaceIndex++;
 				FacePos++;
 			}

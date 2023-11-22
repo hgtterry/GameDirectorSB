@@ -561,3 +561,16 @@ void SB_Exporter::Autodesk_Model(void)
 		App->Say("Autodesk Object file Created successfully");
 	}
 }
+
+// *************************************************************************
+// *			Milkshape_Model:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_Exporter::Milkshape_Model(void)
+{
+	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(Export_Selected);
+	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
+
+	App->CLSB_Export_Milkshape->Export_To_Milk(0);
+
+	App->Say("Milkshape file Created successfully");
+}
