@@ -31,6 +31,13 @@ SB_Export_Milkshape::SB_Export_Milkshape()
 	Text_FileName[0] = 0;
 	MaterialName[0] = 0;
 
+	int Count = 0;
+	while (Count < 499)
+	{
+		TGroup[Count] = nullptr;
+		Count++;
+	}
+
 	WriteMILK = nullptr;
 }
 
@@ -72,7 +79,7 @@ bool SB_Export_Milkshape::Export_To_Milk(bool DoMotions)
 		Write_MILK_File();
 	}
 
-	//CleanUp();
+	CleanUp();
 
 	return 1;
 }
@@ -313,7 +320,7 @@ bool SB_Export_Milkshape::Write_MILK_Groups(void)
 {
 
 	Sort_Groups();
-	Debug
+	
 	word numGroups = App->CLSB_Model->Get_Groupt_Count();
 
 	fwrite(&numGroups, 2, 1, WriteMILK);
@@ -436,4 +443,26 @@ inline void SB_Export_Milkshape::SetVec4(float* target, float x, float y, float 
 	target[1] = y;
 	target[2] = z;
 	target[3] = w;
+}
+
+// *************************************************************************
+// *			CleanUp:- Terry and Hazel Flanigan 2023				 	   *
+// *************************************************************************
+bool SB_Export_Milkshape::CleanUp(void)
+{
+	int Count = 0;
+	int GroupCount = App->CLSB_Model->Get_Groupt_Count();
+
+	while (Count < GroupCount)
+	{
+		if (TGroup[Count])
+		{
+			delete TGroup[Count];
+			TGroup[Count] = NULL;
+		}
+
+		Count++;
+	}
+	
+	return 1;
 }

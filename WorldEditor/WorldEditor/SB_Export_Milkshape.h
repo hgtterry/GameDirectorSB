@@ -97,12 +97,13 @@ private:
 	bool Write_MILK_Texures(void);
 	bool Get_Material_Name(int Loop);
 	inline void SetVec4(float* target, float x, float y, float z, float w);
+	bool CleanUp(void);
 
 	char OutputFolder[MAX_PATH];
 	char Text_FileName[MAX_PATH];
 	char MaterialName[MAX_PATH];
 
-	Cms3d_group_t* TGroup[200];
+	Cms3d_group_t* TGroup[500];
 
 	std::vector<vertex_type> vertex_Data;
 	std::vector<polygon_type> Face_Data;
