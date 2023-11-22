@@ -84,9 +84,11 @@ public:
 	SB_Export_Milkshape();
 	~SB_Export_Milkshape();
 
-	bool Export_To_Milk(bool DoMotions);
+	bool Export_To_Milk();
 
 private:
+
+	bool Export_Textures(void);
 
 	bool Write_MILK_File(void);
 	void Write_MILK_Header(void);

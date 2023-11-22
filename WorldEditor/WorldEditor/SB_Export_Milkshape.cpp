@@ -46,25 +46,48 @@ SB_Export_Milkshape::~SB_Export_Milkshape()
 }
 
 // *************************************************************************
+// *			Export_Textures:- Terry and Hazel Flanigan 2023 	   	   *
+// *************************************************************************
+bool SB_Export_Milkshape::Export_Textures(void)
+{
+	char buf[MAX_PATH];
+
+	int GroupCount = 0;
+	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
+
+	while (GroupCount < GroupCountTotal)
+	{
+		strcpy(buf, App->CLSB_Model->Group[GroupCount]->Text_FileName);
+		int Len = strlen(buf);
+		buf[Len - 4] = 0;
+
+		App->CLSB_Textures->Extract_TXL_Texture(buf, OutputFolder);
+
+		GroupCount++;
+	}
+
+	return 1;
+}
+
+// *************************************************************************
 // *			Export_To_Milk:- Terry and Hazel Flanigan 2023             *
 // *************************************************************************
-bool SB_Export_Milkshape::Export_To_Milk(bool DoMotions)
+bool SB_Export_Milkshape::Export_To_Milk()
 {
-	strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Milk Files a sub folder will be created");
+	/*strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Milk Files a sub folder will be created");
 	int Test = App->CLSB_FileIO->StartBrowser("");
 
 	if (Test == 0)
 	{
 		return 0;
-	}
+	}*/
 
 	OutputFolder[0] = 0;
 
-	char buff[1024];
-	strcpy(buff, App->CLSB_FileIO->szSelectedDir);
+	char buff[MAX_PATH];
+	strcpy(buff, App->CLSB_Exporter->mFolder_Path);
 	strcat(buff, "\\");
-	strcat(buff, App->CLSB_Model->JustName);
-	strcat(buff, "_Milkshape");
+	strcat(buff, App->CLSB_Exporter->mDirectory_Name);
 	strcat(buff, "\\");
 
 	strcpy(OutputFolder, buff);
@@ -74,9 +97,8 @@ bool SB_Export_Milkshape::Export_To_Milk(bool DoMotions)
 
 	if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
 	{
-		//App->CL_Textures->DecompileTextures(OutputFolder);
-
 		Write_MILK_File();
+		Export_Textures();
 	}
 
 	CleanUp();
@@ -89,10 +111,10 @@ bool SB_Export_Milkshape::Export_To_Milk(bool DoMotions)
 // *************************************************************************
 bool SB_Export_Milkshape::Write_MILK_File(void)
 {
-	char buf[244];
+	char buf[MAX_PATH];
 	strcpy(buf, OutputFolder);
 	strcat(buf, "\\");
-	strcat(buf, App->CLSB_Model->JustName);
+	strcat(buf, App->CLSB_Exporter->mJustName);
 	strcat(buf, ".ms3d");
 
 	WriteMILK = fopen(buf, "wb");
@@ -111,8 +133,6 @@ bool SB_Export_Milkshape::Write_MILK_File(void)
 	int TotalFrames = 0;
 
 	Convert_To_GlobalMesh();
-
-	
 
 	Write_MILK_Mesh();
 	Write_MILK_Groups();
@@ -206,7 +226,6 @@ void SB_Export_Milkshape::Convert_To_GlobalMesh(void)
 
 		Offset = Offset + App->CLSB_Model->Group[Count]->GroupVertCount;
 		Count++;
-
 	}
 
 	VC = 0;
@@ -289,7 +308,6 @@ bool SB_Export_Milkshape::Write_MILK_Mesh(void)
 		Face.s[2] = MapCord_Data[C].u;
 		Face.t[2] = 1 - MapCord_Data[C].v;
 
-
 		// 3 Face Normals for Face
 		Face.Vector3Normals[0][0] = Normal_Data[A].x;
 		Face.Vector3Normals[0][1] = Normal_Data[A].y;
@@ -318,7 +336,6 @@ bool SB_Export_Milkshape::Write_MILK_Mesh(void)
 // *************************************************************************
 bool SB_Export_Milkshape::Write_MILK_Groups(void)
 {
-
 	Sort_Groups();
 	
 	word numGroups = App->CLSB_Model->Get_Groupt_Count();
@@ -411,8 +428,8 @@ bool SB_Export_Milkshape::Write_MILK_Texures(void)
 
 
 		int Len = strlen(Text_FileName);
-		Text_FileName[Len - 4] = 0;
-		strcat(Text_FileName, ".jpg");
+		//Text_FileName[Len - 4] = 0;
+		//strcat(Text_FileName, ".jpg");
 
 		strcpy(mat.texture, Text_FileName);
 		strcpy(mat.alphamap, "");
@@ -428,7 +445,6 @@ bool SB_Export_Milkshape::Write_MILK_Texures(void)
 // *************************************************************************
 bool SB_Export_Milkshape::Get_Material_Name(int Loop)
 {
-
 	strcpy(MaterialName, App->CLSB_Model->Group[Loop]->MaterialName);
 	strcpy(Text_FileName, App->CLSB_Model->Group[Loop]->Text_FileName);
 	return 1;

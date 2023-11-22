@@ -394,6 +394,11 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 				App->CLSB_Exporter->Autodesk_Model();
 			}
 
+			if (App->CLSB_Exporter->Selected_Index == 3)
+			{
+				App->CLSB_Exporter->Milkshape_Model();
+			}
+
 			App->CLSB_Exporter->Is_Canceled = 0;
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
@@ -468,6 +473,22 @@ void SB_Exporter::Set_Dialog_Data_FromIndex(HWND m_hDlg)
 		SetDlgItemText(m_hDlg, IDC_ST_SELECTEDFORMAT, "Autodesk...  ( .3ds )");
 	}
 
+	if (Selected_Index == 3)
+	{
+		strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
+
+		if (App->CLSB_Exporter->Export_Selected == 0)
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Milkshape_All");
+		}
+		else
+		{
+			strcat(App->CLSB_Exporter->mDirectory_Name, "_Milkshape_Sel");
+		}
+
+		SetDlgItemText(m_hDlg, IDC_ST_SELECTEDFORMAT, "Milkshape..  ( .ms3d )");
+	}
+
 	SetDlgItemText(m_hDlg, IDC_ST_SUBFOLDER_NAME, App->CLSB_Exporter->mDirectory_Name);
 }
 
@@ -512,6 +533,8 @@ void SB_Exporter::List_File_Formats(HWND m_hDlg)
 	sprintf(buf, "%s", "Autodesk...  ( .3ds )");
 	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
+	sprintf(buf, "%s", "Milkshape...  ( .ms3d )");
+	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_ADDSTRING, (WPARAM)0, (LPARAM)buf);
 
 	SendDlgItemMessage(m_hDlg, IDC_LST_FILEFORMATS, LB_SETCURSEL, (WPARAM)0, (LPARAM)0);
 }
@@ -570,7 +593,7 @@ void SB_Exporter::Milkshape_Model(void)
 	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(Export_Selected);
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 
-	App->CLSB_Export_Milkshape->Export_To_Milk(0);
+	App->CLSB_Export_Milkshape->Export_To_Milk();
 
 	App->Say("Milkshape file Created successfully");
 }
