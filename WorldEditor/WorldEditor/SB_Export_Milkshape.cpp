@@ -147,7 +147,7 @@ void SB_Export_Milkshape::Convert_To_GlobalMesh(void)
 	int Offset = 0;
 
 	vertex_Data.resize(App->CLSB_Model->VerticeCount);
-	Face_Data.resize(1000);// App->CLSB_Model->FaceCount);
+	Face_Data.resize(App->CLSB_Model->FaceCount);
 
 	Normal_Data.resize(App->CLSB_Model->VerticeCount);
 	MapCord_Data.resize(App->CLSB_Model->VerticeCount);
@@ -353,7 +353,7 @@ bool SB_Export_Milkshape::Sort_Groups(void)
 	{
 		TGroup[Count] = new Cms3d_group_t;
 		TGroup[Count]->flags = 0;
-		TGroup[Count]->materialIndex = -1;// App->CLSB_Model->Group[Count]->MaterialIndex;// -1;Count;//-1;
+		TGroup[Count]->materialIndex = App->CLSB_Model->Group[Count]->MaterialIndex;// -1;Count;//-1;
 		strcpy(TGroup[Count]->name, App->CLSB_Model->Group[Count]->GroupName);
 
 		VertCount = 0;
