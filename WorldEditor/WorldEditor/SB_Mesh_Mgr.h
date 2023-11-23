@@ -45,7 +45,9 @@ public:
 
 	int ActualFaceCount;
 	int	mTextureCount;
+
 	char TextureName2[20][MAX_PATH];
+	int IsTextureAlpha[20];
 
 	HWND Mesh_Viewer_HWND;
 

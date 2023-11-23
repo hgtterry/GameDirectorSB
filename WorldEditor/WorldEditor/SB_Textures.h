@@ -69,14 +69,14 @@ public:
 	bool Extract_TXL_Texture(char* Name, char* Folder);
 	bool LoadTextures_TXL(char* Name);
 
+	geBitmap* Temp_RF_Bitmap;
+
 	char TextureFileName[MAX_PATH];
 
 protected:
 
 	bool Texture_To_Bmp(char* File);
 	bool LoadDummyTexture(int Index);
-
-	geBitmap* Temp_RF_Bitmap;
 
 	geVFile* VFS;
 

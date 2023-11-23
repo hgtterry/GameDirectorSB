@@ -674,6 +674,15 @@ bool SB_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, B
 
 			strcpy(TextureName2[AdjustedIndex], matname);
 
+			if (geBitmap_HasAlpha(pLevel->WadFile->mBitmaps[i].bmp))
+			{
+				IsTextureAlpha[AdjustedIndex] = 1;
+			}
+			else
+			{
+				IsTextureAlpha[AdjustedIndex] = 0;
+			}
+
 			mAdjusedIndex_Store[AdjustedIndex] = i;
 
 			AddTexture_GL(NULL, matname, AdjustedIndex);
@@ -1002,6 +1011,7 @@ bool SB_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int 
 	for (int index = 0; index < pWad->mBitmapCount; index++)
 	{
 		char mName[MAX_PATH];
+		char TempTextureFile[MAX_PATH];
 
 		CString Name = pWad->mBitmaps[index].Name;
 		strcpy(mName, Name);
@@ -1011,16 +1021,30 @@ bool SB_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int 
 		{
 			Bitmap = pWad->mBitmaps[index].bmp;
 
-			char TempTextureFile_BMP[MAX_PATH];
-			strcpy(TempTextureFile_BMP, App->WorldEditor_Directory);
-			strcat(TempTextureFile_BMP, "\\");
-			strcat(TempTextureFile_BMP, "TextureLoad.bmp");
+			if (geBitmap_HasAlpha(Bitmap))
+			{
+				App->CLSB_Textures->LoadTextures_TXL(pWad->mBitmaps[index].Name);
 
-			App->CLSB_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile_BMP);
+				strcpy(TempTextureFile, App->WorldEditor_Directory);
+				strcat(TempTextureFile, "\\");
+				strcat(TempTextureFile, "TextureLoad.tga");
 
-			App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_BrushTexture, TempTextureFile_BMP, GroupIndex);
+				App->CLSB_Textures->WriteTGA(TempTextureFile, App->CLSB_Textures->Temp_RF_Bitmap);
 
-			DeleteFile((LPCTSTR)TempTextureFile_BMP);
+				App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_BrushTexture, TempTextureFile, GroupIndex);
+			}
+			else
+			{
+				strcpy(TempTextureFile, App->WorldEditor_Directory);
+				strcat(TempTextureFile, "\\");
+				strcat(TempTextureFile, "TextureLoad.bmp");
+
+				App->CLSB_Textures->Genesis_WriteToBmp(Bitmap, TempTextureFile);
+
+				App->CLSB_Textures->Soil_Load_Texture(App->CLSB_Ogre->RenderListener->g_BrushTexture, TempTextureFile, GroupIndex);
+			}
+
+			DeleteFile((LPCTSTR)TempTextureFile);
 		}
 	}
 
@@ -1185,7 +1209,15 @@ bool SB_Mesh_Mgr::WE_Convert_All_Texture_Groups()
 
 		char buff[MAX_PATH];
 		strcpy(buff, TextureName2[Count]);
-		strcat(buff, ".bmp");
+		if (IsTextureAlpha[Count] == 1)
+		{
+			strcat(buff, ".tga");
+		}
+		else
+		{
+			strcat(buff, ".bmp");
+		}
+
 		strcpy(App->CLSB_Model->Group[Count]->Text_FileName, buff);
 
 		App->CLSB_Model->Group[Count]->MaterialIndex = Count;

@@ -1258,7 +1258,6 @@ bool SB_Textures::Extract_TXL_Texture(char* Name, char* Folder)
 		strcat(Buf1, ".tga");
 
 		strcat(Name2, Buf1);
-		//App->CL_TxlEditor->WriteTGA(Name2, BitmapPtr->bmp);
 		nErrorCode = WriteTGA(Name2, Temp_RF_Bitmap);
 	}
 	else
@@ -1337,23 +1336,7 @@ bool SB_Textures::LoadTextures_TXL(char* Name)
 
 	Temp_RF_Bitmap = geBitmap_CreateFromFile(File);
 
-	App->Say("Loaded TXL");
-	/*BitMap_Names.resize(100);
-
-	while (geVFile_FinderGetNextFile(Finder) != GE_FALSE)
-	{
-		geVFile_Properties	Properties;
-
-		geVFile_FinderGetProperties(Finder, &Properties);
-
-		strcpy(BitMap_Names[NameCount].Name, Properties.Name);
-
-		NameCount++;
-	}
-
-	Copy_Texture_Names();
-
-	Check_for_Textures(VFS);*/
+	//geBitmap_Destroy(&Temp_RF_Bitmap);
 
 	geVFile_Close(File);
 	geVFile_Close(VFS);
