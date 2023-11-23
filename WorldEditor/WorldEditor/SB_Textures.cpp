@@ -39,6 +39,8 @@ distribution.
 SB_Textures::SB_Textures()
 {
 	TextureFileName[0] = 0;
+
+	VFS = NULL;
 }
 
 SB_Textures::~SB_Textures()
@@ -714,12 +716,12 @@ int SB_Textures::WriteTGA(const char* pszFile, geBitmap* pBitmap)
 	gePixelFormat   FormatA;
 	geBitmap_Info   BitmapInfo;
 	int             nErrorCode = TPACKERROR_UNKNOWN;      // Return code
-	TGAHEADER		tgah;
+	TGAHEADER2		tgah;
 	long			footer = 0;
 	char			signature[18] = "TRUEVISION-XFILE.";
 
-	uint8* pPixelData;
-	uint8* pPixelDataA;
+	Ogre::uint8* pPixelData;
+	Ogre::uint8* pPixelDataA;
 
 	int             i, j;
 	HANDLE          hFile = NULL;
@@ -761,6 +763,7 @@ int SB_Textures::WriteTGA(const char* pszFile, geBitmap* pBitmap)
 	{
 		if (!geBitmap_LockForRead(geBitmap_GetAlpha(pBitmap), &pLockA, 0, 0, FormatA, GE_FALSE, 0))
 		{
+			App->Say("No Alpha");
 			return FALSE;
 		}
 	}
@@ -782,19 +785,19 @@ int SB_Textures::WriteTGA(const char* pszFile, geBitmap* pBitmap)
 	tgah.Xorigin = 0;
 	tgah.Yorigin = 0;
 
-	tgah.Width = (uint16)BitmapInfo.Width;
-	tgah.Height = (uint16)BitmapInfo.Height;
+	tgah.Width = (Ogre::uint16)BitmapInfo.Width;
+	tgah.Height = (Ogre::uint16)BitmapInfo.Height;
 
 	tgah.PixelDepth = 32;
 	tgah.ImageDescriptor = 8; //00001000 - not flipped, 8 alpha bits
 
 
-	pPixelData = (uint8*)geBitmap_GetBits(pLock);
+	pPixelData = (Ogre::uint8*)geBitmap_GetBits(pLock);
 
-	pPixelDataA = (uint8*)geBitmap_GetBits(pLockA);
+	pPixelDataA = (Ogre::uint8*)geBitmap_GetBits(pLockA);
 
 	// Write the tga header
-	if (!WriteFile(hFile, (LPVOID)&tgah, sizeof(TGAHEADER), (LPDWORD)&nBytesWritten, (NULL)))
+	if (!WriteFile(hFile, (LPVOID)&tgah, sizeof(TGAHEADER2), (LPDWORD)&nBytesWritten, (NULL)))
 	{
 		nErrorCode = TPACKERROR_WRITE;
 		goto ExitWriteBitmap;
@@ -813,7 +816,7 @@ int SB_Textures::WriteTGA(const char* pszFile, geBitmap* pBitmap)
 				goto ExitWriteBitmap;
 			}
 
-			pPixelData += 3;
+			pPixelData +=3;
 
 
 			if (!WriteFile(hFile, (LPVOID)pPixelDataA, 1, (LPDWORD)&nBytesWritten, (NULL)))
@@ -871,7 +874,7 @@ ExitWriteBitmap:
 	{
 		geBitmap_UnLock(pLockA);
 	}
-
+	
 	return nErrorCode;
 }
 
@@ -1229,25 +1232,34 @@ bool SB_Textures::Create_DummyTexture(char* Folder)
 	return 1;
 }
 
+// ----------------------------------------
+// 
 // *************************************************************************
 // *		Extract_TXL_Texture:- Terry and Hazel Flanigan 2023    	 	   *
 // *************************************************************************
 bool SB_Textures::Extract_TXL_Texture(char* Name, char* Folder)
 {
-	m_pDoc = (CFusionDoc*)App->m_pMainFrame->GetCurrentDoc();
-	WadFileEntry* BitmapPtr = m_pDoc->GetDibBitmap(Name);
+	App->Get_Current_Document();
+	WadFileEntry* BitmapPtr = App->m_pDoc->GetDibBitmap(Name);
 
-	char Name2[200];
+	int nErrorCode;
+
+	char Name2[MAX_PATH];
 	strcpy(Name2, Folder);
 
 	if (geBitmap_HasAlpha(BitmapPtr->bmp))
 	{
+		LoadTextures_TXL(Name);
+
+		//App->Say(BitmapPtr->Name);
+
 		char Buf1[200];
 		strcpy(Buf1, BitmapPtr->Name);
 		strcat(Buf1, ".tga");
 
 		strcat(Name2, Buf1);
-		WriteTGA(Name2, BitmapPtr->bmp);
+		//App->CL_TxlEditor->WriteTGA(Name2, BitmapPtr->bmp);
+		nErrorCode = WriteTGA(Name2, Temp_RF_Bitmap);
 	}
 	else
 	{
@@ -1257,8 +1269,94 @@ bool SB_Textures::Extract_TXL_Texture(char* Name, char* Folder)
 
 		strcat(Name2, Buf1);
 
-		WriteBMP8(Name2, BitmapPtr->bmp);
+		nErrorCode = WriteBMP8(Name2, BitmapPtr->bmp);
 	}
+
+	if (nErrorCode != TPACKERROR_OK)
+	{
+		// Error writing this bitmap
+		switch (nErrorCode)
+		{
+		case TPACKERROR_CREATEFILE:
+			App->Say("Unable to create output file %s");
+			break;
+		case TPACKERROR_WRITE:
+			App->Say("I/O error writing %s");
+			break;
+		case TPACKERROR_MEMORYALLOCATION:
+			App->Say("Memory allocation error writing %s");
+			break;
+		case TPACKERROR_UNKNOWN:
+		default:
+			App->Say("UInknown error writing %s");
+		}
+	}
+
+	return 1;
+}
+
+// *************************************************************************
+// *			LoadTextures_TXL:- Terry and Hazel Flanigan 2023 		   *
+// *************************************************************************
+bool SB_Textures::LoadTextures_TXL(char* Name)
+{
+	VFS = NULL;
+
+	geVFile* File = NULL;
+	geVFile_Finder* Finder = NULL;
+
+	//NameCount = 0;
+
+	VFS = geVFile_OpenNewSystem(NULL, GE_VFILE_TYPE_VIRTUAL, App->CL_World->mCurrent_TXL_FilePath, NULL, GE_VFILE_OPEN_READONLY | GE_VFILE_OPEN_DIRECTORY);
+	if (!VFS)
+	{
+		App->Say("Could not open file", App->CL_World->mCurrent_TXL_FilePath);
+		return 0;
+	}
+
+	Finder = geVFile_CreateFinder(VFS, "*.*");
+	if (!Finder)
+	{
+		App->Say("Could not create Finder *.* ");
+
+		geVFile_Close(VFS);
+		return 0;
+	}
+
+
+	if (VFS)
+	{
+		File = geVFile_Open(VFS, Name, GE_VFILE_OPEN_READONLY);
+	}
+
+	if (!File)
+	{
+		App->Say("Could not open", Name);
+		return 0;
+	}
+
+	Temp_RF_Bitmap = geBitmap_CreateFromFile(File);
+
+	App->Say("Loaded TXL");
+	/*BitMap_Names.resize(100);
+
+	while (geVFile_FinderGetNextFile(Finder) != GE_FALSE)
+	{
+		geVFile_Properties	Properties;
+
+		geVFile_FinderGetProperties(Finder, &Properties);
+
+		strcpy(BitMap_Names[NameCount].Name, Properties.Name);
+
+		NameCount++;
+	}
+
+	Copy_Texture_Names();
+
+	Check_for_Textures(VFS);*/
+
+	geVFile_Close(File);
+	geVFile_Close(VFS);
 
 	return 1;
 }

@@ -74,14 +74,6 @@ bool SB_Export_Milkshape::Export_Textures(void)
 // *************************************************************************
 bool SB_Export_Milkshape::Export_To_Milk()
 {
-	/*strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Milk Files a sub folder will be created");
-	int Test = App->CLSB_FileIO->StartBrowser("");
-
-	if (Test == 0)
-	{
-		return 0;
-	}*/
-
 	OutputFolder[0] = 0;
 
 	char buff[MAX_PATH];

@@ -398,8 +398,8 @@ int A_TxlEditor::WriteTGA(const char * pszFile, geBitmap *pBitmap)
 	long			footer = 0;
 	char			signature[18] = "TRUEVISION-XFILE.";
 
-	Ogre::uint8 *         pPixelData;
-	Ogre::uint8 *			pPixelDataA;
+	Ogre::uint8 *       pPixelData;
+	Ogre::uint8 *		pPixelDataA;
 
 	int             i,j;
 	HANDLE          hFile = NULL;

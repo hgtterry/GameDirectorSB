@@ -541,6 +541,7 @@ void A_TextureDialog::Get_BitMap()
 
 	if(geBitmap_HasAlpha(BitmapPtr->bmp))
 	{
+		//hbm = CreateHBitmapFromgeBitmap(BitmapPtr->bmp, hDC);
 		hbm = CreateHBitmapFromgeBitmap(geBitmap_GetAlpha(BitmapPtr->bmp), hDC);
 		if (hbm == NULL)
 		{

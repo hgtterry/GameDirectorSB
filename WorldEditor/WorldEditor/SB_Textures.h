@@ -22,6 +22,25 @@ distribution.
 */
 
 #pragma once
+
+#pragma pack(1)
+typedef struct TGAHEADER2
+{
+	char	IDLength;
+	char	ColorMapType;
+	char	ImageType;
+	Ogre::uint16	CMFirstEntry;
+	Ogre::uint16	CMLength;
+	char	CMEntrySize;
+	Ogre::uint16	Xorigin;
+	Ogre::uint16	Yorigin;
+	Ogre::uint16	Width;
+	Ogre::uint16	Height;
+	char	PixelDepth;
+	char	ImageDescriptor;
+} TGAHEADER2;
+#pragma pack()
+
 class SB_Textures
 {
 public:
@@ -45,7 +64,10 @@ public:
 	bool Bmp_To_Jpg(char* File);
 
 	bool Create_DummyTexture(char* Folder);
+
+
 	bool Extract_TXL_Texture(char* Name, char* Folder);
+	bool LoadTextures_TXL(char* Name);
 
 	char TextureFileName[MAX_PATH];
 
@@ -53,6 +75,10 @@ protected:
 
 	bool Texture_To_Bmp(char* File);
 	bool LoadDummyTexture(int Index);
+
+	geBitmap* Temp_RF_Bitmap;
+
+	geVFile* VFS;
 
 	CFusionDoc* m_pDoc;
 };

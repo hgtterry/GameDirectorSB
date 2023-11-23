@@ -69,7 +69,6 @@ typedef struct	TPack_WindowData
 }	TPack_WindowData;
 
 #pragma pack(1)
-
 typedef struct TGAHEADER
 {
 	char	IDLength;
@@ -85,7 +84,6 @@ typedef struct TGAHEADER
 	char	PixelDepth;
 	char	ImageDescriptor;
 } TGAHEADER;
-
 #pragma pack()
 
 class A_TxlEditor
