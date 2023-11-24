@@ -91,7 +91,6 @@
 #define IDD_PATHSDIALOG                 227
 #define IDD_PROJECTOPTIONS              228
 #define IDC_EYEDROPPER                  229
-#define IDD_LEVELOPTIONS                231
 #define IDD_BOOLEDIT                    232
 #define IDD_DIALOG2                     233
 #define IDI_ICON1                       238
@@ -489,16 +488,11 @@
 #define IDC_PATHS                       1276
 #define IDC_COMPILEOPTIONS              1277
 #define IDC_SAVE                        1278
-#define IDC_LIGHTMAPSCALE               1279
-#define IDC_DRAWSCALE                   1280
 #define IDC_BOOLLIST                    1281
 #define IDC_EDITTXL                     1281
 #define IDC_CONTENTSLIST                1282
-#define IDC_EDITHEADERSDIR              1282
 #define IDC_MIPMAPBIAS                  1283
-#define IDC_EDITPAWNINI                 1283
 #define IDC_TEXTURELOCK                 1284
-#define IDC_EDITACTORSDIR               1284
 #define IDC_AXISX                       1285
 #define IDC_REFLECTIVITY                1285
 #define IDC_AXISY                       1286
@@ -508,7 +502,6 @@
 #define IDC_EDITSCALE                   1289
 #define IDC_TRANSPARENT                 1289
 #define IDC_BROWSETXL                   1290
-#define IDC_BROWSEPAWNINI               1291
 #define IDC_GROUP_TEXTURE_OFFSET_SCALE  1293
 #define IDC_GROUP_LIGHTMAP_SCALE        1294
 #define IDC_LABEL_TEXTURE_OFFSET_SCALEX 1295

@@ -154,7 +154,6 @@
     <ClCompile Include="group.cpp" />
     <ClCompile Include="KeyEditDlg.cpp" />
     <ClCompile Include="level.cpp" />
-    <ClCompile Include="LevelOptions.cpp" />
     <ClCompile Include="List.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -388,7 +387,6 @@
     <ClInclude Include="group.h" />
     <ClInclude Include="KeyEditDlg.h" />
     <ClInclude Include="level.h" />
-    <ClInclude Include="LevelOptions.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="model.h" />
@@ -500,6 +498,9 @@
     <Image Include="res\MenuBar\TexturesOff.bmp" />
     <Image Include="res\MenuBar\TexturesOn.bmp" />
     <Image Include="res\small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

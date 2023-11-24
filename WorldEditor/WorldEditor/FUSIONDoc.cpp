@@ -31,7 +31,7 @@
 #include "KeyEditDlg.h"
 #include "FusionTabControls.h"
 #include "EntityVisDlg.h"
-#include "LevelOptions.h"
+//#include "LevelOptions.h"
 #include "ScaleDialog.h"
 
 #include "FUSIONView.h"
@@ -5619,59 +5619,8 @@ static geBoolean fdocUpdateBrushFaceTextures (Brush *pBrush, void *pVoid)
 
 void CFusionDoc::OnLeveloptions() 
 {
-    SetModifiedFlag();
     App->CL_Dialogs->Start_Properties();
-
-    return;
-    
-
-    CLevelOptions  Dlg;
-
-    Dlg.m_DrawScale = Level_GetDrawScale (App->CLSB_Doc->pLevel);
-    Dlg.m_LightmapScale = Level_GetLightmapScale (App->CLSB_Doc->pLevel);
-    Dlg.m_TextureLib = Level_GetWadPath (App->CLSB_Doc->pLevel);
-    Dlg.m_HeadersDir = Level_GetHeadersDirectory (App->CLSB_Doc->pLevel);
-// changed QD Actors
-    Dlg.m_ActorsDir = Level_GetActorsDirectory (App->CLSB_Doc->pLevel);
-    Dlg.m_PawnIni = Level_GetPawnIniPath (App->CLSB_Doc->pLevel);
-    
-// end change
-
-    if (Dlg.DoModal () == IDOK)
-    {
-        Level_SetDrawScale (App->CLSB_Doc->pLevel, Dlg.m_DrawScale);
-        Level_SetLightmapScale (App->CLSB_Doc->pLevel, Dlg.m_LightmapScale);
-        if (Dlg.m_TxlChanged)
-        {
-            Level_SetWadPath (App->CLSB_Doc->pLevel, Dlg.m_TextureLib);
-            App->CLSB_Doc->UpdateAfterWadChange();
-        }
-        if (Dlg.m_HeadersChanged)
-        {
-            Level_LoadEntityDefs (App->CLSB_Doc->pLevel, Dlg.m_HeadersDir);
-            if (ValidateEntities( ) == FALSE)
-            {
-                SelectTab( CONSOLE_TAB ) ;
-                AfxMessageBox( IDS_ENTITY_WARNING, MB_OK + MB_ICONEXCLAMATION ) ;
-            }
-            //mpMainFrame->m_wndTabControls->UpdateTabs ();
-        }
-// changed QD Actors
-        if (Dlg.m_ActorsChanged)
-        {
-            Level_SetActorsDir(App->CLSB_Doc->pLevel, Dlg.m_ActorsDir);
-            UpdateEntityActors();
-            App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
-        }
-        if (Dlg.m_PawnIniChanged)
-        {
-            Level_SetPawnIniPath (App->CLSB_Doc->pLevel, Dlg.m_PawnIni);
-            UpdateEntityActors();
-            App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS | REBUILD_QUICK, NULL);
-        }
-// end change
-
-    }
+    SetModifiedFlag();
 }
 
 void CFusionDoc::OnCameraForward()
