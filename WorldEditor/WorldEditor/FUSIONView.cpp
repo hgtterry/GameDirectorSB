@@ -2586,9 +2586,7 @@ void CFusionView::OnEditSelectFacesPrevious()
 
 void CFusionView::OnEditSelectFacesAllinselectedbrushes() 
 {
-	CFusionDoc* pDoc = GetDocument();
-
-	pDoc->SelectAllFacesInBrushes() ;
+	App->CLSB_Doc->SelectAllFacesInBrushes();
 	App->CLSB_Doc->UpdateAllViews( UAV_ALL3DVIEWS, NULL ) ;
 }
 

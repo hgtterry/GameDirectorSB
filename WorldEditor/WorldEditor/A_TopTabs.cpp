@@ -907,9 +907,7 @@ LRESULT CALLBACK SB_TopTabs::Top_Faces_Proc(HWND hDlg, UINT message, WPARAM wPar
 	{
 		if (LOWORD(wParam) == IDC_BT_TT_ALL_BRUSH)
 		{
-			App->Get_Current_Document();
-
-			App->m_pDoc->SelectAllFacesInBrushes();
+			App->CLSB_Doc->SelectAllFacesInBrushes();
 			App->CLSB_Doc->UpdateAllViews(UAV_ALL3DVIEWS, NULL);
 			return TRUE;
 		}

@@ -1997,33 +1997,6 @@ void CFusionDoc::SelectAllEntities (void)
     App->CLSB_Doc->UpdateSelected();
 }
 
-void CFusionDoc::SelectAllFacesInBrushes (void)
-{
-    App->CLSB_Doc->DoGeneralSelect ();
-
-    // Select all faces on all selected brushes
-    int iBrush;
-    int NumSelBrushes = SelBrushList_GetSize (App->CLSB_Doc->pSelBrushes);
-
-    for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
-    {
-        Brush *pBrush;
-
-        pBrush = SelBrushList_GetBrush (App->CLSB_Doc->pSelBrushes, iBrush);
-        if (Brush_IsMulti (pBrush))
-        {
-            BrushList_EnumLeafBrushes (App->CL_Brush->Brush_GetBrushList (pBrush), this, ::SelAllBrushFaces);
-        }
-        else
-        {
-            ::SelAllBrushFaces (pBrush, this);
-        }
-    }
-    App->CLSB_Doc->UpdateSelected ();
-
-    App->CLSB_Doc->ConfigureCurrentTool();
-}
-
 BOOL CFusionDoc::IsEntitySelected(void)
 {
     CEntityArray *Entities;
@@ -5625,7 +5598,7 @@ void CFusionDoc::OnLeveloptions()
 
 void CFusionDoc::OnCameraForward()
 {
-    SetModifiedFlag();
+    //SetModifiedFlag();
 
     CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
@@ -5657,7 +5630,7 @@ void CFusionDoc::OnCameraForward()
 
 void CFusionDoc::OnCameraBack()
 {
-    SetModifiedFlag();
+    //SetModifiedFlag();
 
     CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
@@ -5689,7 +5662,7 @@ void CFusionDoc::OnCameraBack()
 
 void CFusionDoc::OnCameraLeft()
 {
-    SetModifiedFlag();
+    //SetModifiedFlag();
 
     CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
@@ -5706,7 +5679,7 @@ void CFusionDoc::OnCameraLeft()
 
 void CFusionDoc::OnCameraRight()
 {
-    SetModifiedFlag();
+    //SetModifiedFlag();
 
     CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
@@ -5723,7 +5696,7 @@ void CFusionDoc::OnCameraRight()
 
 void CFusionDoc::OnCameraLookUp()
 {
-    SetModifiedFlag();
+    //SetModifiedFlag();
 
     CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
@@ -5743,7 +5716,7 @@ void CFusionDoc::OnCameraLookUp()
 
 void CFusionDoc::OnCameraLookDown()
 {
-    SetModifiedFlag();
+    //SetModifiedFlag();
 
     CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
@@ -5763,7 +5736,7 @@ void CFusionDoc::OnCameraLookDown()
 
 void CFusionDoc::OnCameraUp()
 {
-    SetModifiedFlag();
+    //SetModifiedFlag();
 
     CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
@@ -5779,7 +5752,7 @@ void CFusionDoc::OnCameraUp()
 
 void CFusionDoc::OnCameraDown()
 {
-    SetModifiedFlag();
+    //SetModifiedFlag();
 
     CEntity *pCameraEntity = App->CLSB_Camera_WE->FindCameraEntity();
 
@@ -6248,164 +6221,6 @@ void CFusionDoc::ExportTo3ds(const char *FileName, int ExpSelected, geBoolean Ex
     {
         
     }
-}
-
-// *************************************************************************
-// * Equity_Export_RFW		ExportTo_RFW	// Old Exporter				   *
-// *************************************************************************
-void CFusionDoc::ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles)
-{
-    {
-//        // update view information in level
-//        ViewStateInfo *pViewStateInfo;
-//        POSITION		pos;
-//        CFusionView	*	pView;
-//        int iView;
-//
-//        pos = GetFirstViewPosition();
-//        while( pos != NULL )
-//        {
-//            pView = (CFusionView*)GetNextView(pos) ;
-//            switch (Render_GetViewType (pView->VCam))
-//            {
-//                case VIEWSOLID :
-//                case VIEWTEXTURE :
-//                case VIEWWIRE :
-//                    iView = 0;
-//                    break;
-//                case VIEWTOP :
-//                    iView = 1;
-//                    break;
-//                case VIEWFRONT :
-//                    iView = 2;
-//                    break;
-//                case VIEWSIDE :
-//                    iView = 3;
-//                    break;
-//                default :
-//                    iView = -1;
-//            }
-//            if (iView != -1)
-//            {
-//                pViewStateInfo = Level_GetViewStateInfo (App->CLSB_Doc->pLevel, iView);
-//                pViewStateInfo->IsValid = GE_TRUE;
-//                pViewStateInfo->ZoomFactor = Render_GetZoom (pView->VCam);
-//                Render_GetPitchRollYaw (pView->VCam, &pViewStateInfo->PitchRollYaw);
-//                Render_GetCameraPos (pView->VCam, &pViewStateInfo->CameraPos);
-//            }
-//        }
-//    }
-//
-//// changed QD 12/03 77
-//    BrushList *BList;
-//    geBoolean fResult;
-//
-//    BList = Level_GetBrushes (App->CLSB_Doc->pLevel);
-//    if(!ExpSelected&&!ExpFiles)
-//        fResult = App->CLSB_Export_3DS->Level_Build_3ds(reinterpret_cast<tag_Level3 *> (App->CLSB_Doc->pLevel), FileName, BList, ExpSelected, ExpLights, -1);
-//
-//    else
-//    {
-//        int i, GroupID, GroupCount;
-//        char NewFileName[MAX_PATH];
-//        strcpy(NewFileName, FileName);
-//        GroupID=-1;
-//        GroupCount=1;
-//
-//        if(ExpFiles)
-//        {
-//            GroupListType *GroupList;
-//
-//            GroupList=Level_GetGroups(App->CLSB_Doc->pLevel);
-//            GroupCount=Group_GetCount(GroupList);
-//        }
-//
-//        for(i=0;i<GroupCount;i++)
-//        {
-//            BrushList *SBList;
-//            Brush *pBrush;
-//            BrushIterator bi;
-//
-//            SBList=BrushList_Create();
-//
-//            pBrush = BrushList_GetFirst (BList, &bi);
-//            while (pBrush != NULL)
-//            {
-//                if(!strstr(App->CL_Brush->Brush_GetName(pBrush),".act"))
-//                {
-//                    if(!ExpSelected || SelBrushList_Find(App->CLSB_Doc->pSelBrushes, pBrush))
-//                    {
-//                        if(!ExpFiles || Brush_GetGroupId(pBrush)==i)
-//                        {
-//                            Brush *pClone =	Brush_Clone(pBrush);
-//                            BrushList_Append(SBList, pClone);
-//                        }
-//                    }
-//                }
-//
-//                pBrush = BrushList_GetNext(&bi);
-//            }
-//            // do CSG
-//            {
-//                ModelIterator	mi;
-//                int				i, CurId = 0;
-//                ModelInfo_Type	*ModelInfo;
-//                Model			*pMod;
-//
-//                BrushList_ClearAllCSG (SBList);
-//
-//                BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback, this);
-//
-//                //build individual model mini trees
-//                ModelInfo = Level_GetModelInfo (App->CLSB_Doc->pLevel);
-//                pMod = ModelList_GetFirst (ModelInfo->Models, &mi);
-//
-//                for(i=0;i < ModelList_GetCount(ModelInfo->Models);i++)
-//                {
-//                    CurId = Model_GetId (pMod);
-//
-//                    BrushList_DoCSG(SBList, CurId, ::fdocBrushCSGCallback, this);
-//                }
-//            }
-//
-//            if(ExpFiles)
-//            {
-//                GroupID=i;
-//
-//                //build individual filenames
-//                char Name[MAX_PATH];
-//                char c[2];
-//                c[1]='\0';
-//                ::FilePath_GetName (FileName, Name);
-//                c[0] = (char)(48+(i-i%100)/100);
-//                strcat(Name, c);
-//                c[0] = (char)(48+((i-i%10)/10)%10);
-//                strcat(Name, c);
-//                c[0] = (char)(48+i%10);
-//                strcat(Name, c);
-//
-//                ::FilePath_ChangeName(FileName, Name, NewFileName);
-//            }
-//
-//            fResult = App->CLSB_Export_World->Level_Build_G3ds(reinterpret_cast<tag_Level3 *> (App->CLSB_Doc->pLevel), NewFileName, SBList, ExpSelected, ExpLights, GroupID);
-//            if(!fResult)
-//                App->Say("Error exporting group");
-//            BrushList_Destroy(&SBList);
-//        }
-//
-//    }
-//// end change 12/03
-//
-//    if(fResult == GE_FALSE)
-//    {
-//        // Ok, the save was successful.  Gun any ".old" files we
-//        // ..have laying around for this file.
-//        App->Say("Error exporting file");
-//    }
-//    else
-//    {
-//            App->Say("Exported");
-   }
 }
 
 void CFusionDoc::OnFileExport()

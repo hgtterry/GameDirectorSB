@@ -98,6 +98,7 @@ public:
 	void OnLinkviewports();
 	void LinkViewports();
 	void UpdateAfterWadChange();
+	void SelectAllFacesInBrushes(void);
 
 	// ----------------------------------------------------------- Varibles
 

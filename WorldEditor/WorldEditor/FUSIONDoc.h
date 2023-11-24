@@ -122,7 +122,7 @@ public:
 	void CenterThingInActiveView( Brush* pBrush, CEntity* pEntity );
 	void SelectAllBrushes();
 	void SelectAllEntities();
-	void SelectAllFacesInBrushes();
+	
 
 	
 
@@ -245,7 +245,7 @@ public:
 	void ExportTo3dtv1_32(const char *FileName);
 // changed QD 12/03
 	void ExportTo3ds(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles);
-	void ExportTo_RFW(const char *FileName, int ExpSelected, geBoolean ExpLights, geBoolean ExpFiles); // [281221]
+
 // end change
 
 

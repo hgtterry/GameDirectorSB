@@ -939,7 +939,7 @@ void SB_Brushes::Lock_Textures(bool flag)
 	int NumberOfFaces = 0;
 	Face* pFace;
 
-	m_pDoc->SelectAllFacesInBrushes();
+	App->CLSB_Doc->SelectAllFacesInBrushes();
 
 	NumberOfFaces = SelFaceList_GetSize(App->CLSB_Doc->pSelFaces);
 

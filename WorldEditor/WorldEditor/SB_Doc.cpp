@@ -2259,10 +2259,10 @@ void SB_Doc::UpdateAfterWadChange()
 
     if (!Level_LoadWad(pLevel))
     {
-        CString Msg;
-
+        App->Say("Cant Load TXL File");
+       /* CString Msg;
         AfxFormatString1(Msg, IDS_CANTLOADTXL, Level_GetWadPath(pLevel));
-        AfxMessageBox(Msg, MB_OK + MB_ICONERROR);
+        AfxMessageBox(Msg, MB_OK + MB_ICONERROR);*/
     }
 
     // update textures tab
@@ -2293,5 +2293,34 @@ void SB_Doc::UpdateAfterWadChange()
         App->m_pDoc->RebuildTrees();
         UpdateAllViews(UAV_ALL3DVIEWS, NULL);
     }
+}
 
+// *************************************************************************
+// * Genesis3D   SelectAllFacesInBrushes:- Terry and Hazel Flanigan 2023   *
+// *************************************************************************
+void SB_Doc::SelectAllFacesInBrushes(void)
+{
+    DoGeneralSelect();
+
+    // Select all faces on all selected brushes
+    int iBrush;
+    int NumSelBrushes = SelBrushList_GetSize(pSelBrushes);
+
+    for (iBrush = 0; iBrush < NumSelBrushes; ++iBrush)
+    {
+        Brush* pBrush;
+
+        pBrush = SelBrushList_GetBrush(pSelBrushes, iBrush);
+        if (Brush_IsMulti(pBrush))
+        {
+            BrushList_EnumLeafBrushes(App->CL_Brush->Brush_GetBrushList(pBrush), this, ::SelAllBrushFaces);
+        }
+        else
+        {
+            ::SelAllBrushFaces(pBrush, this);
+        }
+    }
+
+    UpdateSelected();
+    ConfigureCurrentTool();
 }
