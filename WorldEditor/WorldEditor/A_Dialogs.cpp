@@ -265,8 +265,8 @@ LRESULT CALLBACK A_Dialogs::Properties_Proc(HWND hDlg, UINT message, WPARAM wPar
 
 				App->CL_World->Set_Current_TxlPath();
 
-				App->m_pDoc->UpdateAfterWadChange();
-
+				App->CLSB_Doc->UpdateAfterWadChange();
+			
 			}
 
 			EndDialog(hDlg, LOWORD(wParam));

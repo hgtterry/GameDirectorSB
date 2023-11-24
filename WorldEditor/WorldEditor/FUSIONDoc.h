@@ -257,7 +257,7 @@ public:
 
 	CFusionView* GetCameraView();
 
-	void UpdateAfterWadChange();
+	
 
 	CString LastTemplateTypeName;
 

@@ -29,9 +29,9 @@ public:
 	SB_Level(void);
 	~SB_Level(void);
 
-	bool Check_For_Centre_Texture();
-	bool Check_For_Centre_Brush();
-	bool Change_Centre_Brush_Texture();
+	//bool Check_For_Centre_Texture();
+	//bool Check_For_Centre_Brush();
+	//bool Change_Centre_Brush_Texture();
 
 };
 

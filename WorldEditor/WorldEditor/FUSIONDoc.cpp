@@ -5644,7 +5644,7 @@ void CFusionDoc::OnLeveloptions()
         if (Dlg.m_TxlChanged)
         {
             Level_SetWadPath (App->CLSB_Doc->pLevel, Dlg.m_TextureLib);
-            UpdateAfterWadChange();
+            App->CLSB_Doc->UpdateAfterWadChange();
         }
         if (Dlg.m_HeadersChanged)
         {
@@ -5672,49 +5672,6 @@ void CFusionDoc::OnLeveloptions()
 // end change
 
     }
-}
-
-void CFusionDoc::UpdateAfterWadChange()
-{
-    SetModifiedFlag();
-
-    if (!Level_LoadWad (App->CLSB_Doc->pLevel))
-    {
-        CString Msg;
-
-        AfxFormatString1 (Msg, IDS_CANTLOADTXL, Level_GetWadPath(App->CLSB_Doc->pLevel));
-        AfxMessageBox (Msg, MB_OK + MB_ICONERROR);
-    }
-
-    // update textures tab
-    App->CLSB_Doc->mCurTextureSelection = 0;
-    App->CL_TextureDialog->Fill_ListBox();
-
-    // update all brush faces
-    BrushList_EnumLeafBrushes (Level_GetBrushes (App->CLSB_Doc->pLevel), this, ::fdocUpdateBrushFaceTextures);
-    {
-        // find the rendered view and set the wad size infos for it
-        POSITION		pos;
-        CFusionView	*	pView;
-
-        pos = GetFirstViewPosition();
-        while( pos != NULL )
-        {
-            pView = (CFusionView*)GetNextView(pos) ;
-            if( Render_GetViewType( pView->VCam ) & (VIEWSOLID|VIEWTEXTURE|VIEWWIRE) )
-            {
-                Render_SetWadSizes (pView->VCam, Level_GetWadSizeInfos (App->CLSB_Doc->pLevel));
-                break ;	// Only 1 rendered view for now
-            }
-        }
-    }
-
-    if (Level_RebuildBspAlways (App->CLSB_Doc->pLevel))
-    {
-        RebuildTrees();
-        App->CLSB_Doc->UpdateAllViews (UAV_ALL3DVIEWS, NULL);
-    }
-
 }
 
 void CFusionDoc::OnCameraForward()

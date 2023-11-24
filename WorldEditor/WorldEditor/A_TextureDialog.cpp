@@ -179,7 +179,7 @@ LRESULT CALLBACK A_TextureDialog::TextureDialog_Proc(HWND hDlg, UINT message, WP
 
 				Level_SetWadPath(App->CLSB_Doc->pLevel, Level_GetWadPath(App->CLSB_Doc->pLevel));
 				App->CL_World->Set_Current_TxlPath();
-				App->m_pDoc->UpdateAfterWadChange();
+				App->CLSB_Doc->UpdateAfterWadChange();
 
 				App->CL_TextureDialog->Fill_ListBox();
 				return TRUE;

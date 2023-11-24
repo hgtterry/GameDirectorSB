@@ -199,8 +199,6 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 
 		App->CLSB_TopTabs->Update_Dlg_Controls();
 
-		//App->CLSB_Level->Check_For_Centre_Brush(); // Centre Brush XYZ
-
 		App->CLSB_Doc->Lock_AllTextures();
 	
 		MessageBox(App->MainHwnd, PathFileName_3dt, "Loaded",MB_OK);
@@ -238,7 +236,7 @@ bool SB_File_WE::Open_3dt_File()
 
 		Level_SetWadPath(App->CLSB_Doc->pLevel, Txlpath);
 		App->CL_World->Set_Current_TxlPath();
-		App->m_pDoc->UpdateAfterWadChange();
+		App->CLSB_Doc->UpdateAfterWadChange();
 		App->CL_TextureDialog->Fill_ListBox();
 
 		strcpy(App->CL_World->mCurrent_TXL_FileName, Txlpath);

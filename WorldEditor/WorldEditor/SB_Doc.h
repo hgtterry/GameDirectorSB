@@ -97,6 +97,7 @@ public:
 	void OnUpdateLinkviewports(CCmdUI* pCmdUI);
 	void OnLinkviewports();
 	void LinkViewports();
+	void UpdateAfterWadChange();
 
 	// ----------------------------------------------------------- Varibles
 

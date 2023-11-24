@@ -278,6 +278,6 @@ void A_World::Level_SetTxlPath(char* Path)
 
 	Level_SetWadPath(App->CLSB_Doc->pLevel,Path);
 	App->CL_World->Set_Current_TxlPath();
-	m_pDoc->UpdateAfterWadChange();
+	App->CLSB_Doc->UpdateAfterWadChange();
 }
 

@@ -2229,3 +2229,69 @@ void SB_Doc::LinkViewports()
     UpdateAllViews(UAV_GRID_ONLY, NULL, FALSE);
 }
 
+static geBoolean fdocUpdateFaceTextures(Face* pFace, void* lParam)
+{
+    CFusionDoc* pDoc = (CFusionDoc*)lParam;
+
+    Face_SetTextureDibId(pFace, Level_GetDibId(App->CLSB_Doc->pLevel, Face_GetTextureName(pFace)));
+    // changed QD 12/03
+    const WadFileEntry* const pbmp = Level_GetWadBitmap(App->CLSB_Doc->pLevel, Face_GetTextureName(pFace));
+    if (pbmp)
+        Face_SetTextureSize(pFace, pbmp->Width, pbmp->Height);
+    // end change
+    return GE_TRUE;
+}
+
+static geBoolean fdocUpdateBrushFaceTextures(Brush* pBrush, void* pVoid)
+{
+    Brush_EnumFaces(pBrush, pVoid, ::fdocUpdateFaceTextures);
+    return GE_TRUE;
+}
+
+// *************************************************************************
+// * Genesis3D   UpdateAfterWadChange:- Terry and Hazel Flanigan 2023      *
+// *************************************************************************
+void SB_Doc::UpdateAfterWadChange()
+{
+    App->Get_Current_Document();
+
+    App->m_pDoc->SetModifiedFlag();
+
+    if (!Level_LoadWad(pLevel))
+    {
+        CString Msg;
+
+        AfxFormatString1(Msg, IDS_CANTLOADTXL, Level_GetWadPath(pLevel));
+        AfxMessageBox(Msg, MB_OK + MB_ICONERROR);
+    }
+
+    // update textures tab
+    mCurTextureSelection = 0;
+    App->CL_TextureDialog->Fill_ListBox();
+
+    // update all brush faces
+    BrushList_EnumLeafBrushes(Level_GetBrushes(pLevel), this, ::fdocUpdateBrushFaceTextures);
+    {
+        // find the rendered view and set the wad size infos for it
+        POSITION		pos;
+        CFusionView* pView;
+
+        pos = App->m_pDoc->GetFirstViewPosition();
+        while (pos != NULL)
+        {
+            pView = (CFusionView*)App->m_pDoc->GetNextView(pos);
+            if (Render_GetViewType(pView->VCam) & (VIEWSOLID | VIEWTEXTURE | VIEWWIRE))
+            {
+                Render_SetWadSizes(pView->VCam, Level_GetWadSizeInfos(pLevel));
+                break;	// Only 1 rendered view for now
+            }
+        }
+    }
+
+    if (Level_RebuildBspAlways(pLevel))
+    {
+        App->m_pDoc->RebuildTrees();
+        UpdateAllViews(UAV_ALL3DVIEWS, NULL);
+    }
+
+}
