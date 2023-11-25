@@ -42,6 +42,8 @@ public:
 	char mDirectory_Name[MAX_PATH];
 	char mFolder_Path[MAX_PATH];
 
+	HWND Export_Dlg_Hwnd;
+
 private:
 
 	static LRESULT CALLBACK Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);

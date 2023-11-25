@@ -48,7 +48,7 @@ bool SB_PB::Start_ProgressBar()
 {
 
 	ProgBarHwnd = CreateDialog(App->hInst, (LPCTSTR)IDD_SB_PROGRESS_BAR, App->MainHwnd, (DLGPROC)ProgressNewBarProc);
-
+	
 	Dio = 0;
 	Pani = 0;
 	ClearBarDlg = 1;

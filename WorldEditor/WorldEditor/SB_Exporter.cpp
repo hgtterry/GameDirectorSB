@@ -37,7 +37,7 @@ SB_Exporter::SB_Exporter(void)
 	mDirectory_Name[0] = 0;
 	mFolder_Path[0] = 0;
 
-
+	Export_Dlg_Hwnd = NULL;
 }
 
 SB_Exporter::~SB_Exporter(void)
@@ -111,6 +111,9 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		Temp = GetDlgItem(hDlg, IDC_CK_EXPORTALL);
 		SendMessage(Temp, BM_SETCHECK, 1, 0);
 		App->CLSB_Exporter->Export_Selected = 0;
+
+		App->CLSB_Exporter->Export_Dlg_Hwnd = hDlg;
+		//ShowWindow(hDlg, SW_SHOW);
 
 		return TRUE;
 	}
@@ -381,6 +384,8 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDOK)
 		{
+			ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
+
 			App->CLSB_PB->Start_ProgressBar();
 
 			if (App->CLSB_Exporter->Selected_Index == 0)
