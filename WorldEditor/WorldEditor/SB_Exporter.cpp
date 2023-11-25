@@ -385,7 +385,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 			if (App->CLSB_Exporter->Selected_Index == 0)
 			{
-				App->CLSB_PB->Set_Progress("Starting", 3);
+				App->CLSB_PB->Set_Progress("Starting", 4);
 
 				App->CLSB_Exporter->Ogre3D_Model();
 
@@ -564,8 +564,10 @@ void SB_Exporter::Ogre3D_Model(void)
 	App->CLSB_PB->Nudge("Converting to Groups");
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 
-	App->CLSB_Export_Ogre3D->Export_AssimpToOgre();
 	App->CLSB_PB->Nudge("Exporting Ogre3d");
+	App->CLSB_Export_Ogre3D->Export_AssimpToOgre();
+
+	App->CLSB_PB->Nudge("Finished");
 }
 
 // *************************************************************************
