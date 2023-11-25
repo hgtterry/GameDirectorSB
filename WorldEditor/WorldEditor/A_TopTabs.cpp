@@ -712,7 +712,10 @@ LRESULT CALLBACK SB_TopTabs::Top_Test_Proc(HWND hDlg, UINT message, WPARAM wPara
 		if (LOWORD(wParam) == IDC_WETEST)
 		{
 			//App->CLSB_Export_3DS->Export_World_GD3D(0);
-			App->CLSB_Exporter->Milkshape_Model();
+			//App->CLSB_Exporter->Milkshape_Model();
+			App->CLSB_PB->Start_ProgressBar();
+			App->CLSB_PB->Set_Progress("Converting", 15);
+			App->CLSB_PB->Nudge("Testing");
 
 			return TRUE;
 		}

@@ -1446,7 +1446,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.27 - [24-11-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.27 - [25-11-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2446,6 +2446,19 @@ BEGIN
     EDITTEXT        IDC_EDITTEXT,51,67,208,18,ES_AUTOHSCROLL
 END
 
+IDD_SB_PROGRESS_BAR DIALOGEX 0, 0, 309, 176
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Export Progress"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,129,155,50,14,WS_DISABLED
+    PUSHBUTTON      "Cancel",IDCANCEL,252,155,50,14,NOT WS_VISIBLE
+    CTEXT           "Static",IDC_PBBANNER,7,7,295,26,SS_CENTERIMAGE
+    LTEXT           "Static",IDC_STBAR,8,75,294,20,WS_BORDER
+    CTEXT           "Static",IDC_ST_PB_STATUS,7,122,295,19,SS_CENTERIMAGE
+    LTEXT           "Static",IDC_PBACTION,7,59,295,12,SS_CENTERIMAGE
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2752,6 +2765,14 @@ BEGIN
     END
 
     IDD_SB_TEXT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
+
+    IDD_SB_PROGRESS_BAR, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 302
@@ -3067,6 +3088,11 @@ BEGIN
 END
 
 IDD_SB_TEXT_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SB_PROGRESS_BAR AFX_DIALOG_LAYOUT
 BEGIN
     0
 END

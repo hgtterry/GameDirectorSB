@@ -106,6 +106,7 @@ distribution.
 #include "SB_Picking.h"
 #include "SB_Mesh_Mgr.h"
 
+#include "SB_PB.h"
 
 class SB_App
 {
@@ -190,6 +191,8 @@ public:
 	SB_Picking*					CLSB_Picking;
 	SB_Mesh_Mgr*				CLSB_Mesh_Mgr;
 
+	SB_PB*						CLSB_PB;
+
 	bool InitApp(void);
 	void InitMFC(void);
 
@@ -197,6 +200,7 @@ public:
 	void LoadProgramResource(void);
 
 	void Start_Dialogs();
+	void Enable_Dialogs(bool Enable);
 
 	void Beep_Win();
 	void Say(const char* Message, char* Message2 = NULL);
@@ -221,7 +225,6 @@ public:
 	void Debug_Message(char* Message, bool NewLine);
 	void Debug_Int(int Value, bool NewLine);
 	void Debug_Float(float Value, bool NewLine);
-	void Wait_For_Key(int Delay);
 
 	HBRUSH CreateGradientBrush(COLORREF top, COLORREF bottom, LPNMCUSTOMDRAW item);
 

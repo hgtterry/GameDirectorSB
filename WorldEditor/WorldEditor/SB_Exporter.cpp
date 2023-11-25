@@ -58,6 +58,9 @@ void SB_Exporter::Start_Export_Dlg()
 	}
 
 	App->CLSB_Exporter->Is_Canceled = 0;
+
+	App->Enable_Dialogs(0);
+
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_EXPORTOPTIONS, App->MainHwnd, (DLGPROC)Export_Dlg_Proc);
 }
 // *************************************************************************
@@ -378,10 +381,16 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			
+			App->CLSB_PB->Start_ProgressBar();
+
 			if (App->CLSB_Exporter->Selected_Index == 0)
 			{
+				App->CLSB_PB->Set_Progress("Starting", 3);
+
 				App->CLSB_Exporter->Ogre3D_Model();
+
+				App->CLSB_PB->Stop_Progress_Bar("Ogre3D Mesh file Created successfully");
+
 			}
 
 			if (App->CLSB_Exporter->Selected_Index == 1)
@@ -400,6 +409,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 			}
 
 			App->CLSB_Exporter->Is_Canceled = 0;
+			App->Enable_Dialogs(1);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -407,7 +417,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CLSB_Exporter->Is_Canceled = 1;
-
+			App->Enable_Dialogs(1);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -548,12 +558,14 @@ void SB_Exporter::List_File_Formats(HWND m_hDlg)
 // *************************************************************************
 void SB_Exporter::Ogre3D_Model(void)
 {
+	App->CLSB_PB->Nudge("Build_Brush_List");
 	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(Export_Selected);
+
+	App->CLSB_PB->Nudge("Converting to Groups");
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 
 	App->CLSB_Export_Ogre3D->Export_AssimpToOgre();
-
-	App->Say("Ogre3D Mesh file Created successfully");
+	App->CLSB_PB->Nudge("Exporting Ogre3d");
 }
 
 // *************************************************************************

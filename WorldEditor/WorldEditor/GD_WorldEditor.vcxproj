@@ -208,6 +208,7 @@
     <ClCompile Include="SB_Ogre.cpp" />
     <ClCompile Include="SB_OgreListener.cpp" />
     <ClCompile Include="SB_Panels.cpp" />
+    <ClCompile Include="SB_PB.cpp" />
     <ClCompile Include="SB_Physics.cpp" />
     <ClCompile Include="SB_Picking.cpp" />
     <ClCompile Include="SB_Player.cpp" />
@@ -311,6 +312,7 @@
     <ClInclude Include="SB_Ogre.h" />
     <ClInclude Include="SB_OgreListener.h" />
     <ClInclude Include="SB_Panels.h" />
+    <ClInclude Include="SB_PB.h" />
     <ClInclude Include="SB_Physics.h" />
     <ClInclude Include="SB_Picking.h" />
     <ClInclude Include="SB_Player.h" />

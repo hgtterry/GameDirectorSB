@@ -174,6 +174,7 @@
 #define IDD_SB_SOUNDPLAYER              347
 #define IDD_SB_BRUSH_VIEWER             349
 #define IDD_SB_TEXT_DIALOG              351
+#define IDD_SB_PROGRESS_BAR             354
 #define IDC_RESET_ALL                   1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT10                      1002
@@ -869,6 +870,10 @@
 #define IDC_CK_EXPORTSELECTED           1564
 #define IDC_EDITTEXT                    1565
 #define IDC_ST_SELECTEDFORMAT           1566
+#define IDC_PBBANNER                    1567
+#define IDC_STBAR                       1568
+#define IDC_ST_PB_STATUS                1569
+#define IDC_PBACTION                    1570
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1087,9 +1092,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        353
+#define _APS_NEXT_RESOURCE_VALUE        356
 #define _APS_NEXT_COMMAND_VALUE         33097
-#define _APS_NEXT_CONTROL_VALUE         1567
+#define _APS_NEXT_CONTROL_VALUE         1571
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

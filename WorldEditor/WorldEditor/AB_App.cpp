@@ -104,6 +104,8 @@ SB_App::SB_App()
 	CLSB_Picking =				nullptr;
 	CLSB_Mesh_Mgr =				nullptr;
 
+	CLSB_PB =					nullptr;
+
 	AppBackground = NULL;
 	BlackBrush =	NULL;
 	Brush_White =	NULL;
@@ -311,6 +313,7 @@ bool SB_App::InitApp(void)
 	CLSB_SoundMgr =					new SB_SoundMgr();
 	CLSB_Mesh_Mgr =					new SB_Mesh_Mgr();
 	
+	CLSB_PB =						new SB_PB();
 	
 	InitCommonControls();
 
@@ -920,20 +923,6 @@ void SB_App::Debug_Float(float Value, bool NewLine)
 }
 
 // *************************************************************************
-// *			Wait_For_Key:- Terry and Hazel Flanigan 2023			   *
-// *************************************************************************
-void SB_App::Wait_For_Key(int Delay)
-{
-	int Count = 0;
-
-	while (Count < Delay)
-	{
-		App->Flash_Window();
-		Count++;
-	}
-}
-
-// *************************************************************************
 // *			Start_Dialogs:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_App::Start_Dialogs()
@@ -941,6 +930,15 @@ void SB_App::Start_Dialogs()
 	CLSB_TopTabs->Start_Headers_Tabs();
 	CL_TabsControl->Start_Tabs_Control_Dlg();
 	CLSB_ViewMgrDlg->Start_View_MgrDlg();
+}
 
+// *************************************************************************
+// *			Bock_Dialogs:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_App::Enable_Dialogs(bool Enable)
+{
+	EnableWindow(CLSB_ViewMgrDlg->MgrDlg_hWnd, Enable);
+	EnableWindow(App->CLSB_TopTabs->Top_Tabs_Hwnd, Enable);
+	EnableWindow(App->CL_TabsControl->Tabs_Control_Hwnd, Enable);
 }
 
