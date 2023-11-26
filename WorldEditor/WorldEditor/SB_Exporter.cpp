@@ -113,8 +113,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		App->CLSB_Exporter->Export_Selected = 0;
 
 		App->CLSB_Exporter->Export_Dlg_Hwnd = hDlg;
-		//ShowWindow(hDlg, SW_SHOW);
-
+		
 		return TRUE;
 	}
 
@@ -384,33 +383,66 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
+			App->Enable_Dialogs(0);
 
-			App->CLSB_PB->Start_ProgressBar();
-
+			// ----------------- Ogre3d
 			if (App->CLSB_Exporter->Selected_Index == 0)
 			{
+				bool Test = App->CLSB_Exporter->Check_File(".mesh");
+				if (Test == 1)
+				{
+					return true;
+				}
+				
+				App->CLSB_PB->Start_ProgressBar();
 				App->CLSB_PB->Set_Progress("Starting", 4);
+				ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
 
 				App->CLSB_Exporter->Ogre3D_Model();
 
 				App->CLSB_PB->Stop_Progress_Bar("Ogre3D Mesh file Created successfully");
-
 			}
 
+			// ----------------- Wavefront
 			if (App->CLSB_Exporter->Selected_Index == 1)
 			{
+				bool Test = App->CLSB_Exporter->Check_File(".obj");
+				if (Test == 1)
+				{
+					return true;
+				}
+
+				App->CLSB_PB->Start_ProgressBar();
+				App->CLSB_PB->Set_Progress("Starting", 4);
+				ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
+
 				App->CLSB_Exporter->Object_Model();
+
+				App->CLSB_PB->Stop_Progress_Bar("Wavefront Object file Created successfully");
 			}
 
+			// ----------------- 3ds
 			if (App->CLSB_Exporter->Selected_Index == 2)
 			{
 				App->CLSB_Exporter->Autodesk_Model();
 			}
 
+			// ----------------- Milkshape
 			if (App->CLSB_Exporter->Selected_Index == 3)
 			{
+				bool Test = App->CLSB_Exporter->Check_File(".ms3d");
+				if (Test == 1)
+				{
+					return true;
+				}
+
+				App->CLSB_PB->Start_ProgressBar();
+				App->CLSB_PB->Set_Progress("Starting", 4);
+				ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
+
 				App->CLSB_Exporter->Milkshape_Model();
+
+				App->CLSB_PB->Stop_Progress_Bar("Milkshape file Created successfully");
 			}
 
 			App->CLSB_Exporter->Is_Canceled = 0;
@@ -436,10 +468,45 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 }
 
 // *************************************************************************
+// *			Check_File:- Terry and Hazel Flanigan 2023 				   *
+// *************************************************************************
+bool SB_Exporter::Check_File(char* Extension)
+{
+	char checkfile[MAX_PATH];
+	strcpy(checkfile, App->CLSB_Exporter->mFolder_Path);
+	strcat(checkfile, "\\");
+	strcat(checkfile, App->CLSB_Exporter->mDirectory_Name);
+	strcat(checkfile, "\\");
+	strcat(checkfile, App->CLSB_Exporter->mJustName);
+
+	strcat(checkfile, Extension);
+
+	bool test = App->CLSB_FileIO->Check_File_Exist(checkfile);
+
+	if (test == 1)
+	{
+		App->CLSB_Dialogs->YesNo("File Exsits", "Do you want to update File");
+
+		bool Doit = App->CLSB_Dialogs->Canceled;
+		if (Doit == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
+// *************************************************************************
 // *		Set_Dialog_Data_FromIndex:- Terry and Hazel Flanigan 2023 	   *
 // *************************************************************************
 void SB_Exporter::Set_Dialog_Data_FromIndex(HWND m_hDlg)
 {
+
 	if (Selected_Index == 0)
 	{
 		strcpy(App->CLSB_Exporter->mDirectory_Name, App->CLSB_Exporter->mJustName);
@@ -580,15 +647,16 @@ void SB_Exporter::Ogre3D_Model(void)
 // *************************************************************************
 void SB_Exporter::Object_Model(void)
 {
+	App->CLSB_PB->Nudge("Build_Brush_List");
 	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(Export_Selected);
+
+	App->CLSB_PB->Nudge("Converting to Groups");
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 
-	bool test = App->CLSB_Export_Object->Create_ObjectFile();
+	App->CLSB_PB->Nudge("Exporting Wavefront");
+	App->CLSB_Export_Object->Create_ObjectFile();
 
-	if (test == 1)
-	{
-		App->Say("Wavefront Object file Created successfully");
-	}
+	App->CLSB_PB->Nudge("Finished");
 }
 
 // *************************************************************************
@@ -609,10 +677,14 @@ void SB_Exporter::Autodesk_Model(void)
 // *************************************************************************
 void SB_Exporter::Milkshape_Model(void)
 {
+	App->CLSB_PB->Nudge("Build_Brush_List");
 	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(Export_Selected);
+
+	App->CLSB_PB->Nudge("Converting to Groups");
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 
+	App->CLSB_PB->Nudge("Exporting Milkshape");
 	App->CLSB_Export_Milkshape->Export_To_Milk();
 
-	App->Say("Milkshape file Created successfully");
+	App->CLSB_PB->Nudge("Finished");
 }
