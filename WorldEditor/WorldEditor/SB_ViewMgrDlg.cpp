@@ -278,19 +278,7 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDC_BT_EXPORT)
 		{
-			App->Enable_Dialogs(0);
-			App->CLSB_Exporter->Start_Export_Dlg();
-
-			if (App->CLSB_Exporter->Is_Canceled == 1)
-			{
-				App->Enable_Dialogs(1);
-				App->Say("Canceled");
-			}
-
-			App->CLSB_Exporter->Do_Export();
-
-			App->Enable_Dialogs(1);
-
+			App->CLSB_Exporter->Start_Export(1);
 			return TRUE;
 		}
 		

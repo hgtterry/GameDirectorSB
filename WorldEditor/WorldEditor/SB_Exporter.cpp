@@ -51,15 +51,6 @@ void SB_Exporter::Start_Export_Dlg()
 {
 	Is_Canceled = 0;
 
-	strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Object Files a sub folder will be created");
-	int Test = App->CLSB_FileIO->StartBrowser("");
-
-	if (Test == 0)
-	{
-		Is_Canceled = 1;
-		return;
-	}
-
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_EXPORTOPTIONS, App->MainHwnd, (DLGPROC)Export_Dlg_Proc);
 }
 // *************************************************************************
@@ -390,7 +381,6 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		if (LOWORD(wParam) == IDCANCEL)
 		{
 			App->CLSB_Exporter->Is_Canceled = 1;
-			App->Enable_Dialogs(1);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -404,6 +394,46 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 }
 
 // *************************************************************************
+// *			Start_Export:- Terry and Hazel Flanigan 2023 			   *
+// *************************************************************************
+bool SB_Exporter::Start_Export(bool Use_FileDialog)
+{
+	App->Enable_Dialogs(0);
+
+	if (Use_FileDialog == 1)
+	{
+		strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Object Files a sub folder will be created");
+		int Test = App->CLSB_FileIO->StartBrowser("");
+
+		if (Test == 0)
+		{
+			App->Enable_Dialogs(1);
+			return 1;
+		}
+	}
+
+	App->CLSB_Exporter->Start_Export_Dlg();
+
+	if (Is_Canceled == 1)
+	{
+		App->Enable_Dialogs(1);
+		return 1;
+	}
+
+	App->CLSB_Exporter->Do_Export();
+
+	if (Is_Canceled == 2)
+	{
+		Start_Export(0);
+		return 1;
+	}
+
+	App->Enable_Dialogs(1);
+
+	return 1;
+}
+
+// *************************************************************************
 // *			Do_Export:- Terry and Hazel Flanigan 2023 				   *
 // *************************************************************************
 bool SB_Exporter::Do_Export()
@@ -414,7 +444,7 @@ bool SB_Exporter::Do_Export()
 		bool if_Canceled = App->CLSB_Exporter->Check_File(".mesh");
 		if (if_Canceled == 1)
 		{
-			//DialogBox(App->hInst, (LPCTSTR)IDD_SB_EXPORTOPTIONS, App->MainHwnd, (DLGPROC)Export_Dlg_Proc);
+			Is_Canceled = 2;
 			return true;
 		}
 

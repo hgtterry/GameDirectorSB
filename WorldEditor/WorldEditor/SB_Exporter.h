@@ -28,26 +28,28 @@ public:
 	SB_Exporter(void);
 	~SB_Exporter(void);
 
-	void Ogre3D_Model(void);
-	void Object_Model(void);
-	void Autodesk_Model(void);
-	void Milkshape_Model(void);
-
 	void Start_Export_Dlg();
-	bool Do_Export();
+	bool Start_Export(bool Use_FileDialog);
 
-	bool Is_Canceled;
-	bool Export_Selected;
+	void Ogre3D_Model(void);
 
 	char mJustName[MAX_PATH];
 	char mDirectory_Name[MAX_PATH];
 	char mFolder_Path[MAX_PATH];
+
+	bool Export_Selected;
 
 	HWND Export_Dlg_Hwnd;
 
 private:
 
 	static LRESULT CALLBACK Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+	bool Do_Export();
+
+	void Object_Model(void);
+	void Autodesk_Model(void);
+	void Milkshape_Model(void);
 
 	void Set_Dialog_Data(HWND m_hDlg);
 	void Set_Dialog_Data_FromIndex(HWND m_hDlg);
@@ -56,5 +58,7 @@ private:
 	
 	int Selected_Index;
 
+	int Is_Canceled;
+	
 };
 
