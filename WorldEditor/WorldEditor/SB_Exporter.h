@@ -34,6 +34,7 @@ public:
 	void Milkshape_Model(void);
 
 	void Start_Export_Dlg();
+	bool Do_Export();
 
 	bool Is_Canceled;
 	bool Export_Selected;

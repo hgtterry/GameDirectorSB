@@ -49,17 +49,16 @@ SB_Exporter::~SB_Exporter(void)
 // *************************************************************************
 void SB_Exporter::Start_Export_Dlg()
 {
+	Is_Canceled = 0;
+
 	strcpy(App->CLSB_FileIO->BrowserMessage, "Select Folder To Place Object Files a sub folder will be created");
 	int Test = App->CLSB_FileIO->StartBrowser("");
 
 	if (Test == 0)
 	{
+		Is_Canceled = 1;
 		return;
 	}
-
-	App->CLSB_Exporter->Is_Canceled = 0;
-
-	App->Enable_Dialogs(0);
 
 	DialogBox(App->hInst, (LPCTSTR)IDD_SB_EXPORTOPTIONS, App->MainHwnd, (DLGPROC)Export_Dlg_Proc);
 }
@@ -383,70 +382,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 
 		if (LOWORD(wParam) == IDOK)
 		{
-			App->Enable_Dialogs(0);
-
-			// ----------------- Ogre3d
-			if (App->CLSB_Exporter->Selected_Index == 0)
-			{
-				bool Test = App->CLSB_Exporter->Check_File(".mesh");
-				if (Test == 1)
-				{
-					return true;
-				}
-				
-				App->CLSB_PB->Start_ProgressBar();
-				App->CLSB_PB->Set_Progress("Starting", 4);
-				ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
-
-				App->CLSB_Exporter->Ogre3D_Model();
-
-				App->CLSB_PB->Stop_Progress_Bar("Ogre3D Mesh file Created successfully");
-			}
-
-			// ----------------- Wavefront
-			if (App->CLSB_Exporter->Selected_Index == 1)
-			{
-				bool Test = App->CLSB_Exporter->Check_File(".obj");
-				if (Test == 1)
-				{
-					return true;
-				}
-
-				App->CLSB_PB->Start_ProgressBar();
-				App->CLSB_PB->Set_Progress("Starting", 4);
-				ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
-
-				App->CLSB_Exporter->Object_Model();
-
-				App->CLSB_PB->Stop_Progress_Bar("Wavefront Object file Created successfully");
-			}
-
-			// ----------------- 3ds
-			if (App->CLSB_Exporter->Selected_Index == 2)
-			{
-				App->CLSB_Exporter->Autodesk_Model();
-			}
-
-			// ----------------- Milkshape
-			if (App->CLSB_Exporter->Selected_Index == 3)
-			{
-				bool Test = App->CLSB_Exporter->Check_File(".ms3d");
-				if (Test == 1)
-				{
-					return true;
-				}
-
-				App->CLSB_PB->Start_ProgressBar();
-				App->CLSB_PB->Set_Progress("Starting", 4);
-				ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
-
-				App->CLSB_Exporter->Milkshape_Model();
-
-				App->CLSB_PB->Stop_Progress_Bar("Milkshape file Created successfully");
-			}
-
 			App->CLSB_Exporter->Is_Canceled = 0;
-			App->Enable_Dialogs(1);
 			EndDialog(hDlg, LOWORD(wParam));
 			return TRUE;
 		}
@@ -465,6 +401,75 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 	}
 
 	return FALSE;
+}
+
+// *************************************************************************
+// *			Do_Export:- Terry and Hazel Flanigan 2023 				   *
+// *************************************************************************
+bool SB_Exporter::Do_Export()
+{
+	// ----------------- Ogre3d
+	if (App->CLSB_Exporter->Selected_Index == 0)
+	{
+		bool if_Canceled = App->CLSB_Exporter->Check_File(".mesh");
+		if (if_Canceled == 1)
+		{
+			//DialogBox(App->hInst, (LPCTSTR)IDD_SB_EXPORTOPTIONS, App->MainHwnd, (DLGPROC)Export_Dlg_Proc);
+			return true;
+		}
+
+		App->CLSB_PB->Start_ProgressBar();
+		App->CLSB_PB->Set_Progress("Starting", 4);
+		ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
+
+		App->CLSB_Exporter->Ogre3D_Model();
+
+		App->CLSB_PB->Stop_Progress_Bar("Ogre3D Mesh file Created successfully");
+	}
+
+	// ----------------- Wavefront
+	if (App->CLSB_Exporter->Selected_Index == 1)
+	{
+		bool Test = App->CLSB_Exporter->Check_File(".obj");
+		if (Test == 1)
+		{
+			return true;
+		}
+
+		App->CLSB_PB->Start_ProgressBar();
+		App->CLSB_PB->Set_Progress("Starting", 4);
+		ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
+
+		App->CLSB_Exporter->Object_Model();
+
+		App->CLSB_PB->Stop_Progress_Bar("Wavefront Object file Created successfully");
+	}
+
+	// ----------------- 3ds
+	if (App->CLSB_Exporter->Selected_Index == 2)
+	{
+		App->CLSB_Exporter->Autodesk_Model();
+	}
+
+	// ----------------- Milkshape
+	if (App->CLSB_Exporter->Selected_Index == 3)
+	{
+		bool Test = App->CLSB_Exporter->Check_File(".ms3d");
+		if (Test == 1)
+		{
+			return true;
+		}
+
+		App->CLSB_PB->Start_ProgressBar();
+		App->CLSB_PB->Set_Progress("Starting", 4);
+		ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
+
+		App->CLSB_Exporter->Milkshape_Model();
+
+		App->CLSB_PB->Stop_Progress_Bar("Milkshape file Created successfully");
+	}
+
+	return 1;
 }
 
 // *************************************************************************
