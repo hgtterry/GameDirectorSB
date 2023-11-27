@@ -450,8 +450,7 @@ bool SB_Exporter::Do_Export()
 
 		App->CLSB_PB->Start_ProgressBar();
 		App->CLSB_PB->Set_Progress("Starting", 4);
-		ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
-
+		
 		App->CLSB_Exporter->Ogre3D_Model();
 
 		App->CLSB_PB->Stop_Progress_Bar("Ogre3D Mesh file Created successfully");
@@ -468,8 +467,7 @@ bool SB_Exporter::Do_Export()
 
 		App->CLSB_PB->Start_ProgressBar();
 		App->CLSB_PB->Set_Progress("Starting", 4);
-		ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
-
+		
 		App->CLSB_Exporter->Object_Model();
 
 		App->CLSB_PB->Stop_Progress_Bar("Wavefront Object file Created successfully");
@@ -478,7 +476,19 @@ bool SB_Exporter::Do_Export()
 	// ----------------- 3ds
 	if (App->CLSB_Exporter->Selected_Index == 2)
 	{
+		bool if_Canceled = App->CLSB_Exporter->Check_File(".3ds");
+		if (if_Canceled == 1)
+		{
+			Is_Canceled = 2;
+			return true;
+		}
+
+		App->CLSB_PB->Start_ProgressBar();
+		App->CLSB_PB->Set_Progress("Starting", 2);
+
 		App->CLSB_Exporter->Autodesk_Model();
+
+		App->CLSB_PB->Stop_Progress_Bar("Autodesk file Created successfully");
 	}
 
 	// ----------------- Milkshape
@@ -492,8 +502,7 @@ bool SB_Exporter::Do_Export()
 
 		App->CLSB_PB->Start_ProgressBar();
 		App->CLSB_PB->Set_Progress("Starting", 4);
-		ShowWindow(App->CLSB_Exporter->Export_Dlg_Hwnd, SW_HIDE);
-
+		
 		App->CLSB_Exporter->Milkshape_Model();
 
 		App->CLSB_PB->Stop_Progress_Bar("Milkshape file Created successfully");
@@ -699,12 +708,10 @@ void SB_Exporter::Object_Model(void)
 // *************************************************************************
 void SB_Exporter::Autodesk_Model(void)
 {
+	App->CLSB_PB->Nudge("Exporting Autodesk 3ds");
 	App->CLSB_Export_3DS->Export_World_GD3D();
 
-	//if (test == 1)
-	{
-		App->Say("Autodesk Object file Created successfully");
-	}
+	App->CLSB_PB->Nudge("Finished");
 }
 
 // *************************************************************************
