@@ -2866,26 +2866,6 @@ void CFusionDoc::SetupDefaultFilename (void)
     }
 }
 
-
-void CFusionDoc::OnFileSave() 
-{
-    if (App->CLSB_Doc->IsNewDocument)
-    {
-        OnFileSaveAs ();
-    }
-    else
-    {
-        SetupDefaultFilename ();
-        CDocument::OnFileSave ();
-    }
-}
-
-void CFusionDoc::OnFileSaveAs() 
-{
-    SetupDefaultFilename ();
-    CDocument::OnFileSaveAs ();
-}
-
 // *************************************************************************
 // *	            Save_SB:- Terry and Hazel Flanigan 2023	               *
 // *************************************************************************

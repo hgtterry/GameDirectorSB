@@ -936,7 +936,15 @@ void SB_File_WE::Save_As_Document()
 	App->CLSB_Doc->IsNewDocument = 0;
 	App->m_pDoc->SetModifiedFlag(FALSE);
 
-	App->m_pDoc->SetTitle(PathFileName_3dt);
+	if (_stricmp(App->CLSB_FileIO->FileName + strlen(App->CLSB_FileIO->FileName) - 4, ".3dt") == 0)
+	{
+	}
+	else
+	{
+		strcat(App->CLSB_FileIO->FileName, ".3dt");
+	}
+
+	App->m_pDoc->SetTitle(App->CLSB_FileIO->FileName);
 
 	App->Say("Saved", App->CL_World->mCurrent_3DT_PathAndFile);
 }

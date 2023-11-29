@@ -348,8 +348,8 @@ protected:
 	afx_msg void OnEntityVisibility();
 	afx_msg void OnRebuildBsp();
 	afx_msg void OnUpdateRebuildBsp(CCmdUI* pCmdUI);
-	afx_msg void OnFileSave();
-	afx_msg void OnFileSaveAs();
+	
+	
 	afx_msg void OnToolsToggleadjustmode();
 	afx_msg void OnUpdateToolsToggleadjustmode(CCmdUI* pCmdUI);
 	afx_msg void OnLeveloptions();
