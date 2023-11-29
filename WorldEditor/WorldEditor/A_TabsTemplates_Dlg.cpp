@@ -168,8 +168,13 @@ LRESULT CALLBACK A_TabsTemplates_Dlg::Templates_Proc(HWND hDlg, UINT message, WP
 					App->m_pDoc->SetModifiedFlag();
 					App->CLSB_TopTabs->Update_Dlg_Controls();
 				}
+				else
+				{
+					App->CLSB_Doc->AddBrushToWorld();
+					App->m_pDoc->SetModifiedFlag();
+				}
 			}
-
+			
 			App->CLSB_Doc->DoGeneralSelect();
 
 			App->CL_World->Reset_Editor();
