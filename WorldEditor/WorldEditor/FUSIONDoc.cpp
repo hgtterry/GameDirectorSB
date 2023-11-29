@@ -147,7 +147,7 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
     ON_COMMAND(ID_ENTITYVISIBILITY, OnEntityVisibility)
     ON_COMMAND(IDM_REBUILD_BSP, OnRebuildBsp)
     ON_UPDATE_COMMAND_UI(IDM_REBUILD_BSP, OnUpdateRebuildBsp)
-    ON_COMMAND(ID_FILE_SAVE_AS, OnFileSaveAs)
+
     ON_COMMAND(ID_TOOLS_TOGGLEADJUSTMODE, OnToolsToggleadjustmode)
     ON_UPDATE_COMMAND_UI(ID_TOOLS_TOGGLEADJUSTMODE, OnUpdateToolsToggleadjustmode)
     ON_COMMAND(IDM_LEVELOPTIONS, OnLeveloptions)
@@ -180,7 +180,8 @@ BEGIN_MESSAGE_MAP(CFusionDoc, CDocument)
     ON_COMMAND(ID_WINDOW_COMMANDPANEL, Start_CommandPanel) 
     ON_COMMAND(ID_FILE_RECENT, Start_RecentFiles)
     ON_COMMAND(ID_FILE_SAVESB, Save_SB)
-    
+    ON_COMMAND(ID_FILE_SAVE_AS, Save_As_SB) // hgtterry Save As
+
     ON_UPDATE_COMMAND_UI(ID_VIEW_3DWIREFRAME, OnUpdateViewTypeWireFrame)
     ON_UPDATE_COMMAND_UI(ID_VIEW_TEXTUREVIEW, OnUpdateViewTypeTexture)
     ON_COMMAND(ID_CAMERA_CENTERONSELECTION, OnCameraCenteronselection)
@@ -2891,6 +2892,14 @@ void CFusionDoc::OnFileSaveAs()
 void CFusionDoc::Save_SB()
 {
     App->CLSB_File_WE->Save_Document();
+}
+
+// *************************************************************************
+// *	            Save_As_SB:- Terry and Hazel Flanigan 2023	               *
+// *************************************************************************
+void CFusionDoc::Save_As_SB()
+{
+    App->CLSB_File_WE->Save_As_Document();
 }
 
 // *************************************************************************

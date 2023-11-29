@@ -36,6 +36,8 @@ public:
 	bool Resolve_TXL_File(char* WadPath, char* FileName);
 
 	void Save_Document();
+	void Save_As_Document();
+
 	bool Save(const char* FileName);
 	bool Start_Load(const char* FileName, bool UseDialogLoader);
 

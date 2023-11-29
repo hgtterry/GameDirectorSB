@@ -163,18 +163,8 @@ bool SB_Export_Ogre3D::CreateDirectoryMesh(void)
 		}
 		else
 		{
-			/*App->CLSB_Dialogs->YesNo("File Exsits", "Do you want to update File");
-
-			bool Doit = App->CLSB_Dialogs->Canceled;
-			if (Doit == 0)
-			{
-				strcpy(mDecompileFolder, mSelected_Directory);
-				_chdir(mSelected_Directory);
-			}
-			else
-			{
-				return 0;
-			}*/
+			strcpy(mDecompileFolder, mSelected_Directory);
+			_chdir(mSelected_Directory);
 		}
 
 	}

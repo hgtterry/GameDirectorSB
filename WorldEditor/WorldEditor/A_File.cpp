@@ -902,6 +902,46 @@ bool SB_File_WE::Open_File_Dialog(char* Extension, char* Title, char* StartDirec
 }
 
 // *************************************************************************
+// *	          Save_As_Document:- Terry and Hazel Flanigan 2023	       *
+// *************************************************************************
+void SB_File_WE::Save_As_Document()
+{
+	App->Get_Current_Document();
+
+	bool test = App->CLSB_FileIO->SaveSelectedFile("*3dt", NULL);
+
+	if (test == 0)
+	{
+		App->Say("Canceld");
+		return;
+	}
+
+	if (_stricmp(App->CLSB_FileIO->PathFileName + strlen(App->CLSB_FileIO->PathFileName) - 4, ".3dt") == 0)
+	{
+	}
+	else
+	{
+		strcat(App->CLSB_FileIO->PathFileName,".3dt");
+	}
+
+	strcpy(App->CL_World->mCurrent_3DT_PathAndFile, App->CLSB_FileIO->PathFileName);
+	strcpy(PathFileName_3dt, App->CLSB_FileIO->PathFileName);
+
+	if (App->CLSB_File_WE->Save(App->CL_World->mCurrent_3DT_PathAndFile) == GE_FALSE)
+	{
+		App->Say("Error: Unable to save file");
+		return;;
+	}
+
+	App->CLSB_Doc->IsNewDocument = 0;
+	App->m_pDoc->SetModifiedFlag(FALSE);
+
+	App->m_pDoc->SetTitle(PathFileName_3dt);
+
+	App->Say("Saved", App->CL_World->mCurrent_3DT_PathAndFile);
+}
+
+// *************************************************************************
 // *	          Save_Document:- Terry and Hazel Flanigan 2023	           *
 // *************************************************************************
 void SB_File_WE::Save_Document()

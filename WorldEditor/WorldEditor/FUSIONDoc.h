@@ -383,7 +383,8 @@ protected:
 	afx_msg void Start_CommandPanel();
 	afx_msg void Start_RecentFiles();
 	afx_msg void Save_SB();
-	
+	afx_msg void Save_As_SB();
+
 	afx_msg void OnViewTypeTexture();
 	afx_msg void OnUpdateViewTypeWireFrame(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateViewTypeTexture(CCmdUI* pCmdUI);
