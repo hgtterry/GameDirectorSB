@@ -1260,7 +1260,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	MeshPtr mesh = OgreManual->convertToMesh("Poo");
 
-	//mesh->buildEdgeList();
+	mesh->buildEdgeList();
 
 	char name[MAX_PATH];
 	strcpy(name, App->WorldEditor_Directory);
@@ -1271,7 +1271,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	MeshSerializer* ms = new MeshSerializer();
 	ms->exportMesh(mesh.get(), name);
-
+	delete(ms);
 
 
 	/*Ogre::Entity* Object_Ent;

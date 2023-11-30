@@ -87,7 +87,9 @@ bool SB_Ogre::InitOgre(void)
 	m_imgui.Init(mSceneMgr,RenderHwnd);
 
 	createFrameListener();
-	
+
+	mSceneMgr->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
+
 	return 1;
 }
 

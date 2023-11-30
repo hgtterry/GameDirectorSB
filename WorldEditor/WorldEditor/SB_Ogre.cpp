@@ -94,6 +94,7 @@ bool SB_Ogre::InitOgre(void)
 	App->CLSB_Grid->Reset_View();
 	App->CLSB_Grid->Grid_SetVisible(true);
 
+	mSceneMgr->setShadowTechnique(SHADOWTYPE_STENCIL_ADDITIVE);
 	return 1;
 }
 
