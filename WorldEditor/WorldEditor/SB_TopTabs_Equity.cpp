@@ -157,6 +157,12 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 			return TRUE;
 		}
 
+		if (LOWORD(wParam) == IDC_BT_TEST)
+		{
+			Debug
+			return 1;
+		}
+
 		if (LOWORD(wParam) == IDC_UPDATE2)
 		{
 			App->CLSB_Scene->Update_Scene();
@@ -257,7 +263,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Files_TB_Proc(HWND hDlg, UINT message, WPARA
 		if (LOWORD(wParam) == IDC_BT_ETEST)
 		{
 			//App->CLSB_Ogre->Do_Basketball();
-
+			Debug
 			return 1;
 		}
 		

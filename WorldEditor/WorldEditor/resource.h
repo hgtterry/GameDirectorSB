@@ -874,6 +874,7 @@
 #define IDC_STBAR                       1568
 #define IDC_ST_PB_STATUS                1569
 #define IDC_PBACTION                    1570
+#define IDC_BT_TEST                     1571
 #define ID_BRUSH_PRIMITIVES_CUBE        32771
 #define ID_BRUSH_PRIMITIVES_PYRAMID     32772
 #define ID_BRUSH_PRIMITIVES_SPHEROID    32773
@@ -1094,7 +1095,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        356
 #define _APS_NEXT_COMMAND_VALUE         33097
-#define _APS_NEXT_CONTROL_VALUE         1571
+#define _APS_NEXT_CONTROL_VALUE         1572
 #define _APS_NEXT_SYMED_VALUE           112
 #endif
 #endif

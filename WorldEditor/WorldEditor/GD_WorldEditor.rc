@@ -1446,7 +1446,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.27 - [29-11-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.30 - [29-11-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -2232,6 +2232,7 @@ BEGIN
     PUSHBUTTON      "Test",IDC_BT_TT_TEST,0,2,62,17
     PUSHBUTTON      "Camera",IDC_BT_TT_CAMERA,64,2,62,17
     PUSHBUTTON      "Update",IDC_UPDATE2,439,2,67,17
+    PUSHBUTTON      "Test",IDC_BT_TEST,368,2,67,17
 END
 
 IDD_TB_EQ_TEST DIALOGEX 0, 20, 775, 32
