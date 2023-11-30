@@ -175,6 +175,7 @@ void SB_Grid::Grid_Update(bool Create)
 	GridNode->setVisible(true);
 	GridNode->setScale(Scale_X, Scale_Y, Scale_Z);
 }
+
 // *************************************************************************
 // *	  		Hair_Update:- Terry and Hazel Flanigan 2022				   *
 // *************************************************************************

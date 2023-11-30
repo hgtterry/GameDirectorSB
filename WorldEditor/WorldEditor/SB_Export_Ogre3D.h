@@ -83,6 +83,7 @@ public:
 	~SB_Export_Ogre3D(void);
 
 	bool Export_AssimpToOgre(void);
+	void Convert_ToOgre3D(bool Create);
 
 	bool Add_Sub_Folder;
 	char NewDirectory[MAX_PATH];
@@ -133,6 +134,9 @@ private:
 
 	float u;
 	float v;
+
+	Ogre::ManualObject* OgreManual;
+	Ogre::SceneNode* OgreNode;
 
 	XMLStore_Type* S_XMLStore[1];
 	

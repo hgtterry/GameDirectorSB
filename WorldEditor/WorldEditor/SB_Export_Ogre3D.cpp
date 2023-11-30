@@ -1177,3 +1177,108 @@ bool SB_Export_Ogre3D::Render_WE_ToXML(int GroupIndex)
 
 	return 1;
 }
+
+
+// *************************************************************************
+// *	  		Convert_ToOgre3D:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
+{
+	if (Create == 1)
+	{
+		OgreManual = App->CLSB_Ogre->mSceneMgr->createManualObject("OgreManual2");
+		OgreManual->setRenderQueueGroup(2);
+	}
+
+	int A = 0;
+	int B = 0;
+	int C = 0;
+	float x = 0;
+	float y = 0;
+	float z = 0;
+
+	//OgreManual->clear();
+	OgreManual->setDynamic(true);
+
+	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
+	int Count = 0;
+	int VertCount = 0;
+
+	while (Count < GroupCountTotal)
+	{
+		OgreManual->begin("Test_Material_0", RenderOperation::OT_TRIANGLE_LIST);
+
+		VertCount = 0;
+		while (VertCount < App->CLSB_Model->Group[Count]->GroupFaceCount)
+		{
+			A = App->CLSB_Model->Group[Count]->Face_Data[VertCount].a;
+			B = App->CLSB_Model->Group[Count]->Face_Data[VertCount].b;
+			C = App->CLSB_Model->Group[Count]->Face_Data[VertCount].c;
+
+			// --------------------------------------------------
+
+			x = App->CLSB_Model->Group[Count]->vertex_Data[A].x;
+			y = App->CLSB_Model->Group[Count]->vertex_Data[A].y;
+			z = App->CLSB_Model->Group[Count]->vertex_Data[A].z;
+			
+			OgreManual->position(Ogre::Vector3(x, y, z));
+			OgreManual->colour(ColourValue(1, 0, 0, 1));
+
+			x = App->CLSB_Model->Group[Count]->vertex_Data[B].x;
+			y = App->CLSB_Model->Group[Count]->vertex_Data[B].y;
+			z = App->CLSB_Model->Group[Count]->vertex_Data[B].z;
+
+			OgreManual->position(Ogre::Vector3(x, y, z));
+			OgreManual->colour(ColourValue(0, 1, 0, 1));
+
+			x = App->CLSB_Model->Group[Count]->vertex_Data[C].x;
+			y = App->CLSB_Model->Group[Count]->vertex_Data[C].y;
+			z = App->CLSB_Model->Group[Count]->vertex_Data[C].z;
+
+			OgreManual->position(Ogre::Vector3(x, y, z));
+			OgreManual->colour(ColourValue(0, 0, 1, 1));
+
+			VertCount++;
+		}
+
+		OgreManual->end();
+
+		Count++;
+	}
+
+	//App->Say_Int(OgreManual->getNumSections());
+
+	/*if (Create == 1)
+	{
+		OgreNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+		OgreNode->attachObject(OgreManual);
+	}
+
+	OgreNode->setPosition(0, 0, 0);
+	OgreNode->setVisible(true);
+	OgreNode->setScale(1, 1, 1);*/
+
+	MeshPtr mesh = OgreManual->convertToMesh("Poo");
+
+	//mesh->buildEdgeList();
+
+	char name[MAX_PATH];
+	strcpy(name, App->WorldEditor_Directory);
+	strcat(name, "Test.mesh");
+	App->Say(name);
+
+	//Ogre::String export_fn = App->WorldEditor_Directory;
+
+	MeshSerializer* ms = new MeshSerializer();
+	ms->exportMesh(mesh.get(), name);
+
+
+
+	/*Ogre::Entity* Object_Ent;
+	Object_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Poo");
+	OgreNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	OgreNode->attachObject(Object_Ent);
+
+	OgreNode->setVisible(true);*/
+	//OgreManual->
+}
