@@ -166,7 +166,6 @@
     <ClCompile Include="node.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="OgreXMLMeshSerializer.cpp" />
     <ClCompile Include="Parse3dt.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -236,10 +235,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TexturePacker.cpp" />
-    <ClCompile Include="tinystr.cpp" />
-    <ClCompile Include="tinyxml.cpp" />
-    <ClCompile Include="tinyxmlerror.cpp" />
-    <ClCompile Include="tinyxmlparser.cpp" />
     <ClCompile Include="typeio.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Test|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -326,8 +321,6 @@
     <ClInclude Include="SB_Textures.h" />
     <ClInclude Include="SB_TopTabs_Equity.h" />
     <ClInclude Include="SB_ViewMgrDlg.h" />
-    <ClInclude Include="tinystr.h" />
-    <ClInclude Include="tinyxml.h" />
     <ClInclude Include="TypeParser\cparser.h" />
     <ClInclude Include="TypeParser\cscanner.h" />
     <ClInclude Include="TypeParser\Hash.h" />

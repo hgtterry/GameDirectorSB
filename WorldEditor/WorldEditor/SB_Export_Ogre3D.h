@@ -26,9 +26,6 @@ distribution.
 using namespace std;
 using namespace Ogre;
 
-#define MAX_VERTICES 100000
-#define MAX_POLYGONS 100000
-
 class SB_Export_Ogre3D
 {
 public:
@@ -81,7 +78,5 @@ private:
 
 	Ogre::SceneNode* World_Node;
 	Ogre::Entity* World_Ent;
-
-	MeshSerializer* meshSerializer;
 };
 

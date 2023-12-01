@@ -23,10 +23,6 @@ distribution.
 
 #include "StdAfx.h"
 #include "AB_App.h"
-
-//#include "OgreProgressiveMeshGenerator.h"
-//#include "OgreDistanceLodStrategy.h"
-
 #include "SB_Export_Ogre3D.h"
 
 SB_Export_Ogre3D::SB_Export_Ogre3D(void)
@@ -168,7 +164,7 @@ void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-		Export_Manual->begin(MatName, RenderOperation::OT_TRIANGLE_LIST);
+		Export_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST);
 
 		FaceCount = 0;
 		FaceIndex = 0;
@@ -220,14 +216,14 @@ void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
 		return;
 	}
 
-	MeshPtr mesh = Export_Manual->convertToMesh("TestMesh");
+	Ogre::MeshPtr mesh = Export_Manual->convertToMesh("TestMesh");
 
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();
 
 	App->CLSB_Ogre->mSceneMgr->destroyManualObject(Export_Manual);
 
-	MeshSerializer* ms = new MeshSerializer();
+	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
 	ms->exportMesh(mesh.get(), mExport_PathAndFile_Mesh);
 	delete(ms);
 
@@ -275,7 +271,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-		World_Manual->begin(MatName, RenderOperation::OT_TRIANGLE_LIST);
+		World_Manual->begin(MatName, Ogre::RenderOperation::OT_TRIANGLE_LIST);
 
 		FaceCount = 0;
 		FaceIndex = 0;
@@ -326,14 +322,14 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 		App->Say("Can not create Ogre Sections");
 	}
 
-	MeshPtr mesh = World_Manual->convertToMesh("TestMesh");
+	Ogre::MeshPtr mesh = World_Manual->convertToMesh("TestMesh");
 
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();
 
 	App->CLSB_Ogre->mSceneMgr->destroyManualObject(World_Manual);
 
-	MeshSerializer* ms = new MeshSerializer();
+	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
 	ms->exportMesh(mesh.get(), World_File_PathAndFile);
 	delete(ms);
 
