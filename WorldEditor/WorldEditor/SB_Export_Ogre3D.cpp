@@ -63,10 +63,58 @@ SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 	WritePolyFile = nullptr;
 
 	Add_Sub_Folder = 1;
+	
 }
 
 SB_Export_Ogre3D::~SB_Export_Ogre3D(void)
 {
+	mDecompileFolder[0] = 0;
+	mOgreMeshFileName[0] = 0;
+	mOgreScriptFileName[0] = 0;
+	mOgreSkellFileName[0] = 0;
+	mOgreSkellTagName[0] = 0;
+
+	XmlMeshFileName[0] = 0;
+	XmlScriptFileName[0] = 0;
+	XmlSkellFileName[0] = 0;
+	XmlSkellTagName[0] = 0;
+
+	Source_Path_FileName[0] = 0;
+	Dest_Path_FileName[0] = 0;
+
+	NewDirectory[0] = 0;
+	Directory_Name[0] = 0;
+	mCurrentFolder[0] = 0;
+
+	mSelected_Directory[0] = 0;
+
+	nx = 0;
+	ny = 0;
+	nz = 0;
+
+	u = 0;
+	v = 0;
+
+	WritePolyFile = nullptr;
+
+	Add_Sub_Folder = 1;
+}
+
+// *************************************************************************
+// *				Init:- Terry and Hazel Flanigan 2023			 	   *
+// *************************************************************************
+void SB_Export_Ogre3D::Init(void)
+{
+	strcpy(World_File_PathAndFile, App->WorldEditor_Directory);
+	strcat(World_File_PathAndFile, "\\");
+	strcat(World_File_PathAndFile, "Data");
+	strcat(World_File_PathAndFile, "\\");
+	strcat(World_File_PathAndFile, "World_Test");
+
+	strcpy(World_File_Path, World_File_PathAndFile);
+
+	strcat(World_File_PathAndFile, "\\");
+	strcat(World_File_PathAndFile, "Test.mesh");
 }
 
 // *************************************************************************
@@ -1184,6 +1232,8 @@ bool SB_Export_Ogre3D::Render_WE_ToXML(int GroupIndex)
 // *************************************************************************
 void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 {
+	Init();
+
 	if (Create == 1)
 	{
 		OgreManual = App->CLSB_Ogre->mSceneMgr->createManualObject("OgreManual2");
@@ -1302,15 +1352,8 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();
 
-	char name[MAX_PATH];
-	strcpy(name, App->WorldEditor_Directory);
-	strcat(name, "Test.mesh");
-	//App->Say(name);
-
-	Ogre::String export_fn = App->WorldEditor_Directory;
-
 	MeshSerializer* ms = new MeshSerializer();
-	ms->exportMesh(mesh.get(), name);
+	ms->exportMesh(mesh.get(), World_File_PathAndFile);
 	delete(ms);
 
 	if (Create == 1)
@@ -1324,10 +1367,41 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	OgreNode->setScale(1, 1, 1);
 
 	/*Ogre::Entity* Object_Ent;
-	Object_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Poo");
+	//Object_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Poo");
 	OgreNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	OgreNode->attachObject(Object_Ent->);
 
 	OgreNode->setVisible(true);*/
 	//OgreManual->
+
+	DecompileTextures_TXL2();
+}
+
+// *************************************************************************
+// *		DecompileTextures_TXL:- Terry and Hazel Flanigan 2023  	   	   *
+// *************************************************************************
+bool SB_Export_Ogre3D::DecompileTextures_TXL2(void)
+{
+
+	char OutputFolder[MAX_PATH];
+	strcpy(OutputFolder, World_File_Path);
+	strcat(OutputFolder, "\\");
+
+	char buf[MAX_PATH];
+
+	int GroupCount = 0;
+	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
+
+	while (GroupCount < GroupCountTotal)
+	{
+		strcpy(buf, App->CLSB_Model->Group[GroupCount]->Text_FileName);
+		int Len = strlen(buf);
+		buf[Len - 4] = 0;
+
+		App->CLSB_Textures->Extract_TXL_Texture(buf, OutputFolder);
+
+		GroupCount++;
+	}
+
+	return 1;
 }

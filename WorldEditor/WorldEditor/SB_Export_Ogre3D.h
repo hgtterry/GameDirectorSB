@@ -91,10 +91,13 @@ public:
 
 private:
 
+	void Init(void);
+
 	bool CreateDirectoryMesh(void);
 
 	bool DecompileTextures(void);
 	bool DecompileTextures_TXL(void);
+	bool DecompileTextures_TXL2(void);
 
 	void CreateMaterialFile(char* MatFileName);
 
@@ -127,6 +130,9 @@ private:
 	char mCurrentFolder[MAX_PATH];
 
 	char mSelected_Directory[MAX_PATH];
+
+	char World_File_Path[MAX_PATH];
+	char World_File_PathAndFile[MAX_PATH];
 
 	float nx;
 	float ny;
