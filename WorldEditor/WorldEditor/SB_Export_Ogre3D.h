@@ -92,7 +92,8 @@ public:
 private:
 
 	void Init(void);
-
+	
+	void Get_Data(int Index, int FaceIndex);
 	bool CreateDirectoryMesh(void);
 
 	bool DecompileTextures(void);
@@ -143,8 +144,14 @@ private:
 	float u;
 	float v;
 
+	float x ;
+	float y ;
+	float z ;
+
 	Ogre::ManualObject* OgreManual;
-	Ogre::SceneNode* OgreNode;
+
+	Ogre::SceneNode* World_Node;
+	Ogre::Entity* World_Ent;
 
 	XMLStore_Type* S_XMLStore[1];
 	

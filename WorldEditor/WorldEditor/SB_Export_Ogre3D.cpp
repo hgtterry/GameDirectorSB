@@ -63,6 +63,9 @@ SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 	WritePolyFile = nullptr;
 
 	Add_Sub_Folder = 1;
+
+	World_Node = NULL;
+	World_Ent = NULL;
 	
 }
 
@@ -115,6 +118,17 @@ void SB_Export_Ogre3D::Init(void)
 
 	strcat(World_File_PathAndFile, "\\");
 	strcat(World_File_PathAndFile, "Test.mesh");
+
+	x = 0;
+	y = 0;
+	z = 0;
+
+	nx = 0;
+	ny = 0;
+	nz = 0;
+
+	u = 0;
+	v = 0;
 }
 
 // *************************************************************************
@@ -1238,18 +1252,6 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	int B = 0;
 	int C = 0;
 
-	float x = 0;
-	float y = 0;
-	float z = 0;
-
-	float nx = 0;
-	float ny = 0;
-	float nz = 0;
-
-	float u = 0;
-	float v = 0;
-	
-
 	OgreManual->setDynamic(false);
 	OgreManual->setCastShadows(false);
 
@@ -1284,16 +1286,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 
 			// --------------------------------------------------
 
-			x = App->CLSB_Model->Group[Count]->vertex_Data[A].x;
-			y = App->CLSB_Model->Group[Count]->vertex_Data[A].y;
-			z = App->CLSB_Model->Group[Count]->vertex_Data[A].z;
-
-			u = App->CLSB_Model->Group[Count]->MapCord_Data[A].u;
-			v = App->CLSB_Model->Group[Count]->MapCord_Data[A].v;
-
-			nx = App->CLSB_Model->Group[Count]->Normal_Data[A].x;
-			ny = App->CLSB_Model->Group[Count]->Normal_Data[A].y;
-			nz = App->CLSB_Model->Group[Count]->Normal_Data[A].z;
+			Get_Data(Count, A);
 
 			OgreManual->position(Ogre::Vector3(x, y, z));
 			OgreManual->textureCoord(Ogre::Vector2(u, v));
@@ -1301,16 +1294,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 			OgreManual->index(FaceIndex);
 			FaceIndex++;
 
-			x = App->CLSB_Model->Group[Count]->vertex_Data[B].x;
-			y = App->CLSB_Model->Group[Count]->vertex_Data[B].y;
-			z = App->CLSB_Model->Group[Count]->vertex_Data[B].z;
-
-			u = App->CLSB_Model->Group[Count]->MapCord_Data[B].u;
-			v = App->CLSB_Model->Group[Count]->MapCord_Data[B].v;
-
-			nx = App->CLSB_Model->Group[Count]->Normal_Data[B].x;
-			ny = App->CLSB_Model->Group[Count]->Normal_Data[B].y;
-			nz = App->CLSB_Model->Group[Count]->Normal_Data[B].z;
+			Get_Data(Count, B);
 
 			OgreManual->position(Ogre::Vector3(x, y, z));
 			OgreManual->textureCoord(Ogre::Vector2(u, v));
@@ -1318,23 +1302,14 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 			OgreManual->index(FaceIndex);
 			FaceIndex++;
 
-			x = App->CLSB_Model->Group[Count]->vertex_Data[C].x;
-			y = App->CLSB_Model->Group[Count]->vertex_Data[C].y;
-			z = App->CLSB_Model->Group[Count]->vertex_Data[C].z;
-
-			u = App->CLSB_Model->Group[Count]->MapCord_Data[C].u;
-			v = App->CLSB_Model->Group[Count]->MapCord_Data[C].v;
-
-			nx = App->CLSB_Model->Group[Count]->Normal_Data[C].x;
-			ny = App->CLSB_Model->Group[Count]->Normal_Data[C].y;
-			nz = App->CLSB_Model->Group[Count]->Normal_Data[C].z;
+			Get_Data(Count, C);
 
 			OgreManual->position(Ogre::Vector3(x, y, z));
 			OgreManual->textureCoord(Ogre::Vector2(u, v));
 			OgreManual->normal(Ogre::Vector3(nx, ny, nz));
 			OgreManual->index(FaceIndex);
-			FaceIndex++;
 
+			FaceIndex++;
 			FaceCount++;
 		}
 
@@ -1371,14 +1346,31 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(World_File_Path, "FileSystem", App->CLSB_Ogre->App_Resource_Group);
 
-	Ogre::Entity* Object_Ent;
-	Object_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Test.mesh");
-	OgreNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	OgreNode->attachObject(Object_Ent);
+	World_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Test.mesh");
+	World_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	World_Node->attachObject(World_Ent);
 
-	OgreNode->setPosition(0, 0, 0);
-	OgreNode->setVisible(true);
-	OgreNode->setScale(1, 1, 1);
+	World_Node->setPosition(0, 0, 0);
+	World_Node->setVisible(true);
+	World_Node->setScale(1, 1, 1);
+
+}
+
+// *************************************************************************
+// *			Get_Data:- Terry and Hazel Flanigan 2023  			   	   *
+// *************************************************************************
+void SB_Export_Ogre3D::Get_Data(int Index, int FaceIndex)
+{
+	x = App->CLSB_Model->Group[Index]->vertex_Data[FaceIndex].x;
+	y = App->CLSB_Model->Group[Index]->vertex_Data[FaceIndex].y;
+	z = App->CLSB_Model->Group[Index]->vertex_Data[FaceIndex].z;
+
+	u = App->CLSB_Model->Group[Index]->MapCord_Data[FaceIndex].u;
+	v = App->CLSB_Model->Group[Index]->MapCord_Data[FaceIndex].v;
+
+	nx = App->CLSB_Model->Group[Index]->Normal_Data[FaceIndex].x;
+	ny = App->CLSB_Model->Group[Index]->Normal_Data[FaceIndex].y;
+	nz = App->CLSB_Model->Group[Index]->Normal_Data[FaceIndex].z;
 }
 
 // *************************************************************************
