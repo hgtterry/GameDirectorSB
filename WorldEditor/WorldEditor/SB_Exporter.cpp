@@ -94,8 +94,7 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 		
 		HWND Temp = GetDlgItem(hDlg, IDC_CK_SUBFOLDER);
 		SendMessage(Temp, BM_SETCHECK, BST_CHECKED, 0);
-		App->CLSB_Export_Ogre3D->Add_Sub_Folder = 1;
-
+		
 		App->CLSB_Exporter->List_File_Formats(hDlg);
 
 		Temp = GetDlgItem(hDlg, IDC_CK_EXPORTALL);
@@ -290,14 +289,12 @@ LRESULT CALLBACK SB_Exporter::Export_Dlg_Proc(HWND hDlg, UINT message, WPARAM wP
 			{
 				EnableWindow(GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME), 1);
 				EnableWindow(GetDlgItem(hDlg, IDC_BT_FOLDER_NAME), 1);
-				App->CLSB_Export_Ogre3D->Add_Sub_Folder = 1;
 				return 1;
 			}
 			else
 			{
 				EnableWindow(GetDlgItem(hDlg, IDC_ST_SUBFOLDER_NAME), 0);
 				EnableWindow(GetDlgItem(hDlg, IDC_BT_FOLDER_NAME), 0);
-				App->CLSB_Export_Ogre3D->Add_Sub_Folder = 0;
 				return 1;
 			}
 
@@ -682,8 +679,7 @@ void SB_Exporter::Ogre3D_Model(void)
 
 	App->CLSB_PB->Nudge("Exporting Ogre3d");
 	App->CLSB_Export_Ogre3D->Export_To_Ogre3D(1);
-	//App->CLSB_Export_Ogre3D->Export_AssimpToOgre();
-
+	
 	App->CLSB_PB->Nudge("Finished");
 }
 
