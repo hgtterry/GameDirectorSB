@@ -1193,52 +1193,100 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	int A = 0;
 	int B = 0;
 	int C = 0;
+
 	float x = 0;
 	float y = 0;
 	float z = 0;
 
-	//OgreManual->clear();
-	OgreManual->setDynamic(true);
+	float nx = 0;
+	float ny = 0;
+	float nz = 0;
+
+	float u = 0;
+	float v = 0;
+	
+
+	OgreManual->setDynamic(false);
+	OgreManual->setCastShadows(false);
+
+	OgreManual->estimateVertexCount(App->CLSB_Model->VerticeCount);
+	OgreManual->estimateIndexCount(App->CLSB_Model->FaceCount);
 
 	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
 	int Count = 0;
-	int VertCount = 0;
+	int FaceCount = 0;
+	int FaceIndex = 0;
 
 	while (Count < GroupCountTotal)
 	{
-		OgreManual->begin("Test_Material_0", RenderOperation::OT_TRIANGLE_LIST);
+		OgreManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_TRIANGLE_LIST);
 
-		VertCount = 0;
-		while (VertCount < App->CLSB_Model->Group[Count]->GroupFaceCount)
+		FaceCount = 0;
+		FaceIndex = 0;
+
+		while (FaceCount < App->CLSB_Model->Group[Count]->GroupFaceCount)
 		{
-			A = App->CLSB_Model->Group[Count]->Face_Data[VertCount].a;
-			B = App->CLSB_Model->Group[Count]->Face_Data[VertCount].b;
-			C = App->CLSB_Model->Group[Count]->Face_Data[VertCount].c;
+			A = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].a;
+			B = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].b;
+			C = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].c;
 
 			// --------------------------------------------------
 
 			x = App->CLSB_Model->Group[Count]->vertex_Data[A].x;
 			y = App->CLSB_Model->Group[Count]->vertex_Data[A].y;
 			z = App->CLSB_Model->Group[Count]->vertex_Data[A].z;
-			
+
+			u = App->CLSB_Model->Group[Count]->MapCord_Data[A].u;
+			v = App->CLSB_Model->Group[Count]->MapCord_Data[A].v;
+
+			nx = App->CLSB_Model->Group[Count]->Normal_Data[A].x;
+			ny = App->CLSB_Model->Group[Count]->Normal_Data[A].y;
+			nz = App->CLSB_Model->Group[Count]->Normal_Data[A].z;
+
 			OgreManual->position(Ogre::Vector3(x, y, z));
+			OgreManual->textureCoord(Ogre::Vector2(u, v));
+			OgreManual->normal(Ogre::Vector3(nx, ny, nz));
 			OgreManual->colour(ColourValue(1, 0, 0, 1));
+			OgreManual->index(FaceIndex);
+			FaceIndex++;
 
 			x = App->CLSB_Model->Group[Count]->vertex_Data[B].x;
 			y = App->CLSB_Model->Group[Count]->vertex_Data[B].y;
 			z = App->CLSB_Model->Group[Count]->vertex_Data[B].z;
 
+			u = App->CLSB_Model->Group[Count]->MapCord_Data[B].u;
+			v = App->CLSB_Model->Group[Count]->MapCord_Data[B].v;
+
+			nx = App->CLSB_Model->Group[Count]->Normal_Data[B].x;
+			ny = App->CLSB_Model->Group[Count]->Normal_Data[B].y;
+			nz = App->CLSB_Model->Group[Count]->Normal_Data[B].z;
+
 			OgreManual->position(Ogre::Vector3(x, y, z));
+			OgreManual->textureCoord(Ogre::Vector2(u, v));
+			OgreManual->normal(Ogre::Vector3(nx, ny, nz));
 			OgreManual->colour(ColourValue(0, 1, 0, 1));
+			OgreManual->index(FaceIndex);
+			FaceIndex++;
 
 			x = App->CLSB_Model->Group[Count]->vertex_Data[C].x;
 			y = App->CLSB_Model->Group[Count]->vertex_Data[C].y;
 			z = App->CLSB_Model->Group[Count]->vertex_Data[C].z;
 
-			OgreManual->position(Ogre::Vector3(x, y, z));
-			OgreManual->colour(ColourValue(0, 0, 1, 1));
+			u = App->CLSB_Model->Group[Count]->MapCord_Data[C].u;
+			v = App->CLSB_Model->Group[Count]->MapCord_Data[C].v;
 
-			VertCount++;
+			nx = App->CLSB_Model->Group[Count]->Normal_Data[C].x;
+			ny = App->CLSB_Model->Group[Count]->Normal_Data[C].y;
+			nz = App->CLSB_Model->Group[Count]->Normal_Data[C].z;
+
+			OgreManual->position(Ogre::Vector3(x, y, z));
+			OgreManual->textureCoord(Ogre::Vector2(u, v));
+			OgreManual->normal(Ogre::Vector3(nx, ny, nz));
+			OgreManual->colour(ColourValue(0, 0, 1, 1));
+			OgreManual->index(FaceIndex);
+			FaceIndex++;
+
+			FaceCount++;
 		}
 
 		OgreManual->end();
@@ -1248,7 +1296,24 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	//App->Say_Int(OgreManual->getNumSections());
 
-	/*if (Create == 1)
+
+	MeshPtr mesh = OgreManual->convertToMesh("TestMesh");
+
+	mesh->setAutoBuildEdgeLists(true);
+	mesh->buildEdgeList();
+
+	char name[MAX_PATH];
+	strcpy(name, App->WorldEditor_Directory);
+	strcat(name, "Test.mesh");
+	//App->Say(name);
+
+	Ogre::String export_fn = App->WorldEditor_Directory;
+
+	MeshSerializer* ms = new MeshSerializer();
+	ms->exportMesh(mesh.get(), name);
+	delete(ms);
+
+	if (Create == 1)
 	{
 		OgreNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 		OgreNode->attachObject(OgreManual);
@@ -1256,28 +1321,12 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	OgreNode->setPosition(0, 0, 0);
 	OgreNode->setVisible(true);
-	OgreNode->setScale(1, 1, 1);*/
-
-	MeshPtr mesh = OgreManual->convertToMesh("Poo");
-
-	mesh->buildEdgeList();
-
-	char name[MAX_PATH];
-	strcpy(name, App->WorldEditor_Directory);
-	strcat(name, "Test.mesh");
-	App->Say(name);
-
-	//Ogre::String export_fn = App->WorldEditor_Directory;
-
-	MeshSerializer* ms = new MeshSerializer();
-	ms->exportMesh(mesh.get(), name);
-	delete(ms);
-
+	OgreNode->setScale(1, 1, 1);
 
 	/*Ogre::Entity* Object_Ent;
 	Object_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Poo");
 	OgreNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	OgreNode->attachObject(Object_Ent);
+	OgreNode->attachObject(Object_Ent->);
 
 	OgreNode->setVisible(true);*/
 	//OgreManual->
