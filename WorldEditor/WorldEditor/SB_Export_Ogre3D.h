@@ -96,10 +96,12 @@ private:
 	bool CreateDirectoryMesh(void);
 
 	bool DecompileTextures(void);
+
 	bool DecompileTextures_TXL(void);
 	bool DecompileTextures_TXL2(void);
 
 	void CreateMaterialFile(char* MatFileName);
+	void CreateMaterialFile2(char* MatFileName);
 
 	bool Write_XML_File();
 	bool Write_WE_XML_File();

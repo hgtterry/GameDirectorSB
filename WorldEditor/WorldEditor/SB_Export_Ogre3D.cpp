@@ -775,8 +775,7 @@ void SB_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
 	int numMaterials = App->CLSB_Model->GroupCount;
 
 	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
-	//matMgrSgl.initialise();
-
+	
 	Ogre::MaterialSerializer matSer;
 
 	for (int i = 0; i < numMaterials; ++i)
@@ -797,11 +796,6 @@ void SB_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
 
 		if (0 < strlen(File))
 		{
-			/*if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
-			{
-				App->Say(File);
-			}*/
-
 			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);
 
 			if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
@@ -1262,6 +1256,9 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	OgreManual->estimateVertexCount(App->CLSB_Model->VerticeCount);
 	OgreManual->estimateIndexCount(App->CLSB_Model->FaceCount);
 
+	char MaterialNumber[255];
+	char MatName[255];
+
 	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
 	int Count = 0;
 	int FaceCount = 0;
@@ -1269,7 +1266,12 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	while (Count < GroupCountTotal)
 	{
-		OgreManual->begin("BaseWhiteAlphaBlended", RenderOperation::OT_TRIANGLE_LIST);
+		_itoa(Count, MaterialNumber, 10);
+		strcpy(MatName, "Test");
+		strcat(MatName, "_Material_");
+		strcat(MatName, MaterialNumber);
+
+		OgreManual->begin(MatName, RenderOperation::OT_TRIANGLE_LIST);
 
 		FaceCount = 0;
 		FaceIndex = 0;
@@ -1296,7 +1298,6 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 			OgreManual->position(Ogre::Vector3(x, y, z));
 			OgreManual->textureCoord(Ogre::Vector2(u, v));
 			OgreManual->normal(Ogre::Vector3(nx, ny, nz));
-			OgreManual->colour(ColourValue(1, 0, 0, 1));
 			OgreManual->index(FaceIndex);
 			FaceIndex++;
 
@@ -1314,7 +1315,6 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 			OgreManual->position(Ogre::Vector3(x, y, z));
 			OgreManual->textureCoord(Ogre::Vector2(u, v));
 			OgreManual->normal(Ogre::Vector3(nx, ny, nz));
-			OgreManual->colour(ColourValue(0, 1, 0, 1));
 			OgreManual->index(FaceIndex);
 			FaceIndex++;
 
@@ -1332,7 +1332,6 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 			OgreManual->position(Ogre::Vector3(x, y, z));
 			OgreManual->textureCoord(Ogre::Vector2(u, v));
 			OgreManual->normal(Ogre::Vector3(nx, ny, nz));
-			OgreManual->colour(ColourValue(0, 0, 1, 1));
 			OgreManual->index(FaceIndex);
 			FaceIndex++;
 
@@ -1344,37 +1343,42 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 		Count++;
 	}
 
-	//App->Say_Int(OgreManual->getNumSections());
-
+	
+	if (OgreManual->getNumSections() == 0)
+	{
+		App->Say("Can not create Ogre Sections");
+	}
 
 	MeshPtr mesh = OgreManual->convertToMesh("TestMesh");
 
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();
 
+	App->CLSB_Ogre->mSceneMgr->destroyManualObject(OgreManual);
+
 	MeshSerializer* ms = new MeshSerializer();
 	ms->exportMesh(mesh.get(), World_File_PathAndFile);
 	delete(ms);
 
-	if (Create == 1)
-	{
-		OgreNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-		OgreNode->attachObject(OgreManual);
-	}
+	DecompileTextures_TXL2();
+
+	char Material_PathAndFile[MAX_PATH];
+	strcpy(Material_PathAndFile, World_File_Path);
+	strcat(Material_PathAndFile, "\\");
+	strcat(Material_PathAndFile, "Test.material");
+
+	CreateMaterialFile2(Material_PathAndFile);
+	
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(World_File_Path, "FileSystem", App->CLSB_Ogre->App_Resource_Group);
+
+	Ogre::Entity* Object_Ent;
+	Object_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Test.mesh");
+	OgreNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	OgreNode->attachObject(Object_Ent);
 
 	OgreNode->setPosition(0, 0, 0);
 	OgreNode->setVisible(true);
 	OgreNode->setScale(1, 1, 1);
-
-	/*Ogre::Entity* Object_Ent;
-	//Object_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Poo");
-	OgreNode = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
-	OgreNode->attachObject(Object_Ent->);
-
-	OgreNode->setVisible(true);*/
-	//OgreManual->
-
-	DecompileTextures_TXL2();
 }
 
 // *************************************************************************
@@ -1403,5 +1407,57 @@ bool SB_Export_Ogre3D::DecompileTextures_TXL2(void)
 		GroupCount++;
 	}
 
+
 	return 1;
+}
+
+// *************************************************************************
+// *		CreateMaterialFile2:- Terry and Hazel Flanigan 2023		   	   *
+// *************************************************************************
+void SB_Export_Ogre3D::CreateMaterialFile2(char* MatFileName)
+{
+	char MatName[255];
+	char File[255];
+	char MaterialNumber[255];
+
+	Ogre::String OMatFileName = MatFileName;
+	Ogre::String OFile;
+	Ogre::String OMatName;
+
+	int numMaterials = App->CLSB_Model->GroupCount;
+
+	Ogre::MaterialManager& matMgrSgl = Ogre::MaterialManager::getSingleton();
+
+	Ogre::MaterialSerializer matSer;
+
+	for (int i = 0; i < numMaterials; ++i)
+	{
+		_itoa(i, MaterialNumber, 10);
+		strcpy(MatName, App->CLSB_Model->JustName);
+		strcat(MatName, "_Material_");
+		strcat(MatName, MaterialNumber);
+
+		strcpy(File, App->CLSB_Model->Group[i]->Text_FileName);
+
+		OMatName = MatName;
+		OFile = File;
+
+		Ogre::MaterialPtr ogremat = matMgrSgl.create(OMatName,
+			Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+
+
+		if (0 < strlen(File))
+		{
+			ogremat->getTechnique(0)->getPass(0)->createTextureUnitState(File);
+
+			if (_stricmp(File + strlen(File) - 4, ".TGA") == 0)
+			{
+				ogremat->getTechnique(0)->getPass(0)->setAlphaRejectSettings(Ogre::CMPF_GREATER, 128);
+			}
+		}
+
+		matSer.queueForExport(ogremat);
+	}
+
+	matSer.exportQueued(OMatFileName);
 }
