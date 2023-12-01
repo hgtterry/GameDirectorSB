@@ -114,14 +114,11 @@ void SB_Export_Ogre3D::Set_Export_Paths(void)
 	strcpy(mExport_PathAndFile_Mesh, mExport_Path);
 	strcat(mExport_PathAndFile_Mesh, mExport_Just_Name);
 	strcat(mExport_PathAndFile_Mesh, ".mesh");
-	//App->Say(mExport_PathAndFile_Mesh);
-
+	
 	strcpy(mExport_PathAndFile_Material, mExport_Path);
 	strcat(mExport_PathAndFile_Material, mExport_Just_Name);
 	strcat(mExport_PathAndFile_Material, ".material");
-	//App->Say(mExport_PathAndFile_Material);
 
-	//App->Say(mExport_Just_Name);
 }
 
 // *************************************************************************
