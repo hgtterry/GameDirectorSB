@@ -163,6 +163,8 @@ void SB_Export_Ogre3D::Set_Export_Paths(void)
 	strcat(mExport_PathAndFile_Material, mExport_Just_Name);
 	strcat(mExport_PathAndFile_Material, ".material");
 	//App->Say(mExport_PathAndFile_Material);
+
+	//App->Say(mExport_Just_Name);
 }
 
 // *************************************************************************
@@ -172,7 +174,8 @@ void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
 {
 	Set_Export_Paths();
 
-	//return;
+	CreateDirectory(mExport_Path, NULL);
+
 	if (Create == 1)
 	{
 		Export_Manual = App->CLSB_Ogre->mSceneMgr->createManualObject("OgreManual2");
@@ -937,9 +940,10 @@ void SB_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
 	for (int i = 0; i < numMaterials; ++i)
 	{
 		_itoa(i, MaterialNumber, 10);
-		strcpy(MatName, App->CLSB_Model->JustName);
+		strcpy(MatName, mExport_Just_Name);
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
+		App->Say(MatName);
 
 		strcpy(File, App->CLSB_Model->Group[i]->Text_FileName);
 
@@ -1566,7 +1570,7 @@ void SB_Export_Ogre3D::CreateMaterialFile2(char* MatFileName)
 	for (int i = 0; i < numMaterials; ++i)
 	{
 		_itoa(i, MaterialNumber, 10);
-		strcpy(MatName, App->CLSB_Model->JustName);
+		strcpy(MatName, mExport_Just_Name);
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
