@@ -64,6 +64,9 @@ SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 
 	Add_Sub_Folder = 1;
 
+	Export_Manual = NULL;
+	World_Manual = NULL;
+
 	World_Node = NULL;
 	World_Ent = NULL;
 	
@@ -129,6 +132,145 @@ void SB_Export_Ogre3D::Init(void)
 
 	u = 0;
 	v = 0;
+}
+
+// *************************************************************************
+// *		Set_Export_Paths:- Terry and Hazel Flanigan 2023		 	   *
+// *************************************************************************
+void SB_Export_Ogre3D::Set_Export_Paths(void)
+{
+	x,y,z = 0;
+	nx,ny,nz = 0;
+	u,v = 0;
+	
+	char ExportFolder[MAX_PATH];
+
+	strcpy(mSelected_Directory, App->CLSB_Exporter->mFolder_Path);
+	strcpy(Directory_Name, App->CLSB_Exporter->mDirectory_Name);
+	strcpy(mExport_Just_Name, App->CLSB_Exporter->mJustName);
+
+	strcpy(mExport_Path, mSelected_Directory);
+	strcat(mExport_Path, "\\");
+	strcat(mExport_Path, Directory_Name);
+	strcat(mExport_Path, "\\");
+
+	strcpy(mExport_PathAndFile_Mesh, mExport_Path);
+	strcat(mExport_PathAndFile_Mesh, mExport_Just_Name);
+	strcat(mExport_PathAndFile_Mesh, ".mesh");
+	//App->Say(mExport_PathAndFile_Mesh);
+
+	strcpy(mExport_PathAndFile_Material, mExport_Path);
+	strcat(mExport_PathAndFile_Material, mExport_Just_Name);
+	strcat(mExport_PathAndFile_Material, ".material");
+	//App->Say(mExport_PathAndFile_Material);
+}
+
+// *************************************************************************
+// *	  		Export_To_Ogre3D:- Terry and Hazel Flanigan 2022		   *
+// *************************************************************************
+void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
+{
+	Set_Export_Paths();
+
+	//return;
+	if (Create == 1)
+	{
+		Export_Manual = App->CLSB_Ogre->mSceneMgr->createManualObject("OgreManual2");
+		Export_Manual->setRenderQueueGroup(2);
+	}
+
+	int A = 0;
+	int B = 0;
+	int C = 0;
+
+	Export_Manual->setDynamic(false);
+	Export_Manual->setCastShadows(false);
+
+	Export_Manual->estimateVertexCount(App->CLSB_Model->VerticeCount);
+	Export_Manual->estimateIndexCount(App->CLSB_Model->FaceCount);
+
+	char MaterialNumber[255];
+	char MatName[255];
+
+	int GroupCountTotal = App->CLSB_Model->Get_Groupt_Count();
+	int Count = 0;
+	int FaceCount = 0;
+	int FaceIndex = 0;
+
+	while (Count < GroupCountTotal)
+	{
+		_itoa(Count, MaterialNumber, 10);
+		strcpy(MatName, mExport_Just_Name);
+		strcat(MatName, "_Material_");
+		strcat(MatName, MaterialNumber);
+
+		Export_Manual->begin(MatName, RenderOperation::OT_TRIANGLE_LIST);
+
+		FaceCount = 0;
+		FaceIndex = 0;
+
+		while (FaceCount < App->CLSB_Model->Group[Count]->GroupFaceCount)
+		{
+			A = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].a;
+			B = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].b;
+			C = App->CLSB_Model->Group[Count]->Face_Data[FaceCount].c;
+
+			// --------------------------------------------------
+
+			Get_Data(Count, A);
+
+			Export_Manual->position(Ogre::Vector3(x, y, z));
+			Export_Manual->textureCoord(Ogre::Vector2(u, v));
+			Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			Export_Manual->index(FaceIndex);
+			FaceIndex++;
+
+			Get_Data(Count, B);
+
+			Export_Manual->position(Ogre::Vector3(x, y, z));
+			Export_Manual->textureCoord(Ogre::Vector2(u, v));
+			Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			Export_Manual->index(FaceIndex);
+			FaceIndex++;
+
+			Get_Data(Count, C);
+
+			Export_Manual->position(Ogre::Vector3(x, y, z));
+			Export_Manual->textureCoord(Ogre::Vector2(u, v));
+			Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			Export_Manual->index(FaceIndex);
+
+			FaceIndex++;
+			FaceCount++;
+		}
+
+		Export_Manual->end();
+
+		Count++;
+	}
+
+
+	if (Export_Manual->getNumSections() == 0)
+	{
+		App->Say("Can not create Ogre Sections");
+		return;
+	}
+
+	MeshPtr mesh = Export_Manual->convertToMesh("TestMesh");
+
+	mesh->setAutoBuildEdgeLists(true);
+	mesh->buildEdgeList();
+
+	App->CLSB_Ogre->mSceneMgr->destroyManualObject(Export_Manual);
+
+	MeshSerializer* ms = new MeshSerializer();
+	ms->exportMesh(mesh.get(), mExport_PathAndFile_Mesh);
+	delete(ms);
+
+	DecompileTextures_TXL2(mExport_Path);
+
+	CreateMaterialFile2(mExport_PathAndFile_Material);
+
 }
 
 // *************************************************************************
@@ -1244,19 +1386,19 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	if (Create == 1)
 	{
-		OgreManual = App->CLSB_Ogre->mSceneMgr->createManualObject("OgreManual2");
-		OgreManual->setRenderQueueGroup(2);
+		World_Manual = App->CLSB_Ogre->mSceneMgr->createManualObject("OgreManual2");
+		World_Manual->setRenderQueueGroup(2);
 	}
 
 	int A = 0;
 	int B = 0;
 	int C = 0;
 
-	OgreManual->setDynamic(false);
-	OgreManual->setCastShadows(false);
+	World_Manual->setDynamic(false);
+	World_Manual->setCastShadows(false);
 
-	OgreManual->estimateVertexCount(App->CLSB_Model->VerticeCount);
-	OgreManual->estimateIndexCount(App->CLSB_Model->FaceCount);
+	World_Manual->estimateVertexCount(App->CLSB_Model->VerticeCount);
+	World_Manual->estimateIndexCount(App->CLSB_Model->FaceCount);
 
 	char MaterialNumber[255];
 	char MatName[255];
@@ -1273,7 +1415,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
-		OgreManual->begin(MatName, RenderOperation::OT_TRIANGLE_LIST);
+		World_Manual->begin(MatName, RenderOperation::OT_TRIANGLE_LIST);
 
 		FaceCount = 0;
 		FaceIndex = 0;
@@ -1288,54 +1430,58 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 
 			Get_Data(Count, A);
 
-			OgreManual->position(Ogre::Vector3(x, y, z));
-			OgreManual->textureCoord(Ogre::Vector2(u, v));
-			OgreManual->normal(Ogre::Vector3(nx, ny, nz));
-			OgreManual->index(FaceIndex);
+			World_Manual->position(Ogre::Vector3(x, y, z));
+			World_Manual->textureCoord(Ogre::Vector2(u, v));
+			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			World_Manual->index(FaceIndex);
 			FaceIndex++;
 
 			Get_Data(Count, B);
 
-			OgreManual->position(Ogre::Vector3(x, y, z));
-			OgreManual->textureCoord(Ogre::Vector2(u, v));
-			OgreManual->normal(Ogre::Vector3(nx, ny, nz));
-			OgreManual->index(FaceIndex);
+			World_Manual->position(Ogre::Vector3(x, y, z));
+			World_Manual->textureCoord(Ogre::Vector2(u, v));
+			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			World_Manual->index(FaceIndex);
 			FaceIndex++;
 
 			Get_Data(Count, C);
 
-			OgreManual->position(Ogre::Vector3(x, y, z));
-			OgreManual->textureCoord(Ogre::Vector2(u, v));
-			OgreManual->normal(Ogre::Vector3(nx, ny, nz));
-			OgreManual->index(FaceIndex);
+			World_Manual->position(Ogre::Vector3(x, y, z));
+			World_Manual->textureCoord(Ogre::Vector2(u, v));
+			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
+			World_Manual->index(FaceIndex);
 
 			FaceIndex++;
 			FaceCount++;
 		}
 
-		OgreManual->end();
+		World_Manual->end();
 
 		Count++;
 	}
 
 	
-	if (OgreManual->getNumSections() == 0)
+	if (World_Manual->getNumSections() == 0)
 	{
 		App->Say("Can not create Ogre Sections");
 	}
 
-	MeshPtr mesh = OgreManual->convertToMesh("TestMesh");
+	MeshPtr mesh = World_Manual->convertToMesh("TestMesh");
 
 	mesh->setAutoBuildEdgeLists(true);
 	mesh->buildEdgeList();
 
-	App->CLSB_Ogre->mSceneMgr->destroyManualObject(OgreManual);
+	App->CLSB_Ogre->mSceneMgr->destroyManualObject(World_Manual);
 
 	MeshSerializer* ms = new MeshSerializer();
 	ms->exportMesh(mesh.get(), World_File_PathAndFile);
 	delete(ms);
 
-	DecompileTextures_TXL2();
+	char OutputFolder[MAX_PATH];
+	strcpy(OutputFolder, World_File_Path);
+	strcat(OutputFolder, "\\");
+
+	DecompileTextures_TXL2(OutputFolder);
 
 	char Material_PathAndFile[MAX_PATH];
 	strcpy(Material_PathAndFile, World_File_Path);
@@ -1353,7 +1499,6 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	World_Node->setPosition(0, 0, 0);
 	World_Node->setVisible(true);
 	World_Node->setScale(1, 1, 1);
-
 }
 
 // *************************************************************************
@@ -1376,12 +1521,8 @@ void SB_Export_Ogre3D::Get_Data(int Index, int FaceIndex)
 // *************************************************************************
 // *		DecompileTextures_TXL:- Terry and Hazel Flanigan 2023  	   	   *
 // *************************************************************************
-bool SB_Export_Ogre3D::DecompileTextures_TXL2(void)
+bool SB_Export_Ogre3D::DecompileTextures_TXL2(char* PathAndFile)
 {
-
-	char OutputFolder[MAX_PATH];
-	strcpy(OutputFolder, World_File_Path);
-	strcat(OutputFolder, "\\");
 
 	char buf[MAX_PATH];
 
@@ -1394,7 +1535,7 @@ bool SB_Export_Ogre3D::DecompileTextures_TXL2(void)
 		int Len = strlen(buf);
 		buf[Len - 4] = 0;
 
-		App->CLSB_Textures->Extract_TXL_Texture(buf, OutputFolder);
+		App->CLSB_Textures->Extract_TXL_Texture(buf, PathAndFile);
 
 		GroupCount++;
 	}

@@ -681,6 +681,7 @@ void SB_Exporter::Ogre3D_Model(void)
 	App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
 
 	App->CLSB_PB->Nudge("Exporting Ogre3d");
+	//App->CLSB_Export_Ogre3D->Export_To_Ogre3D(1);
 	App->CLSB_Export_Ogre3D->Export_AssimpToOgre();
 
 	App->CLSB_PB->Nudge("Finished");

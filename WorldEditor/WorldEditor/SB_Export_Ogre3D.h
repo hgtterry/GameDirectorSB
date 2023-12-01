@@ -83,6 +83,8 @@ public:
 	~SB_Export_Ogre3D(void);
 
 	bool Export_AssimpToOgre(void);
+	void Export_To_Ogre3D(bool Create);
+
 	void Convert_ToOgre3D(bool Create);
 
 	bool Add_Sub_Folder;
@@ -93,13 +95,15 @@ private:
 
 	void Init(void);
 	
+	void Set_Export_Paths(void);
+
 	void Get_Data(int Index, int FaceIndex);
 	bool CreateDirectoryMesh(void);
 
 	bool DecompileTextures(void);
 
 	bool DecompileTextures_TXL(void);
-	bool DecompileTextures_TXL2(void);
+	bool DecompileTextures_TXL2(char* PathAndFile);
 
 	void CreateMaterialFile(char* MatFileName);
 	void CreateMaterialFile2(char* MatFileName);
@@ -137,6 +141,12 @@ private:
 	char World_File_Path[MAX_PATH];
 	char World_File_PathAndFile[MAX_PATH];
 
+	char mExport_Just_Name[MAX_PATH];
+
+	char mExport_Path[MAX_PATH];
+	char mExport_PathAndFile_Material[MAX_PATH];
+	char mExport_PathAndFile_Mesh[MAX_PATH];
+
 	float nx;
 	float ny;
 	float nz;
@@ -148,7 +158,8 @@ private:
 	float y ;
 	float z ;
 
-	Ogre::ManualObject* OgreManual;
+	Ogre::ManualObject* Export_Manual;
+	Ogre::ManualObject* World_Manual;
 
 	Ogre::SceneNode* World_Node;
 	Ogre::Entity* World_Ent;
