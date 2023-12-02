@@ -157,7 +157,7 @@ SB_App::SB_App()
 	CursorPosX = 500;
 	CursorPosY = 500;
 
-	Debug_App = 1;
+	Debug_App = 0;
 	Debug_File = 0;
 	Just_Equity = 0;
 	Centre_Debug = 1;

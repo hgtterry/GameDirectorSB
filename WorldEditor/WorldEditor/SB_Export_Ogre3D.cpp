@@ -368,7 +368,6 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CLSB_Ogre->World_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CLSB_Ogre->World_Resource_Group);
 
-		Debug
 	}
 	else
 	{
