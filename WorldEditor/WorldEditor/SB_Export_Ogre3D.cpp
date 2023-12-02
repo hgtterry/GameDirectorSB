@@ -27,17 +27,21 @@ distribution.
 
 SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 {
-	Directory_Name[0] = 0;
-	mCurrentFolder[0] = 0;
-
+	mDirectory_Name[0] = 0;
 	mSelected_Directory[0] = 0;
 
-	nx = 0;
-	ny = 0;
-	nz = 0;
+	mWorld_File_Path[0] = 0;
+	mWorld_File_PathAndFile[0] = 0;
 
-	u = 0;
-	v = 0;
+	mExport_Just_Name[0] = 0;
+
+	mExport_Path[0] = 0;
+	mExport_PathAndFile_Material[0] = 0;
+	mExport_PathAndFile_Mesh[0] = 0;
+
+	x, y, z = 0;
+	nx, ny, nz = 0;
+	u, v = 0;
 
 	Export_Manual = NULL;
 	World_Manual = NULL;
@@ -49,46 +53,30 @@ SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 
 SB_Export_Ogre3D::~SB_Export_Ogre3D(void)
 {
-	Directory_Name[0] = 0;
-	mCurrentFolder[0] = 0;
-
-	mSelected_Directory[0] = 0;
-
-	nx = 0;
-	ny = 0;
-	nz = 0;
-
-	u = 0;
-	v = 0;
-
+	
 }
 
 // *************************************************************************
-// *				Init:- Terry and Hazel Flanigan 2023			 	   *
+// *		Set_World_Paths:- Terry and Hazel Flanigan 2023			 	   *
 // *************************************************************************
-void SB_Export_Ogre3D::Init(void)
+void SB_Export_Ogre3D::Set_World_Paths(void)
 {
-	strcpy(World_File_PathAndFile, App->WorldEditor_Directory);
-	strcat(World_File_PathAndFile, "\\");
-	strcat(World_File_PathAndFile, "Data");
-	strcat(World_File_PathAndFile, "\\");
-	strcat(World_File_PathAndFile, "World_Test");
+	strcpy(mWorld_File_PathAndFile, App->WorldEditor_Directory);
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, "Data");
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, "World_Test");
 
-	strcpy(World_File_Path, World_File_PathAndFile);
+	strcpy(mWorld_File_Path, mWorld_File_PathAndFile);
 
-	strcat(World_File_PathAndFile, "\\");
-	strcat(World_File_PathAndFile, "Test.mesh");
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, "Test.mesh");
 
-	x = 0;
-	y = 0;
-	z = 0;
+	strcpy(mExport_Just_Name, "Test");
 
-	nx = 0;
-	ny = 0;
-	nz = 0;
-
-	u = 0;
-	v = 0;
+	x, y, z = 0;
+	nx, ny, nz = 0;
+	u, v = 0;
 }
 
 // *************************************************************************
@@ -96,19 +84,15 @@ void SB_Export_Ogre3D::Init(void)
 // *************************************************************************
 void SB_Export_Ogre3D::Set_Export_Paths(void)
 {
-	x,y,z = 0;
-	nx,ny,nz = 0;
-	u,v = 0;
-	
 	char ExportFolder[MAX_PATH];
 
 	strcpy(mSelected_Directory, App->CLSB_Exporter->mFolder_Path);
-	strcpy(Directory_Name, App->CLSB_Exporter->mDirectory_Name);
+	strcpy(mDirectory_Name, App->CLSB_Exporter->mDirectory_Name);
 	strcpy(mExport_Just_Name, App->CLSB_Exporter->mJustName);
 
 	strcpy(mExport_Path, mSelected_Directory);
 	strcat(mExport_Path, "\\");
-	strcat(mExport_Path, Directory_Name);
+	strcat(mExport_Path, mDirectory_Name);
 	strcat(mExport_Path, "\\");
 
 	strcpy(mExport_PathAndFile_Mesh, mExport_Path);
@@ -118,6 +102,10 @@ void SB_Export_Ogre3D::Set_Export_Paths(void)
 	strcpy(mExport_PathAndFile_Material, mExport_Path);
 	strcat(mExport_PathAndFile_Material, mExport_Just_Name);
 	strcat(mExport_PathAndFile_Material, ".material");
+
+	x, y, z = 0;
+	nx, ny, nz = 0;
+	u, v = 0;
 
 }
 
@@ -224,9 +212,9 @@ void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
 	ms->exportMesh(mesh.get(), mExport_PathAndFile_Mesh);
 	delete(ms);
 
-	DecompileTextures_TXL2(mExport_Path);
+	DecompileTextures_TXL(mExport_Path);
 
-	CreateMaterialFile2(mExport_PathAndFile_Material);
+	CreateMaterialFile(mExport_PathAndFile_Material);
 
 }
 
@@ -235,7 +223,7 @@ void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
 // *************************************************************************
 void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 {
-	Init();
+	Set_World_Paths();
 
 	if (Create == 1)
 	{
@@ -327,23 +315,23 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	App->CLSB_Ogre->mSceneMgr->destroyManualObject(World_Manual);
 
 	Ogre::MeshSerializer* ms = new Ogre::MeshSerializer();
-	ms->exportMesh(mesh.get(), World_File_PathAndFile);
+	ms->exportMesh(mesh.get(), mWorld_File_PathAndFile);
 	delete(ms);
 
 	char OutputFolder[MAX_PATH];
-	strcpy(OutputFolder, World_File_Path);
+	strcpy(OutputFolder, mWorld_File_Path);
 	strcat(OutputFolder, "\\");
 
-	DecompileTextures_TXL2(OutputFolder);
+	DecompileTextures_TXL(OutputFolder);
 
 	char Material_PathAndFile[MAX_PATH];
-	strcpy(Material_PathAndFile, World_File_Path);
+	strcpy(Material_PathAndFile, mWorld_File_Path);
 	strcat(Material_PathAndFile, "\\");
 	strcat(Material_PathAndFile, "Test.material");
 
-	CreateMaterialFile2(Material_PathAndFile);
+	CreateMaterialFile(Material_PathAndFile);
 	
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(World_File_Path, "FileSystem", App->CLSB_Ogre->App_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre->App_Resource_Group);
 
 	World_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Test.mesh");
 	World_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
@@ -374,7 +362,7 @@ void SB_Export_Ogre3D::Get_Data(int Index, int FaceIndex)
 // *************************************************************************
 // *		DecompileTextures_TXL:- Terry and Hazel Flanigan 2023  	   	   *
 // *************************************************************************
-bool SB_Export_Ogre3D::DecompileTextures_TXL2(char* PathAndFile)
+bool SB_Export_Ogre3D::DecompileTextures_TXL(char* PathAndFile)
 {
 
 	char buf[MAX_PATH];
@@ -398,9 +386,9 @@ bool SB_Export_Ogre3D::DecompileTextures_TXL2(char* PathAndFile)
 }
 
 // *************************************************************************
-// *		CreateMaterialFile2:- Terry and Hazel Flanigan 2023		   	   *
+// *		CreateMaterialFile:- Terry and Hazel Flanigan 2023		   	   *
 // *************************************************************************
-void SB_Export_Ogre3D::CreateMaterialFile2(char* MatFileName)
+void SB_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
 {
 	char MatName[255];
 	char File[255];

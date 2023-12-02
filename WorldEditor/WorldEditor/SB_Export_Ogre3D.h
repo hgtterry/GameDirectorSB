@@ -33,28 +33,21 @@ public:
 	~SB_Export_Ogre3D(void);
 
 	void Export_To_Ogre3D(bool Create);
-
 	void Convert_ToOgre3D(bool Create);
-	char Directory_Name[MAX_PATH];
 
 private:
 
-	void Init(void);
-	
+	void Set_World_Paths(void);
 	void Set_Export_Paths(void);
-
 	void Get_Data(int Index, int FaceIndex);
-	
-	bool DecompileTextures_TXL2(char* PathAndFile);
+	bool DecompileTextures_TXL(char* PathAndFile);
+	void CreateMaterialFile(char* MatFileName);
 
-	void CreateMaterialFile2(char* MatFileName);
-
-	char mCurrentFolder[MAX_PATH];
-
+	char mDirectory_Name[MAX_PATH];
 	char mSelected_Directory[MAX_PATH];
 
-	char World_File_Path[MAX_PATH];
-	char World_File_PathAndFile[MAX_PATH];
+	char mWorld_File_Path[MAX_PATH];
+	char mWorld_File_PathAndFile[MAX_PATH];
 
 	char mExport_Just_Name[MAX_PATH];
 
@@ -69,9 +62,9 @@ private:
 	float u;
 	float v;
 
-	float x ;
-	float y ;
-	float z ;
+	float x;
+	float y;
+	float z;
 
 	Ogre::ManualObject* Export_Manual;
 	Ogre::ManualObject* World_Manual;
