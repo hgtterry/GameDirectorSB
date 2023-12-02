@@ -144,7 +144,7 @@ void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
 			Get_Data(Count, A);
 
 			Export_Manual->position(Ogre::Vector3(x, y, z));
-			Export_Manual->textureCoord(Ogre::Vector2(u, v));
+			Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
 			Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
 			Export_Manual->index(FaceIndex);
 			FaceIndex++;
@@ -152,7 +152,7 @@ void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
 			Get_Data(Count, B);
 
 			Export_Manual->position(Ogre::Vector3(x, y, z));
-			Export_Manual->textureCoord(Ogre::Vector2(u, v));
+			Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
 			Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
 			Export_Manual->index(FaceIndex);
 			FaceIndex++;
@@ -160,7 +160,7 @@ void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
 			Get_Data(Count, C);
 
 			Export_Manual->position(Ogre::Vector3(x, y, z));
-			Export_Manual->textureCoord(Ogre::Vector2(u, v));
+			Export_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
 			Export_Manual->normal(Ogre::Vector3(nx, ny, nz));
 			Export_Manual->index(FaceIndex);
 
@@ -283,7 +283,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 			Get_Data(Count, A);
 
 			World_Manual->position(Ogre::Vector3(x, y, z));
-			World_Manual->textureCoord(Ogre::Vector2(u, v));
+			World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
 			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
 			World_Manual->index(FaceIndex);
 			FaceIndex++;
@@ -291,7 +291,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 			Get_Data(Count, B);
 
 			World_Manual->position(Ogre::Vector3(x, y, z));
-			World_Manual->textureCoord(Ogre::Vector2(u, v));
+			World_Manual->textureCoord(Ogre::Vector2(u, 1 - v));
 			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
 			World_Manual->index(FaceIndex);
 			FaceIndex++;
@@ -299,7 +299,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 			Get_Data(Count, C);
 
 			World_Manual->position(Ogre::Vector3(x, y, z));
-			World_Manual->textureCoord(Ogre::Vector2(u, v));
+			World_Manual->textureCoord(Ogre::Vector2(u,1 - v));
 			World_Manual->normal(Ogre::Vector3(nx, ny, nz));
 			World_Manual->index(FaceIndex);
 
