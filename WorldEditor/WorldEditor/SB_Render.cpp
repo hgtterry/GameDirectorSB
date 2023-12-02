@@ -246,14 +246,10 @@ void SB_Render::Render_Loop()
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Actor)
-		{
-			//RenderByTexture();
-		}
 
-		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
+		if (App->CLSB_Model->Model_Type == Enums::Render_Groups)
 		{
-			//Assimp_Render_Textures();
+			Assimp_Render_Textures();
 		}
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)

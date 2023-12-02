@@ -331,8 +331,6 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 
 	CreateMaterialFile(Material_PathAndFile);
 	
-	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre->App_Resource_Group);
-
 	if (World_Ent)
 	{
 		World_Node->detachAllObjects();
@@ -342,11 +340,24 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 		World_Node = NULL;
 		World_Ent = NULL;
 
-		Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName("Test.mesh");
+		Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName("Test.mesh",App->CLSB_Ogre->World_Resource_Group);
 		ptr->unload();
 
 		Ogre::MeshManager::getSingleton().remove("Test.mesh");
 
+		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CLSB_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CLSB_Ogre->World_Resource_Group);
+
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CLSB_Ogre->World_Resource_Group);
+		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CLSB_Ogre->World_Resource_Group);
+
+		ptr->reload();
+		Debug
+	}
+	else
+	{
+		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre->World_Resource_Group);
 	}
 
 	World_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Test.mesh");

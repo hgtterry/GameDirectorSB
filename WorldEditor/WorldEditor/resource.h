@@ -1086,6 +1086,10 @@
 #define ID_EXPORT_OGRE3D33094           33094
 #define ID_OGRE3D_MESH33095             33095
 #define ID_FILE_EXPORT2                 33096
+#define ID_RENDER_MODE                  33097
+#define ID_MODE_BRUSHES                 33098
+#define ID_MODE_GROUPS                  33099
+#define ID_MODE_OGRE                    33100
 #define IDS_HELPINFORMATION             38000
 
 // Next default values for new objects
@@ -1094,7 +1098,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        356
-#define _APS_NEXT_COMMAND_VALUE         33097
+#define _APS_NEXT_COMMAND_VALUE         33101
 #define _APS_NEXT_CONTROL_VALUE         1572
 #define _APS_NEXT_SYMED_VALUE           112
 #endif

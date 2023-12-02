@@ -165,7 +165,7 @@ LRESULT CALLBACK SB_TopTabs_Equity::Tabs_Headers_Proc(HWND hDlg, UINT message, W
 
 		if (LOWORD(wParam) == IDC_UPDATE2)
 		{
-			App->CLSB_Scene->Update_Scene();
+			App->CLSB_Mesh_Mgr->Update_World();
 			return 1;
 		}
 	}

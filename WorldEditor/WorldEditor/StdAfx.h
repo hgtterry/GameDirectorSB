@@ -84,6 +84,13 @@ namespace Enums
 		CamModel = 4
 	};
 
+	enum RenderMode
+	{
+		Render_Brushes = 0,
+		Render_Groups = 1,
+		Render_Ogre = 2,
+	};
+
 	enum LoadedFile
 	{
 		LoadedFile_None = 0,

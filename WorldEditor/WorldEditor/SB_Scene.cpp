@@ -767,19 +767,6 @@ void SB_Scene::Go_FullScreen_Mode(void)
 }
 
 // *************************************************************************
-// *			Update_Scene:- Terry and Hazel Flanigan 2023		  	   *
-// *************************************************************************
-void SB_Scene::Update_Scene(void)
-{
-	App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
-	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
-
-	//Build_World(0);
-	//App->CLSB_Bullet->Create_Brush_Trimesh(0);
-	//App->CLSB_Model->Set_BondingBox_Brushes();
-}
-
-// *************************************************************************
 // *		Create_Resources_Group:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 bool SB_Scene::Create_Resources_Group()

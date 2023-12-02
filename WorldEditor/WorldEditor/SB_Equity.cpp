@@ -198,6 +198,13 @@ LRESULT CALLBACK SB_Equity::Equity_Dialog_New_Proc(HWND hDlg, UINT message, WPAR
 
 	case WM_COMMAND:
 	{
+		if (LOWORD(wParam) == ID_MODE_GROUPS)
+		{
+			App->CLSB_Model->Model_Type = Enums::Render_Groups;
+			App->CLSB_Export_Ogre3D->World_Node->setVisible(false);
+			return TRUE;
+		}
+
 		if (LOWORD(wParam) == ID_RENDER_BRUSEHS)
 		{
 			if (App->CLSB_Ogre->RenderListener->ShowBrushes == 1)
@@ -1247,12 +1254,8 @@ void SB_Equity::Do_Preview_All()
 			App->CLSB_Equity->First_Run = 0;
 		}
 
-		App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
-		App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
-
-		App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
-		App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
-
+		App->CLSB_Mesh_Mgr->Update_World();
+		
 		App->CLSB_Project->Load_Project();
 
 		App->CLSB_Environment->Add_New_Environ_Entity(true);
@@ -1260,13 +1263,8 @@ void SB_Equity::Do_Preview_All()
 	}
 	else
 	{
-
-		App->CLSB_Mesh_Mgr->WE_Build_Brush_List(0);
-		App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
-
-		App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
-		App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
-
+		App->CLSB_Mesh_Mgr->Update_World();
+		
 		//App->CLSB_Model->Set_BondingBox_Brushes();
 
 		if (Saved_Camera_Mode == 0)

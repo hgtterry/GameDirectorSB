@@ -35,6 +35,8 @@ public:
 	void Export_To_Ogre3D(bool Create);
 	void Convert_ToOgre3D(bool Create);
 
+	Ogre::SceneNode* World_Node;
+
 private:
 
 	void Set_World_Paths(void);
@@ -69,7 +71,6 @@ private:
 	Ogre::ManualObject* Export_Manual;
 	Ogre::ManualObject* World_Manual;
 
-	Ogre::SceneNode* World_Node;
 	Ogre::Entity* World_Ent;
 };
 

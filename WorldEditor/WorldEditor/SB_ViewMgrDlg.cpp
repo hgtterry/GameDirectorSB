@@ -16,7 +16,7 @@ SB_ViewMgrDlg::SB_ViewMgrDlg(void)
 	View_MgrDlg_Active = 0;
 
 	LinkViews_Flag = 1;
-
+	WorldView_Active_Flag = 0;
 }
 
 SB_ViewMgrDlg::~SB_ViewMgrDlg(void)
@@ -134,7 +134,7 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 			}
 			else
 			{
-				App->Custom_Button_Normal(item);
+				App->Custom_Button_Toggle(item, App->CLSB_ViewMgrDlg->WorldView_Active_Flag);
 			}
 
 			return CDRF_DODEFAULT;
@@ -266,13 +266,25 @@ LRESULT CALLBACK SB_ViewMgrDlg::View_MgrDlg_Proc(HWND hDlg, UINT message, WPARAM
 
 		if (LOWORD(wParam) == IDC_BT_PREVIEW)
 		{
-			App->CLSB_Equity->Do_Preview_All();
+			if (App->CLSB_ViewMgrDlg->WorldView_Active_Flag == 1)
+			{
+				App->CLSB_ViewMgrDlg->WorldView_Active_Flag = 0;
+				ShowWindow(App->ListPanel, false);
+				ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, false);
+				App->CLSB_Equity->Show_Equity_Dialog(0);
+			}
+			else
+			{
+				App->CLSB_ViewMgrDlg->WorldView_Active_Flag = 1;
+				App->CLSB_Equity->Do_Preview_All();
+			}
+
 			return TRUE;
 		}
 
 		if (LOWORD(wParam) == IDC_BT_VIEWUPDATE)
 		{
-			App->CLSB_Scene->Update_Scene();
+			App->CLSB_Mesh_Mgr->Update_World();
 			return TRUE;
 		}
 

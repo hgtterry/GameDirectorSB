@@ -1143,6 +1143,11 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					{
 						App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
 					}
+
+					if (App->CLSB_Equity->EquitySB_Dialog_Visible == 1)
+					{
+						App->CLSB_Mesh_Mgr->Update_World();
+					}
 					break;
 				}
 
@@ -1157,6 +1162,11 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 						if (App->CLSB_Brushes->Dimensions_Dlg_Running == 1)
 						{
 							App->CLSB_Brushes->Update_Pos_Dlg(App->CLSB_Brushes->Dimensions_Dlg_hWnd);
+						}
+
+						if (App->CLSB_Equity->EquitySB_Dialog_Visible == 1)
+						{
+							App->CLSB_Mesh_Mgr->Update_World();
 						}
 					}
 
@@ -1177,6 +1187,11 @@ void CFusionView::OnLButtonUp(UINT nFlags, CPoint point)
 					SetCursor(AfxGetApp()->LoadStandardCursor(IDC_ARROW));
 					if(App->CLSB_Doc->mLastOp==BRUSH_SHEAR)
 						App->CLSB_Doc->DoneShear(sides, Render_GetInidx(VCam));
+
+					if (App->CLSB_Equity->EquitySB_Dialog_Visible == 1)
+					{
+						App->CLSB_Mesh_Mgr->Update_World();
+					}
 
 					App->CLSB_Doc->UpdateSelected();
 					if((ModeTool == ID_TOOLS_TEMPLATE) ||

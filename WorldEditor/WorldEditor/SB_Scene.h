@@ -40,7 +40,6 @@ public:
 	bool FaceList_Export(const Brush* b, const FaceList* pList, int BrushCount, int SubBrushCount);
 	int Get_Adjusted_Index(int RealIndex);
 	bool AddTexture_GL(geVFile* BaseFile, const char* TextureName, int GroupIndex);
-	void Update_Scene(void);
 	bool Create_Resources_Group();
 	bool Delete_Resources_Group();
 	bool Add_Resource_Location_Project(char* Resource_Location);

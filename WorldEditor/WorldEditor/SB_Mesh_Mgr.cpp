@@ -654,6 +654,9 @@ void SB_Mesh_Mgr::WE_Build_Brush_List(int ExpSelected)
 // *************************************************************************
 bool SB_Mesh_Mgr::WE_Level_Build_Brushes(Level3* pLevel, const char* Filename, BrushList* BList, int ExpSelected, geBoolean ExpLights, int GroupID)
 {
+	mTextureCount = 0;
+	memset(mAdjusedIndex_Store, 0, 500);
+
 	int i;
 	geBoolean* WrittenTex;
 
@@ -1004,11 +1007,12 @@ bool SB_Mesh_Mgr::AddTexture_GL(geVFile* BaseFile, const char* TextureName, int 
 	HBITMAP	hbm;
 	HDC		hDC;
 
+	int index = 0;
 	geBitmap* Bitmap = NULL;
 	CWadFile* pWad;
 	pWad = NULL;
 	pWad = Level_GetWadFile(App->CLSB_Doc->pLevel);
-	for (int index = 0; index < pWad->mBitmapCount; index++)
+	for (index = 0; index < pWad->mBitmapCount; index++)
 	{
 		char mName[MAX_PATH];
 		char TempTextureFile[MAX_PATH];
@@ -1412,4 +1416,17 @@ int SB_Mesh_Mgr::WE_Get_Vertice_Count(int TextureID)
 	}
 
 	return TotalFaceCount;
+}
+
+// *************************************************************************
+// *		Update_World:- Terry and Hazel Flanigan 2023	 			   *
+// *************************************************************************
+bool SB_Mesh_Mgr::Update_World()
+{
+	WE_Build_Brush_List(0);
+	App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
+	WE_Convert_All_Texture_Groups();
+	App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
+
+	return 1;
 }

@@ -27,6 +27,6 @@ private:
 	bool TopRight_Flag;
 	bool BottomLeft_Flag;
 	bool BottomRight_Flag;
-
+	bool WorldView_Active_Flag;
 };
 

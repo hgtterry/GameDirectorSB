@@ -43,6 +43,8 @@ public:
 	bool WE_Convert_To_Texture_Group(int TextureID);
 	int WE_Get_Vertice_Count(int TextureID);
 
+	bool Update_World();
+
 	int ActualFaceCount;
 	int	mTextureCount;
 

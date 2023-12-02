@@ -41,6 +41,7 @@ SB_Ogre::SB_Ogre(void)
 	OgreModel_Node = nullptr;
 
 	App_Resource_Group = "App_Resource_Group";
+	World_Resource_Group = "World_Resource_Group";
 
 	Block_RenderingQueued = 0;
 	Pause_Rendring = 0;
@@ -177,6 +178,7 @@ bool SB_Ogre::SetUpResources(void)
 	File = Return_Chr;
 	
 	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App_Resource_Group);
+	Ogre::ResourceGroupManager::getSingleton().createResourceGroup(World_Resource_Group);
 
 	//-------------------------------- Zip Files
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation("Media/Core_Data/OgreCore.zip", "Zip",App_Resource_Group);

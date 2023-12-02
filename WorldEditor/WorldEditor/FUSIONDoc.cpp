@@ -3097,6 +3097,7 @@ static void DrawEntity (CEntity *pEnt, ViewVars *v, const EntityTable *pEntityDe
 
 void CFusionDoc::RenderWorld(ViewVars *v, CDC *pDC) // hgtterry RenderWorld
 {
+    
 #define PEN_WHITE_COLOR RGB(255,255,255)
 #define PEN_CYAN_COLOR  RGB(0,255,0)
 #define PEN_BLUE_COLOR  RGB(0,0,255)
