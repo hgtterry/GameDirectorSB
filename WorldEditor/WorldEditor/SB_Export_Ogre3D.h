@@ -48,6 +48,7 @@ private:
 	char mDirectory_Name[MAX_PATH];
 	char mSelected_Directory[MAX_PATH];
 
+	char mWorld_Mesh_JustName[MAX_PATH];
 	char mWorld_File_Path[MAX_PATH];
 	char mWorld_File_PathAndFile[MAX_PATH];
 
@@ -56,6 +57,8 @@ private:
 	char mExport_Path[MAX_PATH];
 	char mExport_PathAndFile_Material[MAX_PATH];
 	char mExport_PathAndFile_Mesh[MAX_PATH];
+
+	int NameIndex;
 
 	float nx;
 	float ny;

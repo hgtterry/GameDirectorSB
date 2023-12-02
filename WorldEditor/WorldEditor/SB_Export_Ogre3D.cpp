@@ -39,6 +39,8 @@ SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 	mExport_PathAndFile_Material[0] = 0;
 	mExport_PathAndFile_Mesh[0] = 0;
 
+	strcpy(mWorld_Mesh_JustName, "World");
+
 	x, y, z = 0;
 	nx, ny, nz = 0;
 	u, v = 0;
@@ -48,35 +50,12 @@ SB_Export_Ogre3D::SB_Export_Ogre3D(void)
 
 	World_Node = NULL;
 	World_Ent = NULL;
-	
+	NameIndex = 0;
 }
 
 SB_Export_Ogre3D::~SB_Export_Ogre3D(void)
 {
 	
-}
-
-// *************************************************************************
-// *		Set_World_Paths:- Terry and Hazel Flanigan 2023			 	   *
-// *************************************************************************
-void SB_Export_Ogre3D::Set_World_Paths(void)
-{
-	strcpy(mWorld_File_PathAndFile, App->WorldEditor_Directory);
-	strcat(mWorld_File_PathAndFile, "\\");
-	strcat(mWorld_File_PathAndFile, "Data");
-	strcat(mWorld_File_PathAndFile, "\\");
-	strcat(mWorld_File_PathAndFile, "World_Test");
-
-	strcpy(mWorld_File_Path, mWorld_File_PathAndFile);
-
-	strcat(mWorld_File_PathAndFile, "\\");
-	strcat(mWorld_File_PathAndFile, "Test.mesh");
-
-	strcpy(mExport_Just_Name, "Test");
-
-	x, y, z = 0;
-	nx, ny, nz = 0;
-	u, v = 0;
 }
 
 // *************************************************************************
@@ -219,6 +198,38 @@ void SB_Export_Ogre3D::Export_To_Ogre3D(bool Create)
 }
 
 // *************************************************************************
+// *		Set_World_Paths:- Terry and Hazel Flanigan 2023			 	   *
+// *************************************************************************
+void SB_Export_Ogre3D::Set_World_Paths(void)
+{
+	char Num[100];
+	itoa(NameIndex, Num, 10);
+
+	strcpy(mWorld_Mesh_JustName, "World");
+	strcat(mWorld_Mesh_JustName, Num);
+
+	strcpy(mWorld_File_PathAndFile, App->WorldEditor_Directory);
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, "Data");
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, "World_Test");
+
+	strcpy(mWorld_File_Path, mWorld_File_PathAndFile);
+
+	strcat(mWorld_File_PathAndFile, "\\");
+	strcat(mWorld_File_PathAndFile, mWorld_Mesh_JustName);
+	strcat(mWorld_File_PathAndFile, ".mesh");
+
+	strcpy(mExport_Just_Name, mWorld_Mesh_JustName);
+
+	NameIndex++;
+
+	x, y, z = 0;
+	nx, ny, nz = 0;
+	u, v = 0;
+}
+
+// *************************************************************************
 // *	  		Convert_ToOgre3D:- Terry and Hazel Flanigan 2022		   *
 // *************************************************************************
 void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
@@ -252,7 +263,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	while (Count < GroupCountTotal)
 	{
 		_itoa(Count, MaterialNumber, 10);
-		strcpy(MatName, "Test");
+		strcpy(MatName, mWorld_Mesh_JustName);
 		strcat(MatName, "_Material_");
 		strcat(MatName, MaterialNumber);
 
@@ -327,9 +338,14 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	char Material_PathAndFile[MAX_PATH];
 	strcpy(Material_PathAndFile, mWorld_File_Path);
 	strcat(Material_PathAndFile, "\\");
-	strcat(Material_PathAndFile, "Test.material");
+	strcat(Material_PathAndFile, mWorld_Mesh_JustName);
+	strcat(Material_PathAndFile, ".material");
 
 	CreateMaterialFile(Material_PathAndFile);
+	
+	char Name[MAX_PATH];
+	strcpy(Name, mWorld_Mesh_JustName);
+	strcat(Name, ".mesh");
 	
 	if (World_Ent)
 	{
@@ -340,10 +356,10 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 		World_Node = NULL;
 		World_Ent = NULL;
 
-		Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName("Test.mesh",App->CLSB_Ogre->World_Resource_Group);
-		ptr->unload();
+		//Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName(Name,App->CLSB_Ogre->World_Resource_Group);
+		//ptr->unload();
 
-		Ogre::MeshManager::getSingleton().remove("Test.mesh");
+		//Ogre::MeshManager::getSingleton().remove(Name);
 
 		Ogre::ResourceGroupManager::getSingleton().destroyResourceGroup(App->CLSB_Ogre->World_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().createResourceGroup(App->CLSB_Ogre->World_Resource_Group);
@@ -352,7 +368,6 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 		Ogre::ResourceGroupManager::getSingleton().clearResourceGroup(App->CLSB_Ogre->World_Resource_Group);
 		Ogre::ResourceGroupManager::getSingleton().initialiseResourceGroup(App->CLSB_Ogre->World_Resource_Group);
 
-		ptr->reload();
 		Debug
 	}
 	else
@@ -360,7 +375,7 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 		Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre->World_Resource_Group);
 	}
 
-	World_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Test.mesh");
+	World_Ent = App->CLSB_Ogre->mSceneMgr->createEntity(Name);
 	World_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	World_Node->attachObject(World_Ent);
 
