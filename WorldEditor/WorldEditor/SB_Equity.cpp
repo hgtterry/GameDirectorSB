@@ -1231,7 +1231,7 @@ void SB_Equity::Do_Preview_All()
 		App->CLSB_Model->Model_Loaded = 1;
 		App->CLSB_Ogre->RenderListener->ShowBrushes = 1;
 		App->CLSB_Ogre->RenderListener->ShowTextured = 1;
-		App->CLSB_Model->Model_Type = Enums::LoadedFile_Brushes;
+		App->CLSB_Model->Model_Type = Enums::LoadedFile_None;
 
 		ShowWindow(App->ListPanel, true);
 		ShowWindow(App->CLSB_Properties->Properties_Dlg_hWnd, true);
@@ -1251,7 +1251,7 @@ void SB_Equity::Do_Preview_All()
 		App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
 
 		App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
-		
+		App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
 
 		App->CLSB_Project->Load_Project();
 
@@ -1265,7 +1265,8 @@ void SB_Equity::Do_Preview_All()
 		App->CLSB_Bullet->Create_Brush_Trimesh_XX(0);
 
 		App->CLSB_Mesh_Mgr->WE_Convert_All_Texture_Groups();
-		
+		App->CLSB_Export_Ogre3D->Convert_ToOgre3D(1);
+
 		//App->CLSB_Model->Set_BondingBox_Brushes();
 
 		if (Saved_Camera_Mode == 0)

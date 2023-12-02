@@ -333,6 +333,22 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	
 	Ogre::ResourceGroupManager::getSingleton().addResourceLocation(mWorld_File_Path, "FileSystem", App->CLSB_Ogre->App_Resource_Group);
 
+	if (World_Ent)
+	{
+		World_Node->detachAllObjects();
+		App->CLSB_Ogre->mSceneMgr->destroySceneNode(World_Node);
+		App->CLSB_Ogre->mSceneMgr->destroyEntity(World_Ent);
+
+		World_Node = NULL;
+		World_Ent = NULL;
+
+		Ogre::ResourcePtr ptr = Ogre::MeshManager::getSingleton().getByName("Test.mesh");
+		ptr->unload();
+
+		Ogre::MeshManager::getSingleton().remove("Test.mesh");
+
+	}
+
 	World_Ent = App->CLSB_Ogre->mSceneMgr->createEntity("Test.mesh");
 	World_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	World_Node->attachObject(World_Ent);

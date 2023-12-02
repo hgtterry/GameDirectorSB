@@ -253,21 +253,21 @@ void SB_Render::Render_Loop()
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Assimp)
 		{
-			Assimp_Render_Textures();
+			//Assimp_Render_Textures();
 		}
 
 		if (App->CLSB_Model->Model_Type == Enums::LoadedFile_Brushes)
 		{
 			//WE_Render_By_Texture();
 
-			if (Render_Brush_Group_Flag == 1)
+			/*if (Render_Brush_Group_Flag == 1)
 			{
 				Brush_Render_Group_Texture();
 			}
 			else
 			{
 				Brush_Render_Brush_Texture();
-			}
+			}*/
  
  
 			//XBrush_Render_Textures();
