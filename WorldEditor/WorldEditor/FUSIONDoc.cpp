@@ -3591,19 +3591,9 @@ void CFusionDoc::OnUpdateGeneralselect(CCmdUI* pCmdUI)
 
 void CFusionDoc::OnCloseDocument() // hgtterry Exit Aplication
 {
-   
-    if (App->CLSB_Ogre->OgreIsRunning == 1)
-    {
-        delete App->CLSB_Ogre->mRoot;
-        App->CLSB_Ogre->mRoot = NULL;
-    }
+    App->Close_WorldEditor();
+   // App->Say("Last Close");
 
-    delete App->CLSB_Doc;
-
-    App->CLSB_Mesh_Mgr->Delete_Brush_List();
-    App->CLSB_Mesh_Mgr->Delete_Group_Brushes();
-
-    //App->Say("Last Close");
     CDocument::OnCloseDocument();
 }
 

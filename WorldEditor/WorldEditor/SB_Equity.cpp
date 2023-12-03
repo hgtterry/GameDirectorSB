@@ -81,7 +81,6 @@ bool SB_Equity::Auto_Load_File()
 // *************************************************************************
 void SB_Equity::Show_Equity_Dialog(bool Show)
 {
-	
 	if (App->Equity_Dlg_hWnd)
 	{
 		if (Show == 1)
@@ -101,6 +100,9 @@ void SB_Equity::Show_Equity_Dialog(bool Show)
 			App->CLSB_TopTabs->Update_Dlg_Controls();
 
 			ShowWindow(App->Equity_Dlg_hWnd, SW_HIDE);
+
+			App->CLSB_ViewMgrDlg->WorldView_Active_Flag = 0;
+			RedrawWindow(App->CLSB_ViewMgrDlg->MgrDlg_hWnd, NULL, NULL, RDW_INVALIDATE | RDW_UPDATENOW);
 		}
 	}
 	else

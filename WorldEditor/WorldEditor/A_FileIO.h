@@ -34,6 +34,8 @@ public:
 
 	bool SaveSelectedFile(char* Extension,char* TszFile);
 	bool CheckExtention(char *FileName);
+	
+	bool Delete_Directory_Contents(char* dir);
 
 	// 1 = File Exsits    0 = No File
 	bool Check_File_Exist(char* Full_Path);

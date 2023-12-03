@@ -250,3 +250,48 @@ bool SB_FileIO::Check_File_Exist(char* Full_Path)
 
 	return 0;
 }
+
+// *************************************************************************
+// *	Delete_Directory_Contents:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+bool SB_FileIO::Delete_Directory_Contents(char* dir)
+{
+	char pSearchPath[MAX_PATH];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(pSearchPath, dir);
+	strcat(pSearchPath, "\\");
+	strcat(pSearchPath, "*.*");
+	
+	hFind = FindFirstFile(pSearchPath, &FindFileData);
+	if (hFind != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			if (!(FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+
+				if (_stricmp(FindFileData.cFileName, "WorldFoler.txt") == 0)
+				{
+
+				}
+				else
+				{
+					char file[MAX_PATH];
+					strcpy(file, dir);
+					strcat(file, "\\");
+					strcat(file, FindFileData.cFileName);
+					remove(file);
+				}
+			}
+
+		} while (::FindNextFile(hFind, &FindFileData));
+
+		FindClose(hFind);
+
+		return 0;
+	}
+
+	return 1;
+}

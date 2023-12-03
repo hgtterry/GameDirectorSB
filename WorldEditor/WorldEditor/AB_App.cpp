@@ -534,6 +534,26 @@ void SB_App::Error_ToFile(char* Message, char* Message2)
 }
 
 // *************************************************************************
+// *			Close_WorldEditor:- Terry and Hazel Flanigan 2023		   *
+// *************************************************************************
+void SB_App::Close_WorldEditor()
+{
+	if (App->CLSB_Ogre->OgreIsRunning == 1)
+	{
+		delete App->CLSB_Ogre->mRoot;
+		App->CLSB_Ogre->mRoot = NULL;
+	}
+
+	delete App->CLSB_Doc;
+
+	App->CLSB_Mesh_Mgr->Delete_Brush_List();
+	App->CLSB_Mesh_Mgr->Delete_Group_Brushes();
+
+	App->CLSB_Export_Ogre3D->Clean_Direcory();
+
+}
+
+// *************************************************************************
 // *			Clear_ErrorLog:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
 void SB_App::Clear_ErrorLog()

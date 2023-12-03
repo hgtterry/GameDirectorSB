@@ -480,3 +480,53 @@ void SB_Export_Ogre3D::CreateMaterialFile(char* MatFileName)
 
 	matSer.exportQueued(OMatFileName);
 }
+
+// *************************************************************************
+// *			Clean_Direcory:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+bool SB_Export_Ogre3D::Clean_Direcory()
+{
+	if (App->CLSB_Scene->Scene_Loaded == 0)
+	{
+		return 0;
+	}
+
+	char pSearchPath[MAX_PATH];
+
+	WIN32_FIND_DATA FindFileData;
+	HANDLE hFind;
+
+	strcpy(pSearchPath, mWorld_File_Path);
+	strcat(pSearchPath, "\\");
+	strcat(pSearchPath, "*.*");
+
+	hFind = FindFirstFile(pSearchPath, &FindFileData);
+	if (hFind != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			if (!(FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+
+				if (_stricmp(FindFileData.cFileName, "WorldFoler.txt") == 0)
+				{
+
+				}
+				else
+				{
+					char file[MAX_PATH];
+					strcpy(file, mWorld_File_Path);
+					strcat(file, "\\");
+					strcat(file, FindFileData.cFileName);
+					remove(file);
+				}
+			}
+
+		} while (::FindNextFile(hFind, &FindFileData));
+
+		FindClose(hFind);
+
+		return 0;
+	}
+
+	return 1;
+}

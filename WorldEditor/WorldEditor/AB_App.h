@@ -210,6 +210,7 @@ public:
 	void Message_ToFile(char* Message, char* Message2 = NULL);
 	void Error_ToFile(char* Message, char* Message2 = NULL);
 	void Clear_ErrorLog();
+	void Close_WorldEditor();
 
 	void Flash_Window();
 	bool IsProcessRunning(char* executableName);

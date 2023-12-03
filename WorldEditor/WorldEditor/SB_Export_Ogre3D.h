@@ -34,6 +34,7 @@ public:
 
 	void Export_To_Ogre3D(bool Create);
 	void Convert_ToOgre3D(bool Create);
+	bool Clean_Direcory();
 
 	Ogre::SceneNode* World_Node;
 
@@ -49,10 +50,11 @@ private:
 	char mSelected_Directory[MAX_PATH];
 
 	char mWorld_Mesh_JustName[MAX_PATH];
-	char mWorld_File_Path[MAX_PATH];
 	char mWorld_File_PathAndFile[MAX_PATH];
 
 	char mExport_Just_Name[MAX_PATH];
+
+	char mWorld_File_Path[MAX_PATH];
 
 	char mExport_Path[MAX_PATH];
 	char mExport_PathAndFile_Material[MAX_PATH];
