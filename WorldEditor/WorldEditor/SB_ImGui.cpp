@@ -46,6 +46,8 @@ SB_ImGui::SB_ImGui()
 	Show_FPS = 1;
 	StartPos = 0;
 	
+	Updating_F = 0;
+
 	Show_Model_Data_F = 0;
 	Show_Camera_Pos_F = 0;
 	Show_BB_Data_F = 0;
@@ -139,6 +141,12 @@ void SB_ImGui::ImGui_Editor_Loop(void)
 	{
 		App->CLSB_Environment->Environ_PropertyEditor();
 	}
+
+	if (Updating_F == 1)
+	{
+		Updating_GUI();
+	}
+	
 }
 
 // *************************************************************************
@@ -228,6 +236,30 @@ void SB_ImGui::ImGui_Set_Colours(void)
 	colors[ImGuiCol_NavWindowingHighlight] = ImVec4(0.70f, 0.70f, 0.70f, 0.70f);
 	colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.20f);
 	colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.20f, 0.20f, 0.20f, 0.35f);
+}
+
+// *************************************************************************
+// *			Updating_GUI:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void SB_ImGui::Updating_GUI(void)
+{
+	ImGui::SetNextWindowPos(ImVec2(Model_Data_PosX, Model_Data_PosY));
+
+	if (!ImGui::Begin("Updating", &Updating_F, ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize
+		| ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar))
+	{
+		ImGui::End();
+	}
+	else
+	{
+		ImGui::Text("Please Wait - Updating");
+		
+		ImVec2 Size = ImGui::GetWindowSize();
+		Model_Data_PosX = ((float)App->CLSB_Ogre->OgreListener->View_Width / 2) - (Size.x / 2);
+		Model_Data_PosY = ((float)App->CLSB_Ogre->OgreListener->View_Height / 2) - (Size.y / 2);;
+
+		ImGui::End();
+	}
 }
 
 // *************************************************************************

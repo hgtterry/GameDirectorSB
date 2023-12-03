@@ -257,12 +257,12 @@ void SB_Grid::Reset_View(void)
 void SB_Grid::Load_Gizmo(void)
 {
 	
-	Sight_Entity = App->CLSB_Ogre->mSceneMgr->createEntity("Arrow23", "axes.mesh", App->CLSB_Ogre->App_Resource_Group);
+	Sight_Entity = App->CLSB_Ogre->mSceneMgr->createEntity("ArrowXYZ", "axes.mesh", App->CLSB_Ogre->App_Resource_Group);
 	Sight_Node = App->CLSB_Ogre->mSceneMgr->getRootSceneNode()->createChildSceneNode();
 	Sight_Node->attachObject(Sight_Entity);
 
 	Sight_Node->setPosition(0, 0, 0);
-	Sight_Node->setVisible(true);
+	Sight_Node->setVisible(false);
 	Sight_Node->setScale(1, 1, 1);
 }
 

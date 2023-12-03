@@ -30,6 +30,7 @@ public:
 
 	void ImGui_Editor_Loop(void);
 
+	void Updating_GUI(void);
 	void Render_FPS(void);
 	void ImGui_FPS(void);
 
@@ -54,6 +55,7 @@ public:
 	bool StartPos;  // Position FPS Frame Flag [150122]
 
 	bool Show_Model_Data_F;
+	bool Updating_F;
 	bool Show_Camera_Pos_F;
 	bool Show_BB_Data_F;
 
