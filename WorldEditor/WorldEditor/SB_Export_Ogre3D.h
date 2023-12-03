@@ -58,6 +58,7 @@ private:
 	char mExport_PathAndFile_Material[MAX_PATH];
 	char mExport_PathAndFile_Mesh[MAX_PATH];
 
+	char mExport_Just_Name_Copy[MAX_PATH];
 	int NameIndex;
 
 	float nx;

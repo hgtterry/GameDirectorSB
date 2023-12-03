@@ -381,6 +381,10 @@ void SB_Export_Ogre3D::Convert_ToOgre3D(bool Create)
 	World_Node->setPosition(0, 0, 0);
 	World_Node->setVisible(true);
 	World_Node->setScale(1, 1, 1);
+
+	remove(mWorld_File_PathAndFile);
+	remove(Material_PathAndFile);
+
 }
 
 // *************************************************************************
