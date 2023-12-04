@@ -188,6 +188,11 @@ void A_Dialogs::Resize_Message(HWND hDlg)
 		}
 	}
 
+	if (iCurHorExt < 300)
+	{
+		iCurHorExt = 300;
+	}
+
 	HWND MessagehWnd = GetDlgItem(hDlg, IDC_STMESSAGE);
 	HWND TextWnd = GetDlgItem(hDlg, IDC_STTEXT);
 	HWND BannerhWnd = GetDlgItem(hDlg, IDC_BANNER);
