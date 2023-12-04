@@ -267,7 +267,6 @@ void A_Dialogs::Resize_Message(HWND hDlg)
 // *************************************************************************
 void A_Dialogs::Start_Properties()
 {
-	Debug
 	App->Get_Current_Document();
 
 	Current_Txl_File[0] = 0;
