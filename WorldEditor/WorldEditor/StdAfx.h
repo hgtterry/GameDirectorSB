@@ -194,6 +194,6 @@ namespace Enums
 // re-enable warnings except 4514
 #pragma warning(default : 4201 4214 4115)
 
-#define Debug App->Say("Here", "Message"); //MessageBox(NULL, "Here", "Message", MB_OK);
+#define Debug App->Say("Here", "  Internal Debug Message  ");
 
 #endif

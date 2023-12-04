@@ -63,7 +63,12 @@ void A_Dialogs::Get_Current_Document()
 // *************************************************************************
 void A_Dialogs::Message(char* pString, char* pString2)
 {
-	strcpy(Message_Text_Header, pString);
+	Message_Text_Header[0] = 0;
+	Message_Text_Message[0] = 0;
+
+	strcpy(Message_Text_Header, " ");
+	strcat(Message_Text_Header, pString);
+	strcat(Message_Text_Header, " ");
 
 	strcpy(Message_Text_Message, " ");
 	strcat(Message_Text_Message, pString2);
@@ -172,25 +177,67 @@ LRESULT CALLBACK A_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam,
 // *************************************************************************
 void A_Dialogs::Resize_Message(HWND hDlg)
 {
-	int iHorExt = 0;
+	int HorExt = 0;
 	SIZE Size;
-	int iCurHorExt = 0;
+	int CurHorExt = 0;
+
+	int HorExt2 = 0;
+	SIZE Size2;
+	int CurHorExt2 = 0;
+
+	int HorExt3 = 0;
+	SIZE Size3;
+	int CurHorExt3 = 0;
+
+	int SizeToUse = 0;
 
 	HDC hdc = GetDC(hDlg);
+
 	SelectObject(hdc, App->Font_CB18);
 	int iResult = GetTextExtentPoint32(hdc, App->CL_Dialogs->Message_Text_Message, strlen(App->CL_Dialogs->Message_Text_Message), &Size);
 	if (iResult != 0)
 	{
-		iHorExt = Size.cx;
-		if (iHorExt > iCurHorExt)
+		HorExt = Size.cx;
+		if (HorExt > CurHorExt)
 		{
-			iCurHorExt = iHorExt;
+			CurHorExt = HorExt;
 		}
 	}
 
-	if (iCurHorExt < 300)
+	SelectObject(hdc, App->Font_Banner);
+	int iResult2 = GetTextExtentPoint32(hdc, "    Message    ", 15, &Size2);
+	if (iResult2 != 0)
 	{
-		iCurHorExt = 300;
+		HorExt2 = Size2.cx;
+		if (HorExt2 > CurHorExt2)
+		{
+			CurHorExt2 = HorExt2;
+		}
+	}
+
+	SelectObject(hdc, App->Font_CB18);
+	int iResult3 = GetTextExtentPoint32(hdc, App->CL_Dialogs->Message_Text_Header, strlen(App->CL_Dialogs->Message_Text_Header), &Size3);
+	if (iResult3 != 0)
+	{
+		HorExt3 = Size3.cx;
+		if (HorExt3 > CurHorExt3)
+		{
+			CurHorExt3 = HorExt3;
+		}
+	}
+
+	if (CurHorExt < CurHorExt2)
+	{
+		SizeToUse = CurHorExt2;
+	}
+	else
+	{
+		SizeToUse = CurHorExt;
+	}
+
+	if (CurHorExt3 > CurHorExt2)
+	{
+		SizeToUse = CurHorExt3;
 	}
 
 	HWND MessagehWnd = GetDlgItem(hDlg, IDC_STMESSAGE);
@@ -200,17 +247,18 @@ void A_Dialogs::Resize_Message(HWND hDlg)
 	HWND OkhWnd = GetDlgItem(hDlg, IDOK);
 	HWND BarhWnd = GetDlgItem(hDlg, IDC_STBAR);
 	
-	SetWindowPos(hDlg, NULL, 0, 0, iCurHorExt + 20, 195, SWP_NOMOVE | SWP_NOZORDER);
+	SetWindowPos(hDlg, NULL, 0, 0, SizeToUse + 20, 195, SWP_NOMOVE | SWP_NOZORDER);
 
-	SetWindowPos(MessagehWnd, NULL, 0, 75, iCurHorExt, 30, SWP_NOZORDER);
-	SetWindowPos(TextWnd, NULL, 0, 40, iCurHorExt, 30, SWP_NOZORDER);
-	SetWindowPos(BannerhWnd, NULL, 0, 0, iCurHorExt, 35, SWP_NOZORDER);
+	SetWindowPos(MessagehWnd, NULL, 0, 75, SizeToUse, 30, SWP_NOZORDER);
+	SetWindowPos(TextWnd, NULL, 0, 40, SizeToUse, 30, SWP_NOZORDER);
+	SetWindowPos(BannerhWnd, NULL, 0, 0, SizeToUse, 35, SWP_NOZORDER);
 
-	SetWindowPos(OkhWnd, NULL, iCurHorExt/2 - 38, 125, 0,0, SWP_NOSIZE | SWP_NOZORDER);
-	SetWindowPos(BarhWnd, NULL, 10, 115, iCurHorExt-10, 1, SWP_NOZORDER);
+	SetWindowPos(OkhWnd, NULL, SizeToUse /2 - 38, 125, 0,0, SWP_NOSIZE | SWP_NOZORDER);
+	SetWindowPos(BarhWnd, NULL, 10, 115, SizeToUse -10, 1, SWP_NOZORDER);
 
 	SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text_Header);
 	SetDlgItemText(hDlg, IDC_STMESSAGE, App->CL_Dialogs->Message_Text_Message);
+	SetDlgItemText(hDlg, IDC_BANNER, "    Message    ");
 
 }
 
@@ -219,6 +267,7 @@ void A_Dialogs::Resize_Message(HWND hDlg)
 // *************************************************************************
 void A_Dialogs::Start_Properties()
 {
+	Debug
 	App->Get_Current_Document();
 
 	Current_Txl_File[0] = 0;
