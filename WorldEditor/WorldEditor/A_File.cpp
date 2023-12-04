@@ -201,7 +201,9 @@ bool SB_File_WE::Start_Load(const char* FileName, bool UseDialogLoader)
 
 		App->CLSB_Doc->Lock_AllTextures();
 	
-		MessageBox(App->MainHwnd, PathFileName_3dt, "Loaded",MB_OK);
+		App->Say("Loaded", PathFileName_3dt);
+
+		//MessageBox(App->MainHwnd, PathFileName_3dt, "Loaded",MB_OK);
 	}
 	else
 	{

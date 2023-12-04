@@ -1101,7 +1101,7 @@ BEGIN
     BEGIN
         MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
         MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
-        MENUITEM "Close",                       ID_FILE_CLOSE33078
+        MENUITEM "Close",                       ID_FILE_CLOSE33078, GRAYED
         MENUITEM SEPARATOR
         MENUITEM "Save",                        ID_FILE_SAVESB
         MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
@@ -1446,7 +1446,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.30 - [03-12-23] -17"
+    IDR_MAINFRAME           "Genesis3D World Editor - Equity V1.30 - [04-12-23] -17"
     IDR_FUSIONTYPE          "Genesis3D World Editor\nWorld\nWorld\nWorld Files (*.3dt)\n.3dt\nWorldEditor.Document\nGenesis3D World Editor Document"
     IDS_LOAD_WARNING        "Some entities or brushes did not load properly, see console for details."
     IDS_NEWGROUP            "Group Name"
@@ -1904,7 +1904,7 @@ BEGIN
     CTEXT           "Message",IDC_BANNER,7,7,403,22,SS_CENTERIMAGE
     CTEXT           "Static",IDC_STTEXT,7,32,403,13,SS_CENTERIMAGE
     CTEXT           "Static",IDC_STMESSAGE,7,53,403,14,SS_CENTERIMAGE
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | SS_SUNKEN,7,74,403,1
+    CONTROL         "",IDC_STBAR,"Static",SS_BLACKFRAME | SS_SUNKEN,7,74,403,1
 END
 
 IDD_SB_TABSDIALOG DIALOGEX 1100, 25, 161, 385
@@ -3100,6 +3100,11 @@ BEGIN
 END
 
 IDD_SB_PROGRESS_BAR AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_MESSAGE AFX_DIALOG_LAYOUT
 BEGIN
     0
 END

@@ -32,7 +32,10 @@ public:
 	virtual ~A_Dialogs();
 
 	bool Show_About_Dlg();
+
 	void Message(char* pString, char* pString2);
+	void Resize_Message(HWND hDlg);
+
 	void Start_Properties();
 	void Start_FrontPanel();
 	bool Start_Move_Brush_Dlg();

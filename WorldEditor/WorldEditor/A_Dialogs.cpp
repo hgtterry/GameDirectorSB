@@ -64,7 +64,10 @@ void A_Dialogs::Get_Current_Document()
 void A_Dialogs::Message(char* pString, char* pString2)
 {
 	strcpy(Message_Text_Header, pString);
-	strcpy(Message_Text_Message, pString2);
+
+	strcpy(Message_Text_Message, " ");
+	strcat(Message_Text_Message, pString2);
+	strcat(Message_Text_Message, " ");
 
 	if (App->CLSB_Equity->EquitySB_Dialog_Visible == 0)
 	{
@@ -89,9 +92,12 @@ LRESULT CALLBACK A_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam,
 		SendDlgItemMessage(hDlg, IDC_BANNER, WM_SETFONT, (WPARAM)App->Font_Banner, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STTEXT, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
 		SendDlgItemMessage(hDlg, IDC_STMESSAGE, WM_SETFONT, (WPARAM)App->Font_CB18, MAKELPARAM(TRUE, 0));
+		SendDlgItemMessage(hDlg, IDOK, WM_SETFONT, (WPARAM)App->Font_CB15, MAKELPARAM(TRUE, 0));
 
-		SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text_Header);
-		SetDlgItemText(hDlg, IDC_STMESSAGE, App->CL_Dialogs->Message_Text_Message);
+		//SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text_Header);
+		//SetDlgItemText(hDlg, IDC_STMESSAGE, App->CL_Dialogs->Message_Text_Message);
+
+		App->CL_Dialogs->Resize_Message(hDlg);
 
 		return TRUE;
 	}
@@ -129,6 +135,20 @@ LRESULT CALLBACK A_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam,
 		return (LONG)App->AppBackground;
 	}
 
+	case WM_NOTIFY:
+	{
+		LPNMHDR some_item = (LPNMHDR)lParam;
+
+		if (some_item->idFrom == IDOK && some_item->code == NM_CUSTOMDRAW)
+		{
+			LPNMCUSTOMDRAW item = (LPNMCUSTOMDRAW)some_item;
+			App->Custom_Button_Normal(item);
+			return CDRF_DODEFAULT;
+		}
+
+		return CDRF_DODEFAULT;
+	}
+
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDOK)
 		{
@@ -148,6 +168,48 @@ LRESULT CALLBACK A_Dialogs::Message_Proc(HWND hDlg, UINT message, WPARAM wParam,
 }
 
 // *************************************************************************
+// *	  		Resize_Message:- Terry and Hazel Flanigan 2023			   *
+// *************************************************************************
+void A_Dialogs::Resize_Message(HWND hDlg)
+{
+	int iHorExt = 0;
+	SIZE Size;
+	int iCurHorExt = 0;
+
+	HDC hdc = GetDC(hDlg);
+	SelectObject(hdc, App->Font_CB18);
+	int iResult = GetTextExtentPoint32(hdc, App->CL_Dialogs->Message_Text_Message, strlen(App->CL_Dialogs->Message_Text_Message), &Size);
+	if (iResult != 0)
+	{
+		iHorExt = Size.cx;
+		if (iHorExt > iCurHorExt)
+		{
+			iCurHorExt = iHorExt;
+		}
+	}
+
+	HWND MessagehWnd = GetDlgItem(hDlg, IDC_STMESSAGE);
+	HWND TextWnd = GetDlgItem(hDlg, IDC_STTEXT);
+	HWND BannerhWnd = GetDlgItem(hDlg, IDC_BANNER);
+
+	HWND OkhWnd = GetDlgItem(hDlg, IDOK);
+	HWND BarhWnd = GetDlgItem(hDlg, IDC_STBAR);
+	
+	SetWindowPos(hDlg, NULL, 0, 0, iCurHorExt + 20, 195, SWP_NOMOVE | SWP_NOZORDER);
+
+	SetWindowPos(MessagehWnd, NULL, 0, 75, iCurHorExt, 30, SWP_NOZORDER);
+	SetWindowPos(TextWnd, NULL, 0, 40, iCurHorExt, 30, SWP_NOZORDER);
+	SetWindowPos(BannerhWnd, NULL, 0, 0, iCurHorExt, 35, SWP_NOZORDER);
+
+	SetWindowPos(OkhWnd, NULL, iCurHorExt/2 - 38, 125, 0,0, SWP_NOSIZE | SWP_NOZORDER);
+	SetWindowPos(BarhWnd, NULL, 10, 115, iCurHorExt-10, 1, SWP_NOZORDER);
+
+	SetDlgItemText(hDlg, IDC_STTEXT, App->CL_Dialogs->Message_Text_Header);
+	SetDlgItemText(hDlg, IDC_STMESSAGE, App->CL_Dialogs->Message_Text_Message);
+
+}
+
+// *************************************************************************
 // *	  		Start_Properties:- Terry and Hazel Flanigan 2023		   *
 // *************************************************************************
 void A_Dialogs::Start_Properties()
@@ -159,6 +221,7 @@ void A_Dialogs::Start_Properties()
 	DialogBox(App->hInst, (LPCTSTR)IDD_LEVELOPTIONS_GD, App->MainHwnd, (DLGPROC)Properties_Proc);
 
 }
+
 // *************************************************************************
 // *        	Properties_Proc:- Terry and Hazel Flanigan 2023			   *
 // *************************************************************************
